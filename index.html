@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Resource Hub</title>
+    <style>
+        /* Modern Minimalist Styling */
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --accent: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        /* Header / Hero Section */
+        header { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 16px; margin-bottom: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
+        header p { font-size: 1.1rem; opacity: 0.9; }
+
+        /* Filters Section */
+        .filter-section { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: center; }
+        .filter-group { display: flex; flex-direction: column; gap: 5px; }
+        .filter-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+        .filter-group select { padding: 10px 15px; border: 1px solid #e2e8f0; border-radius: 8px; outline: none; background-color: #fff; min-width: 180px; cursor: pointer; transition: all 0.3s ease; }
+        .filter-group select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+
+        /* Resource Grid */
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px; }
+        .card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; border-top: 4px solid var(--primary); display: flex; flex-direction: column; justify-content: space-between; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0,0,0,0.1); }
+        .card-tag { display: inline-block; padding: 4px 8px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; text-transform: uppercase; margin-bottom: 12px; width: fit-content; }
+        .tag-notes { background: #e0e7ff; color: #4338ca; }
+        .tag-file { background: #d1fae5; color: #065f46; border-top-color: var(--accent); }
+        .tag-pyq { background: #fef3c7; color: #92400e; }
+        .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        .card-meta { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; }
+        .download-btn { display: block; text-align: center; background-color: var(--primary); color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background 0.2s ease; }
+        .download-btn:hover { background-color: var(--primary-hover); }
+
+        /* About Developer Section */
+        .about-dev { background: var(--card-bg); border-radius: 16px; padding: 40px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .dev-avatar { width: 100px; height: 100px; background: #ddd; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; background: linear-gradient(135deg, #4f46e5, #065f46); }
+        .about-dev h2 { font-size: 1.8rem; margin-bottom: 10px; }
+        .about-dev .subtitle { color: var(--primary); font-weight: 600; margin-bottom: 15px; }
+        .about-dev p { max-width: 600px; margin: 0 auto 20px; color: var(--text-muted); }
+        .social-links a { color: var(--text-main); text-decoration: none; margin: 0 10px; font-weight: 600; transition: color 0.2s; }
+        .social-links a:hover { color: var(--primary); }
+
+        /* No Results Message */
+        .no-results { text-align: center; grid-column: 1 / -1; padding: 40px; color: var(--text-muted); font-size: 1.1rem; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <header>
+            <h1 id="site-title">College Resource Hub</h1>
+            <p>Get Free Access to Important Notes, Practical Files, and PYQs without any stress.</p>
+        </header>
+
+        <!-- Dynamic Filter Bar -->
+        <div class="filter-section">
+            <div class="filter-group">
+                <label for="courseFilter">Course</label>
+                <select id="courseFilter" onchange="filterResources()">
+                    <option value="all">All Courses</option>
+                    <option value="B.Sc">B.Sc</option>
+                    <option value="B.A">B.A</option>
+                    <option value="B.Com">B.Com</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="semFilter">Semester / Year</label>
+                <select id="semFilter" onchange="filterResources()">
+                    <option value="all">All Semesters</option>
+                    <option value="1st Sem">1st Sem</option>
+                    <option value="2nd Sem">2nd Sem</option>
+                    <option value="3rd Sem">3rd Sem</option>
+                    <option value="4th Sem">4th Sem</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="typeFilter">Resource Type</label>
+                <select id="typeFilter" onchange="filterResources()">
+                    <option value="all">All Types</option>
+                    <option value="Notes">Notes</option>
+                    <option value="Practical File">Practical Files</option>
+                    <option value="PYQ">PYQs / Assignments</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Resources Grid -->
+        <div class="resources-grid" id="resourcesGrid">
+            <!-- Dynamic Cards will be injected here by JavaScript -->
+            <div class="no-results" id="noResults">No resources found matching the filters. Stay tuned, more updates coming soon!</div>
+        </div>
+
+<section class="about-developer-card">
+    <style>
+        /* Modern Premium Styles for About Section */
+        .about-developer-card {
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            border-radius: 24px;
+            padding: 50px 30px;
+            margin-top: 60px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative background element */
+        .about-developer-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(79, 70, 229, 0.05);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .dev-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Professional Identity Badge */
+        .dev-avatar-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+        }
+
+        .dev-photo-new {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover; /* Isse photo kharab ya khinchi hui nahi dikhegi */
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+    border: 4px solid #ffffff;
+}
+
+        .online-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 18px;
+            height: 18px;
+            background-color: #10b981;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+        }
+
+        .dev-wrapper h2 {
+            font-size: 2.2rem;
+            color: #1e293b;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        /* Tech Skill Tags */
+        .dev-title-tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tag-dev {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 30px;
+        }
+
+        .tag-blue { background: #eff6ff; color: #2563eb; }
+        .tag-purple { background: #f5f3ff; color: #7c3aed; }
+        .tag-amber { background: #fffbe6; color: #d97706; }
+
+        /* The Vision Statement */
+        .dev-bio {
+            font-size: 1.1rem;
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        @media (min-width: 768px) {
+            .dev-bio { text-align: center; }
+        }
+
+        /* Quick Quote Block */
+        .dev-quote {
+            background: #ffffff;
+            border-left: 4px solid #4f46e5;
+            padding: 15px 20px;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: #64748b;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            text-align: left;
+        }
+
+        /* Interactive Connect Buttons */
+        .connect-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-connect {
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary-git {
+            background-color: #1e293b;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(30, 41, 59, 0.2);
+        }
+
+        .btn-primary-git:hover {
+            background-color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary-in {
+            background-color: #0a66c2;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(10, 102, 194, 0.2);
+        }
+
+        .btn-secondary-in:hover {
+            background-color: #004182;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-mail {
+            background-color: #ffffff;
+            color: #4f46e5;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-outline-mail:hover {
+            border-color: #4f46e5;
+            background-color: #f5f3ff;
+            transform: translateY(-2px);
+        }
+    </style>
+
+    <div class="dev-wrapper">
+        <!-- Avatar Wrapper -->
+        <div class="dev-avatar-container">
+    <img src="My-pic.jpeg" alt="Govind Jangid" class="dev-photo-new">
+    <div class="online-badge"></div>
+    </div>
+
+        <!-- Name & Badges -->
+        <h2>Govind Jangid</h2>
+        
+        <div class="dev-title-tags">
+            <span class="tag-dev tag-blue">💻 Front-End Developer</span>
+            <span class="tag-dev tag-purple">🎓 B.Sc. Mathematics Student</span>
+            <span class="tag-dev tag-amber">⚡ Open For Collaboration</span>
+        </div>
+
+        <!-- Bio / Mission -->
+        <p class="dev-bio">
+            Hey there! I am a passionate programmer and web developer managing my studies alongside building impactful digital products. Being a college student myself, I know how frustrating it gets to hunt for proper notes, assignments, and solved practical files right before the exams. I engineered this seamless platform to simplify your student life, putting high-quality academic resources directly at your fingertips—completely for free.
+        </p>
+
+        <!-- Dynamic Personal Quote -->
+        <div class="dev-quote">
+            "My goal isn't just to write code; it's to solve real problems. This platform is just the first step of a much larger blueprint. Stay tuned, because the actual revolution is yet to come."
+        </div>
+
+        <!-- Connect Buttons -->
+        <div class="connect-buttons">
+            <a href="https://github.com" target="_blank" class="btn-connect btn-primary-git">
+                GitHub Profile
+            </a>
+            <a href="https://linkedin.com" target="_blank" class="btn-connect btn-secondary-in">
+                LinkedIn Connect
+            </a>
+            <a href="mailto:your-email@example.com" class="btn-connect btn-outline-mail">
+                Drop an Email
+            </a>
+        </div>
+    </div>
+</section>
+    </div>
+
+    <!-- Injecting JS Files -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
