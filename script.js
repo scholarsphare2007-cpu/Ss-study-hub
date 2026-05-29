@@ -95,7 +95,7 @@ function runLiveUniverseEngine() {
         root.style.setProperty('--text-color', '#1e293b');
         root.style.setProperty('--text-muted', '#475569');
     } else if (currentHour >= 8 && currentHour < 16) { 
-        // ☀️ Bright Daylight Look (Abhi 1 baje ye chalega ekdum premium look me!)
+        // ☀️ Bright Daylight Look
         root.style.setProperty('--sky-top', '#bae6fd');
         root.style.setProperty('--sky-bottom', '#0284c7');
         root.style.setProperty('--jungle-darkness', 'brightness(1) saturate(1.2)');
@@ -126,13 +126,14 @@ function runLiveUniverseEngine() {
     }
 }
 
-// 🏮 NIGHT SURVIVAL SYSTEM INTERACTIVE GLOWS
-function triggerSurvivalLight(type) {
+// 🏮 INTERACTIVE NIGHT LIGHT SURVIVAL SYSTEM (Fixed Variables & Clicks)
+function engageNightLighting(type) {
     const root = document.documentElement;
     const btnC = document.getElementById('btnCandle');
     const btnL = document.getElementById('btnLantern');
 
-    if (activeLightMode === mode) { clearSurvivalLights(); return; }
+    // FIX: Variable name fallback corrected from 'mode' to 'type'
+    if (activeLightMode === type) { clearSurvivalLights(); return; }
 
     activeLightMode = type;
     if(btnC) btnC.classList.remove('active');
@@ -140,14 +141,14 @@ function triggerSurvivalLight(type) {
 
     if (type === 'candle') {
         if(btnC) btnC.classList.add('active');
-        root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 50%, rgba(251,191,36,0.4) 0%, transparent 55%)');
+        root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 50%, rgba(251,191,36,0.5) 0%, transparent 60%)');
         root.style.setProperty('--card-glass', 'rgba(38, 26, 12, 0.85)');
-        root.style.setProperty('--card-border', 'rgba(251, 191, 36, 0.35)');
+        root.style.setProperty('--card-border', 'rgba(251, 191, 36, 0.4)');
     } else if (type === 'lantern') {
         if(btnL) btnL.classList.add('active');
-        root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 40%, rgba(249,115,22,0.55) 0%, rgba(249,115,22,0.18) 55%, transparent 85%)');
+        root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 40%, rgba(34,211,238,0.45) 0%, rgba(34,211,238,0.12) 50%, transparent 80%)');
         root.style.setProperty('--card-glass', 'rgba(15, 22, 36, 0.85)');
-        root.style.setProperty('--card-border', 'rgba(249, 115, 22, 0.45)');
+        root.style.setProperty('--card-border', 'rgba(34, 211, 238, 0.45)');
     }
 }
 
@@ -158,6 +159,7 @@ function clearSurvivalLights() {
     if(btnC) btnC.classList.remove('active');
     if(btnL) btnL.classList.remove('active');
     document.documentElement.style.setProperty('--lantern-glow', 'radial-gradient(circle, transparent 100%, transparent 100%)');
+    runLiveUniverseEngine();
 }
 
 // ==========================================
@@ -190,12 +192,12 @@ function filterResources() {
     });
 
     if (filteredData.length === 0) {
-        noResults.style.display = 'block';
+        if(noResults) noResults.style.display = 'block';
         document.getElementById('loadMoreContainer').style.display = 'none';
         return;
     } else {
-        noResults.style.close = 'none';
-        noResults.style.display = 'none';
+        // FIX: Invalid syntax property removed safely
+        if(noResults) noResults.style.display = 'none';
     }
 
     renderCards();
@@ -235,12 +237,14 @@ function renderCards() {
     const loadMoreContainer = document.getElementById('loadMoreContainer');
     const loadMoreCount = document.getElementById('loadMoreCount');
 
-    loadMoreCount.innerText = `Showing ${Math.min(currentLimit, filteredData.length)} of ${filteredData.length} items`;
+    if(loadMoreCount) {
+        loadMoreCount.innerText = `Showing ${Math.min(currentLimit, filteredData.length)} of ${filteredData.length} items`;
+    }
 
     if (filteredData.length > currentLimit) {
-        loadMoreContainer.style.display = 'block';
+        if(loadMoreContainer) loadMoreContainer.style.display = 'block';
     } else {
-        loadMoreContainer.style.display = 'none';
+        if(loadMoreContainer) loadMoreContainer.style.display = 'none';
     }
 }
 
