@@ -126,13 +126,13 @@ function runLiveUniverseEngine() {
     }
 }
 
-// 🏮 INTERACTIVE NIGHT LIGHT SURVIVAL SYSTEM (Fixed Variables & Clicks)
+// 🏮 FIX: Function name explicitly matches the HTML triggers
 function engageNightLighting(type) {
     const root = document.documentElement;
     const btnC = document.getElementById('btnCandle');
     const btnL = document.getElementById('btnLantern');
 
-    // FIX: Variable name fallback corrected from 'mode' to 'type'
+    // FIX: Checked using 'type' logic instead of crashed 'mode' fallback
     if (activeLightMode === type) { clearSurvivalLights(); return; }
 
     activeLightMode = type;
@@ -173,14 +173,12 @@ function filterResources() {
     const grid = document.getElementById('resourcesGrid');
     const noResults = document.getElementById('noResults');
     
-    // Old dynamic cards clear out karo
     const cards = grid.querySelectorAll('.card');
     cards.forEach(card => card.remove());
     
     currentLimit = 6;
     filteredData = [];
 
-    // Filter engine matching loops
     resourcesData.forEach(item => {
         const matchCourse = (courseValue === 'all' || item.course === courseValue);
         const matchSem = (semValue === 'all' || item.semester === semValue);
@@ -196,7 +194,6 @@ function filterResources() {
         document.getElementById('loadMoreContainer').style.display = 'none';
         return;
     } else {
-        // FIX: Invalid syntax property removed safely
         if(noResults) noResults.style.display = 'none';
     }
 
@@ -256,7 +253,5 @@ function loadMoreCards() {
 // Master Engine Execution Trigger on Startup
 window.onload = () => {
     filterResources();
-    
-    // Clock loops dynamically runs every 500ms for no freeze accurate ticks
     setInterval(runLiveUniverseEngine, 500); 
 };
