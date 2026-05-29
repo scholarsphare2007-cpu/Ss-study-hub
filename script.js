@@ -1,156 +1,202 @@
-let currentLimit = 6;
-let filteredData = [];
-let activeLightMode = 'off'; // Track internal interactive night lights
+let currentLimit = 6; // Ek baar me kitne cards dikhane hain
+let filteredData = []; // Filtered data ka global array
+let activeLightMode = 'off'; // Night utility light tracker
 
-// 🌌 CORE IMMERSIVE REAL-TIME ENVIRONMENT ENGINE
-function universeEnvironmentEngine() {
+// 🌌 REAL-TIME AMBIENT ENVIRONMENT ENGINE (Clock + Day/Night Sync)
+function runLiveUniverseEngine() {
     const now = new Date();
     
-    // 1. Sync Live Clock Widget
+    // ==========================================
+    // ⏰ 1. LIVE DIGITAL CLOCK LOGIC (No Freeze, Continuous Loop)
+    // ==========================================
     let hours = now.getHours();
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12; hours = hours ? hours : 12;
-    document.getElementById('liveClock').innerText = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+    
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0 ko 12 banayega
+    
+    const formattedTime = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+    
+    // UI par time push karo
+    const clockElement = document.getElementById('liveClock');
+    if (clockElement) {
+        clockElement.innerText = formattedTime;
+    }
 
-    // 2. ORBITAL CELESTIAL MATHEMATICS (Suraj aur Chand ka 180° Safar)
+    // ==========================================
+    // ☀️ 2. DYNAMIC CELESTIAL ORBIT MATHEMATICS (Sun/Moon Movement)
+    // ==========================================
     const currentHour = now.getHours();
     const currentMin = now.getMinutes();
     const totalMinutesInDay = (currentHour * 60) + currentMin;
 
     let celestialX = 0;
-    let celestialY = 100; // Screen bottom border baseline percentage
+    let celestialY = 100;
     const bodyNode = document.getElementById('skyBody');
     const root = document.documentElement;
 
-    // Calculate position angle based on day/night arc cycles
-    if (militaryCheckBetween(currentHour, 5, 19)) {
-        // DAY CYCLE ARC (6:00 AM to 7:00 PM) - Suraj Chalega!
+    // Perfect Day-Night Time Slots Check (5 AM to 7 PM Day)
+    if (currentHour >= 5 && currentHour < 19) {
+        // DAY CYCLE ARC - Suraj Left se Right smoothly move karega
         const startDayMin = 5 * 60;
         const endDayMin = 19 * 60;
         const ratio = (totalMinutesInDay - startDayMin) / (endDayMin - startDayMin);
         
-        celestialX = ratio * 100; // Left to Right 0% - 100%
-        celestialY = 80 - (Math.sin(ratio * Math.PI) * 65); // Dynamic Quad Curve Height Arc
+        celestialX = ratio * 100; // 0% to 100% across screen
+        celestialY = 85 - (Math.sin(ratio * Math.PI) * 70); // Smooth upward mathematical curve arc
         
-        bodyNode.style.background = '#f59e0b'; // Sun Gold Tone
-        bodyNode.style.boxShadow = '0 0 50px #f59e0b, 0 0 100px #f59e0b';
-        document.getElementById('nightPanel').style.display = 'none'; // Hide manual utility switches
+        if (bodyNode) {
+            bodyNode.style.background = '#f59e0b'; // Sun Gold Color
+            bodyNode.style.boxShadow = '0 0 40px #f59e0b, 0 0 80px #eab308, 0 0 150px rgba(245,158,11,0.6)';
+        }
+        
+        // Hide manual night utility switches during day
+        const nightPanel = document.getElementById('nightPanel');
+        if (nightPanel) nightPanel.style.display = 'none';
         clearSurvivalLights();
     } else {
-        // NIGHT CYCLE ARC (7:00 PM to 5:00 AM) - Chand Chalega!
+        // NIGHT CYCLE ARC - Chand chalega
         let ratio = 0;
         if (currentHour >= 19) {
-            ratio = ((currentHour - 19) * 60 + currentMin) / (10 * 60); // 7 PM to Midnight fraction
+            ratio = ((currentHour - 19) * 60 + currentMin) / (10 * 60);
         } else {
-            ratio = ((currentHour + 5) * 60 + currentMin) / (10 * 60); // Midnight to 5 AM fraction
+            ratio = ((currentHour + 5) * 60 + currentMin) / (10 * 60);
         }
         
         celestialX = ratio * 100;
-        celestialY = 80 - (Math.sin(ratio * Math.PI) * 65);
+        celestialY = 85 - (Math.sin(ratio * Math.PI) * 70);
         
-        bodyNode.style.background = '#f8fafc'; // Moon Pearl Glow
-        bodyNode.style.boxShadow = '0 0 30px #cbd5e1, 0 0 60px #94a3b8';
-        document.getElementById('nightPanel').style.display = 'flex'; // Trigger night control station
+        if (bodyNode) {
+            bodyNode.style.background = '#f8fafc'; // Moon Silver Pearl White
+            bodyNode.style.boxShadow = '0 0 30px #cbd5e1, 0 0 60px #94a3b8';
+        }
+        
+        // Show manual night utility control switches
+        const nightPanel = document.getElementById('nightPanel');
+        if (nightPanel) nightPanel.style.display = 'flex';
     }
 
+    // CSS variables me coordinates send karo
     root.style.setProperty('--sun-moon-x', `${celestialX}%`);
-    root.style.setProperty('--sun-moon-y', `${celestialY}px`);
+    root.style.setProperty('--sun-moon-y', `${celestialY}%`);
 
-    // 3. SKY COLORS & JUNGLE DEPTH DYNAMIC CONFIG
-    if (currentHour >= 5 && currentHour < 8) { // Sunrise
-        root.style.setProperty('--sky-top', '#fdba74'); root.style.setProperty('--sky-bottom', '#f472b6');
-        root.style.setProperty('--jungle-darkness', 'brightness(0.5) contrast(1.1)');
-        root.style.setProperty('--card-glass', 'rgba(255, 255, 255, 0.55)');
+    // ==========================================
+    // 🌲 3. REAL TIME WEATHER & GLASS WALLPAPER ENGINE
+    // ==========================================
+    if (currentHour >= 5 && currentHour < 8) { 
+        // 🌅 Sunrise Look
+        root.style.setProperty('--sky-top', '#ff7e5f');
+        root.style.setProperty('--sky-bottom', '#feb47b');
+        root.style.setProperty('--jungle-darkness', 'brightness(0.55) contrast(1.1)');
+        root.style.setProperty('--card-glass', 'rgba(255, 255, 255, 0.45)');
+        root.style.setProperty('--card-border', 'rgba(255, 255, 255, 0.25)');
         root.style.setProperty('--text-color', '#1e293b');
-    } else if (currentHour >= 8 && currentHour < 16) { // Midday Brightness
-        root.style.setProperty('--sky-top', '#38bdf8'); root.style.setProperty('--sky-bottom', '#bae6fd');
-        root.style.setProperty('--jungle-darkness', 'brightness(0.95) saturate(1.2)');
-        root.style.setProperty('--card-glass', 'rgba(255, 255, 255, 0.75)');
+        root.style.setProperty('--text-muted', '#475569');
+    } else if (currentHour >= 8 && currentHour < 16) { 
+        // ☀️ Bright Daylight Look (Abhi 1 baje ye chalega ekdum premium look me!)
+        root.style.setProperty('--sky-top', '#bae6fd');
+        root.style.setProperty('--sky-bottom', '#0284c7');
+        root.style.setProperty('--jungle-darkness', 'brightness(1) saturate(1.2)');
+        root.style.setProperty('--card-glass', 'rgba(255, 255, 255, 0.85)');
+        root.style.setProperty('--card-border', 'rgba(0, 0, 0, 0.08)');
         root.style.setProperty('--text-color', '#0f172a');
-    } else if (currentHour >= 16 && currentHour < 19) { // Sunset
-        root.style.setProperty('--sky-top', '#f97316'); root.style.setProperty('--sky-bottom', '#6b21a8');
-        root.style.setProperty('--jungle-darkness', 'brightness(0.4) saturate(1.5)');
-        root.style.setProperty('--card-glass', 'rgba(255, 255, 255, 0.2)');
+        root.style.setProperty('--text-muted', '#475569');
+    } else if (currentHour >= 16 && currentHour < 19) { 
+        // 🌇 Golden Sunset Look
+        root.style.setProperty('--sky-top', '#f97316');
+        root.style.setProperty('--sky-bottom', '#4c1d95');
+        root.style.setProperty('--jungle-darkness', 'brightness(0.4) saturate(1.4)');
+        root.style.setProperty('--card-glass', 'rgba(255, 255, 255, 0.15)');
+        root.style.setProperty('--card-border', 'rgba(255, 255, 255, 0.2)');
         root.style.setProperty('--text-color', '#ffffff');
-    } else { // Deep Dark Night
-        root.style.setProperty('--sky-top', '#020617'); root.style.setProperty('--sky-bottom', '#0f172a');
-        root.style.setProperty('--jungle-darkness', 'brightness(0.15) contrast(1.2)');
-        root.style.setProperty('--card-glass', 'rgba(15, 23, 42, 0.65)');
-        root.style.setProperty('--text-color', '#f8fafc');
+        root.style.setProperty('--text-muted', '#cbd5e1');
+    } else { 
+        // 🌌 Mystical Deep Midnight Study Look
+        if (activeLightMode === 'off') {
+            root.style.setProperty('--sky-top', '#020617');
+            root.style.setProperty('--sky-bottom', '#0f172a');
+            root.style.setProperty('--jungle-darkness', 'brightness(0.15) contrast(1.2)');
+            root.style.setProperty('--card-glass', 'rgba(15, 23, 42, 0.65)');
+            root.style.setProperty('--card-border', 'rgba(255, 255, 255, 0.08)');
+            root.style.setProperty('--text-color', '#f8fafc');
+            root.style.setProperty('--text-muted', '#94a3b8');
+        }
     }
 }
 
-// Helper time evaluation logic
-function militaryCheckBetween(target, min, max) {
-    return target >= min && target < max;
-}
-
-// 🏮 INTERACTIVE NIGHT LIGHT SURVIVAL SYSTEM
+// 🏮 NIGHT SURVIVAL SYSTEM INTERACTIVE GLOWS
 function triggerSurvivalLight(type) {
     const root = document.documentElement;
     const btnC = document.getElementById('btnCandle');
     const btnL = document.getElementById('btnLantern');
 
-    if (activeLightMode === type) {
-        clearSurvivalLights();
-        return;
-    }
+    if (activeLightMode === mode) { clearSurvivalLights(); return; }
 
     activeLightMode = type;
-    btnC.classList.remove('active');
-    btnL.classList.remove('active');
+    if(btnC) btnC.classList.remove('active');
+    if(btnL) btnL.classList.remove('active');
 
     if (type === 'candle') {
-        btnC.classList.add('active');
-        // Gentle soft yellow candlelight focus center flicker
-        root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 50%, rgba(251,191,36,0.35) 0%, transparent 45%)');
-        root.style.setProperty('--card-glass', 'rgba(45, 31, 15, 0.7)');
-        root.style.setProperty('--card-border', 'rgba(251, 191, 36, 0.3)');
+        if(btnC) btnC.classList.add('active');
+        root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 50%, rgba(251,191,36,0.4) 0%, transparent 55%)');
+        root.style.setProperty('--card-glass', 'rgba(38, 26, 12, 0.85)');
+        root.style.setProperty('--card-border', 'rgba(251, 191, 36, 0.35)');
     } else if (type === 'lantern') {
-        btnL.classList.add('active');
-        // High intensity radiant orange lantern workspace flare coverage
-        root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 40%, rgba(249,115,22,0.5) 0%, rgba(249,115,22,0.1) 50%, transparent 80%)');
-        root.style.setProperty('--card-glass', 'rgba(30, 41, 59, 0.8)');
-        root.style.setProperty('--card-border', 'rgba(249, 115, 22, 0.4)');
+        if(btnL) btnL.classList.add('active');
+        root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 40%, rgba(249,115,22,0.55) 0%, rgba(249,115,22,0.18) 55%, transparent 85%)');
+        root.style.setProperty('--card-glass', 'rgba(15, 22, 36, 0.85)');
+        root.style.setProperty('--card-border', 'rgba(249, 115, 22, 0.45)');
     }
 }
 
 function clearSurvivalLights() {
     activeLightMode = 'off';
-    document.getElementById('btnCandle').classList.remove('active');
-    document.getElementById('btnLantern').classList.remove('active');
+    const btnC = document.getElementById('btnCandle');
+    const btnL = document.getElementById('btnLantern');
+    if(btnC) btnC.classList.remove('active');
+    if(btnL) btnL.classList.remove('active');
     document.documentElement.style.setProperty('--lantern-glow', 'radial-gradient(circle, transparent 100%, transparent 100%)');
-    // Revert structural definitions back to normal values
-    universeEnvironmentEngine();
 }
 
-// Core standard content sorting
+// ==========================================
+// 📄 4. DATABASE & RENDER LOGIC (Cards Filtering & Load More)
+// ==========================================
 function filterResources() {
     const courseValue = document.getElementById('courseFilter').value;
     const semValue = document.getElementById('semFilter').value;
     const typeValue = document.getElementById('typeFilter').value;
+    
     const grid = document.getElementById('resourcesGrid');
     const noResults = document.getElementById('noResults');
     
+    // Old dynamic cards clear out karo
     const cards = grid.querySelectorAll('.card');
     cards.forEach(card => card.remove());
     
-    currentLimit = 6; filteredData = [];
+    currentLimit = 6;
+    filteredData = [];
 
+    // Filter engine matching loops
     resourcesData.forEach(item => {
         const matchCourse = (courseValue === 'all' || item.course === courseValue);
         const matchSem = (semValue === 'all' || item.semester === semValue);
         const matchType = (typeValue === 'all' || item.type === typeValue);
-        if (matchCourse && matchSem && matchType) filteredData.push(item);
+        
+        if (matchCourse && matchSem && matchType) {
+            filteredData.push(item);
+        }
     });
 
     if (filteredData.length === 0) {
         noResults.style.display = 'block';
         document.getElementById('loadMoreContainer').style.display = 'none';
         return;
-    } else { noResults.style.display = 'none'; }
+    } else {
+        noResults.style.close = 'none';
+        noResults.style.display = 'none';
+    }
 
     renderCards();
 }
@@ -169,7 +215,7 @@ function renderCards() {
         if (item.type === 'Syllabus') tagClass = 'tag-syllabus';
         if (item.type === 'Assignment') tagClass = 'tag-assignment';
         if (item.type === 'Important-Topics') tagClass = 'tag-topics';
-        if (item.type === 'Papers') tagClass = 'tag-papers';
+        if (item.type === 'Paper') tagClass = 'tag-paper';
 
         const card = document.createElement('div');
         card.className = 'card';
@@ -188,14 +234,25 @@ function renderCards() {
 
     const loadMoreContainer = document.getElementById('loadMoreContainer');
     const loadMoreCount = document.getElementById('loadMoreCount');
+
     loadMoreCount.innerText = `Showing ${Math.min(currentLimit, filteredData.length)} of ${filteredData.length} items`;
-    loadMoreContainer.style.display = filteredData.length > currentLimit ? 'block' : 'none';
+
+    if (filteredData.length > currentLimit) {
+        loadMoreContainer.style.display = 'block';
+    } else {
+        loadMoreContainer.style.display = 'none';
+    }
 }
 
-function loadMoreCards() { currentLimit += 6; renderCards(); }
+function loadMoreCards() {
+    currentLimit += 6;
+    renderCards();
+}
 
+// Master Engine Execution Trigger on Startup
 window.onload = () => {
     filterResources();
-    universeEnvironmentEngine();
-    setInterval(universeEnvironmentEngine, 1000); // Pulse master timing loops
+    
+    // Clock loops dynamically runs every 500ms for no freeze accurate ticks
+    setInterval(runLiveUniverseEngine, 500); 
 };
