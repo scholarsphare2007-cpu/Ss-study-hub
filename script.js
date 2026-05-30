@@ -120,7 +120,6 @@ function toggleAmbientMasterLight() {
     } else {
         customLightState = 'on';
         if (panel) panel.classList.add('active');
-        // Smooth Yellow-Warm Thermal Glow config injection
         root.style.setProperty('--lantern-glow', 'radial-gradient(circle at 50% 50%, rgba(251,191,36,0.45) 0%, transparent 60%)');
         root.style.setProperty('--card-glass', 'rgba(38, 26, 12, 0.85)');
         root.style.setProperty('--card-border', 'rgba(251, 191, 36, 0.35)');
@@ -143,9 +142,13 @@ function filterResources() {
     const courseValue = document.getElementById('courseFilter').value;
     const semValue = document.getElementById('semFilter').value;
     const typeValue = document.getElementById('typeFilter').value;
+    const searchValue = document.getElementById('materialSearch') ? document.getElementById('materialSearch').value.toLowerCase().trim() : '';
     
     const grid = document.getElementById('resourcesGrid');
     const noResults = document.getElementById('noResults');
+    
+    // Safety check for resourcesData
+    const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
     
     const cards = grid.querySelectorAll('.card');
     cards.forEach(card => card.remove());
@@ -153,12 +156,17 @@ function filterResources() {
     currentLimit = 6;
     filteredData = [];
 
-    resourcesData.forEach(item => {
+    dataSrc.forEach(item => {
         const matchCourse = (courseValue === 'all' || item.course === courseValue);
         const matchSem = (semValue === 'all' || item.semester === semValue);
         const matchType = (typeValue === 'all' || item.type === typeValue);
         
-        if (matchCourse && matchSem && matchType) {
+        const matchSearch = searchValue === '' || 
+                            (item.title && item.title.toLowerCase().includes(searchValue)) ||
+                            (item.subject && item.subject.toLowerCase().includes(searchValue)) ||
+                            (item.course && item.course.toLowerCase().includes(searchValue));
+        
+        if (matchCourse && matchSem && matchType && matchSearch) {
             filteredData.push(item);
         }
     });
@@ -194,13 +202,47 @@ function renderCards() {
         card.className = 'card';
         card.style.animationDelay = `${(index % 6) * 0.05}s`;
         
+        let rawLink = item.link || '';
+        let originalDriveLink = rawLink.trim();
+        let directDownloadLink = '';
+
+        // 🚨 CRITICAL CHECK: Agar link '#' hai, khali hai, ya undefined hai
+        let isLinkValid = originalDriveLink !== '' && originalDriveLink !== '#';
+
+        if (isLinkValid && originalDriveLink.includes('drive.google.com')) {
+            if (originalDriveLink.includes('/file/d/')) {
+                const parts = originalDriveLink.split('/file/d/');
+                if (parts[1]) {
+                    const fileId = parts[1].split('/')[0];
+                    directDownloadLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
+                }
+            } else if (originalDriveLink.includes('id=')) {
+                try {
+                    const urlParams = new URLSearchParams(originalDriveLink.split('?')[1]);
+                    const fileId = urlParams.get('id');
+                    if (fileId) {
+                        directDownloadLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
+                    }
+                } catch(e) {
+                    directDownloadLink = originalDriveLink;
+                }
+            }
+        }
+
+        // Setup Attributes based on validity (No more blank pages for '#')
+        let linkAttrView = isLinkValid ? `href="${originalDriveLink}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, Govind ne abhi iska PDF upload nahi kiya hai! Stay tuned.')"`;
+        let linkAttrDownload = isLinkValid ? `href="${directDownloadLink || originalDriveLink}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, jab file hi nahi hai toh download kya karega! Pehle link aane de.')"`;
+
         card.innerHTML = `
             <div>
                 <span class="card-tag ${tagClass}">${item.type}</span>
                 <h3 class="card-title">${item.title}</h3>
                 <p class="card-meta"><strong>${item.course}</strong> — ${item.semester} | ${item.subject}</p>
             </div>
-            <a href="${item.link}" class="download-btn" target="_blank">Download PDF</a>
+            <div class="card-actions">
+                <a ${linkAttrView} class="action-btn btn-view">View PDF</a>
+                <a ${linkAttrDownload} class="action-btn btn-download">Download</a>
+            </div>
         `;
         grid.appendChild(card);
     });
