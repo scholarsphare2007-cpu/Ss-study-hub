@@ -30,7 +30,7 @@
             color: var(--text-color);
             min-height: 100vh;
             overflow-x: hidden;
-            padding-top: 80px;
+            padding-top: 95px; /* Thoda gap badhaya taaki dynamic navbar cover na kare */
             transition: background 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -126,15 +126,46 @@
             transform: scale(1.1);
         }
 
-        /* Navbar Structural Base */
+        /* 🚀 STICKY NAVBAR STRUCTURAL UPGRADE */
         .top-navbar {
-            position: fixed; top: 0; left: 0; right: 0; height: 75px;
-            background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(20px);
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 30px; z-index: 1000; border-bottom: 1px solid var(--card-border);
+            position: fixed; 
+            top: 0; left: 0; right: 0; 
+            height: 80px;
+            background: rgba(15, 23, 42, 0.15); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0 30px; 
+            z-index: 1000; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Mast transition lagayi */
         }
-        .navbar-brand { font-size: 1.4rem; font-weight: 900; background: linear-gradient(45deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .live-clock-widget { font-family: monospace; background: rgba(255,255,255,0.05); padding: 6px 14px; border-radius: 20px; font-size: 1rem; font-weight: 700; border: 1px solid var(--card-border); }
+
+        /* 🪄 Jadu yahan shuru hota hai jab scroll karenge */
+        .top-navbar.scrolled {
+            height: 65px; /* Navbar patli ho jayegi */
+            background: rgba(15, 23, 42, 0.75); /* Dark background aur blur tez hoga */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Premium drop shadow */
+        }
+
+        .navbar-brand { 
+            font-size: 1.4rem; font-weight: 900; 
+            background: linear-gradient(45deg, #818cf8, #c084fc); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            transition: font-size 0.3s ease;
+        }
+        .top-navbar.scrolled .navbar-brand {
+            font-size: 1.25rem; /* Logo text compact ho jayega scroll pe */
+        }
+
+        .live-clock-widget { font-family: monospace; background: rgba(255,255,255,0.05); padding: 6px 14px; border-radius: 20px; font-size: 1rem; font-weight: 700; border: 1px solid var(--card-border); transition: all 0.3s; }
+        .top-navbar.scrolled .live-clock-widget { background: rgba(255, 255, 255, 0.1); padding: 4px 12px; font-size: 0.9rem; }
+
         .navbar-btn {
             background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             color: white; padding: 8px 16px; border-radius: 30px;
@@ -154,17 +185,47 @@
         }
         header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 8px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
+        /* 🔥 NEW SEARCH BAR BOX CSS */
+        .search-group {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .search-group label {
+            font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.6);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
         .filter-section { 
             background: var(--card-glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             padding: 20px; border-radius: 20px; display: flex; flex-wrap: wrap; gap: 15px; 
             align-items: center; justify-content: center; border: 1px solid var(--card-border); margin-bottom: 40px;
         }
-        .filter-group { display: flex; flex-direction: column; gap: 5px; }
-        .filter-group label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-        .filter-group select { 
+        .filter-section select { 
             padding: 12px 18px; border: 1px solid var(--card-border); border-radius: 10px; 
             background: rgba(15, 23, 42, 0.6); color: #fff; min-width: 190px; cursor: pointer; font-weight: 600;
         }
+        .filter-group { display: flex; flex-direction: column; gap: 5px; }
+        .filter-group label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
 
         /* 3D Immersive Card Engine */
         .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px; }
@@ -185,9 +246,32 @@
         .card-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; line-height: 1.4; }
         .card-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
         
-        .download-btn { 
-            display: block; text-align: center; background: linear-gradient(135deg, #5046e5ca 0%, #7c3aedbc 100%);
-            color: white; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 0.9rem;
+        /* 🔥 NEW: TWO ACTIONS FLEX BOX SYSTEM FOR VIEW & DOWNLOAD */
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        .action-btn { 
+            flex: 1; text-align: center; padding: 11px 5px; border-radius: 10px; 
+            text-decoration: none; font-weight: 700; font-size: 0.82rem; transition: all 0.2s ease;
+        }
+        .btn-view {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+        }
+        .btn-view:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .btn-download {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+        }
+        .btn-download:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
         }
 
         .load-more-container { text-align: center; margin-bottom: 50px; }
@@ -206,21 +290,25 @@
 
         .no-results { text-align: center; grid-column: 1 / -1; padding: 40px; display: none; }
 
-        /* 📱 STRICT RESPONSIVE MOBILE BRIDGE - NO OVERLAYS */
+        /* 📱 STRICT RESPONSIVE MOBILE BRIDGE */
         @media screen and (max-width: 768px) {
             .top-navbar { padding: 0 12px; height: 65px; display: flex; justify-content: space-between; align-items: center; }
+            .top-navbar.scrolled { height: 55px; } /* Mobile par scroll hone par aur compact */
             .navbar-brand { font-size: 1.15rem; }
-            
-            /* Order elements inline to avoid stacking/overlapping clocks or toggles */
+            .top-navbar.scrolled .navbar-brand { font-size: 1.05rem; }
             .live-clock-widget { font-size: 0.85rem; padding: 4px 10px; order: 2; margin: 0; }
+            .top-navbar.scrolled .live-clock-widget { font-size: 0.78rem; padding: 3px 8px; }
             .survival-control-panel { display: flex !important; order: 3; padding: 5px 10px; border-radius: 15px; margin: 0; }
             .survival-btn-light { font-size: 0.7rem; gap: 3px; }
-            .navbar-btn { display: none; } /* Hide dev profile spec on top navbar mobile to keep clean space */
-
+            .navbar-btn { display: none; }
+            .search-group { max-width: 100%; padding: 0 10px; }
+            .filter-section { padding: 15px 10px; }
             .filter-group { width: 100%; }
             .filter-group select { min-width: 100%; }
             .resources-grid { grid-template-columns: 1fr; }
             .connect-buttons { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+            .card-actions { gap: 8px; }
+            .action-btn { font-size: 0.78rem; padding: 10px 4px; }
         }
     </style>
 </head>
@@ -251,7 +339,7 @@
         </svg>
     </div>
 
-    <nav class="top-navbar">
+    <nav class="top-navbar" id="mainNavbar">
         <div class="navbar-brand">Resource Hub</div>
         
         <div class="survival-control-panel" id="nightPanel" style="display: none;" onclick="toggleAmbientMasterLight()">
@@ -269,6 +357,11 @@
             <h1 id="site-title">College Resource Hub</h1>
             <p>Experience an immersive real-time dynamic environment while managing your course files.</p>
         </header>
+
+        <div class="search-group">
+            <label for="materialSearch">Search Material</label>
+            <input type="text" id="materialSearch" class="search-input" placeholder="Type Subject or Topic (e.g. Matrices, Physics)..." onkeyup="filterResources()">
+        </div>
 
         <div class="filter-section">
             <div class="filter-group">
@@ -303,8 +396,10 @@
                     <option value="all">All Types</option>
                     <option value="Syllabus">Syllabus</option>
                     <option value="Notes">Notes</option>
+                    <option value="Books">Book</option>
                     <option value="Practical-Files">Practical File</option>
                     <option value="Assignment">Assignments</option>
+                    <option value="Smart One Week Series">Smart One Week Series</option>
                     <option value="PYQ">PYQs</option>
                     <option value="Paper">papers</option>
                     <option value="Important-Topics">Important-Topics</option>
@@ -344,6 +439,17 @@
             </div>
         </section>
     </div>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('mainNavbar');
+            if (window.scrollY > 40) { // Jaise hi 40px scroll hoga, magic chalu
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
