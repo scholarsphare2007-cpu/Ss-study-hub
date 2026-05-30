@@ -6,7 +6,7 @@ const resourcesData = [
         subject: "Mathematics",
         type: "Syllabus",
         title: "Mathematics 2nd sem Syllabus (2025-26)",
-        link: "#"
+        link: "https://drive.google.com/file/d/1dCy4U9F4qlwwmiTGUz5Tz8fjtZOufbRd/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
@@ -94,7 +94,7 @@ const resourcesData = [
         subject: "Chemistry",
         type: "Syllabus",
         title: "Chemistry 2nd sem syllabus (2025-26)",
-        link: "#"
+        link: "https://drive.google.com/file/d/1VOUyhNjNCV0vM5FRaBklEgBqdzPhzFS5/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
