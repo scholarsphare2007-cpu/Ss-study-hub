@@ -186,6 +186,35 @@
         }
         header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 8px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
+        /* 🔥 PREMIUM APP DOWNLOAD BUTTON STYLE */
+        .pwa-download-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .pwa-btn {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 28px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pwa-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
+        }
+        .pwa-btn:active {
+            transform: translateY(0) scale(1);
+        }
+
         /* 🔥 NEW SEARCH BAR BOX CSS */
         .search-group {
             width: 100%;
@@ -357,7 +386,37 @@
         <header>
             <h1 id="site-title">College Resource Hub</h1>
             <p>Experience an immersive real-time dynamic environment while managing your course files.</p>
-        </header>
+            
+           <!-- Replace your button container with this -->
+<div class="pwa-download-container">
+    <button id="installBtn" class="pwa-btn tech-style" style="display: none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Get the App
+    </button>
+</div>
+
+<style>
+.pwa-btn.tech-style {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border-radius: 50px; /* Full capsule shape */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pwa-btn.tech-style:hover {
+    letter-spacing: 1.5px; /* Hover karne par text halka sa failega */
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+    transform: translateY(-2px);
+}
+</style>
 
         <div class="search-group">
             <label for="materialSearch">Search Material</label>
@@ -444,20 +503,64 @@
     <script>
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('mainNavbar');
-            if (window.scrollY > 40) { // Jaise hi 40px scroll hoga, magic chalu
+            if (window.scrollY > 40) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
         });
     </script>
+
     <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-      .then(() => console.log('Bhai, App Engine Registered!'))
-      .catch((err) => console.log('App engine error:', err));
-  }
-</script>
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        // 1. Service Worker Registration (Relative Path Optimized for GitHub Pages)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('Bhai, App Engine Registered Successfully! Scope:', reg.scope))
+                    .catch((err) => console.log('App engine structure error:', err));
+            });
+        }
+
+        // 2. Custom Install Handler (Chrome defaults filter hook)
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Default browser bar blocker
+            e.preventDefault();
+            // Storing token structure
+            deferredPrompt = e;
+            // Reveal our custom built UI Button
+            if (installBtn) {
+                installBtn.style.display = 'inline-flex';
+            }
+        });
+
+        // 3. Execution Action Click
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    // Launch custom prompt bundle
+                    deferredPrompt.prompt();
+                    // Intercept user decision matrix
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`User execution status: ${outcome}`);
+                    // Flush buffer data
+                    deferredPrompt = null;
+                    installBtn.style.display = 'none';
+                }
+            });
+        }
+
+        // 4. Verification Check post execution
+        window.addEventListener('appinstalled', () => {
+            if (installBtn) {
+                installBtn.style.display = 'none';
+            }
+            deferredPrompt = null;
+            console.log('App Successfully Mounted inside standard user dashboard context!');
+        });
+    </script>
 
     <script src="data.js?v=1.1"></script>
     <script src="script.js?v=1.1"></script>
