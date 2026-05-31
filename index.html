@@ -141,17 +141,17 @@
             padding: 0 30px; 
             z-index: 1000; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Mast transition lagayi */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* 🪄 Jadu yahan shuru hota hai jab scroll karenge */
         .top-navbar.scrolled {
-            height: 65px; /* Navbar patli ho jayegi */
-            background: rgba(15, 23, 42, 0.75); /* Dark background aur blur tez hoga */
+            height: 65px; 
+            background: rgba(15, 23, 42, 0.75); 
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid var(--card-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Premium drop shadow */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
         }
 
         .navbar-brand { 
@@ -161,7 +161,7 @@
             transition: font-size 0.3s ease;
         }
         .top-navbar.scrolled .navbar-brand {
-            font-size: 1.25rem; /* Logo text compact ho jayega scroll pe */
+            font-size: 1.25rem; 
         }
 
         .live-clock-widget { font-family: monospace; background: rgba(255,255,255,0.05); padding: 6px 14px; border-radius: 20px; font-size: 1rem; font-weight: 700; border: 1px solid var(--card-border); transition: all 0.3s; }
@@ -213,6 +213,47 @@
         }
         .pwa-btn:active {
             transform: translateY(0) scale(1);
+        }
+        
+        .pwa-btn.tech-style {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 28px;
+            border-radius: 50px; 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pwa-btn.tech-style:hover {
+            letter-spacing: 1.5px; 
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* 🍏 NEW: PREMIUM iOS DOWNLOAD INSTRUCTION CARD */
+        .ios-install-popup {
+            display: none;
+            background: rgba(30, 27, 75, 0.85);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 14px 24px;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            max-width: 450px;
+            margin: 15px auto;
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.2);
+            animation: lightBreathe 4s infinite ease-in-out;
+            line-height: 1.5;
         }
 
         /* 🔥 NEW SEARCH BAR BOX CSS */
@@ -323,7 +364,7 @@
         /* 📱 STRICT RESPONSIVE MOBILE BRIDGE */
         @media screen and (max-width: 768px) {
             .top-navbar { padding: 0 12px; height: 65px; display: flex; justify-content: space-between; align-items: center; }
-            .top-navbar.scrolled { height: 55px; } /* Mobile par scroll hone par aur compact */
+            .top-navbar.scrolled { height: 55px; } 
             .navbar-brand { font-size: 1.15rem; }
             .top-navbar.scrolled .navbar-brand { font-size: 1.05rem; }
             .live-clock-widget { font-size: 0.85rem; padding: 4px 10px; order: 2; margin: 0; }
@@ -387,36 +428,17 @@
             <h1 id="site-title">College Resource Hub</h1>
             <p>Experience an immersive real-time dynamic environment while managing your course files.</p>
             
-           <!-- Replace your button container with this -->
-<div class="pwa-download-container">
-    <button id="installBtn" class="pwa-btn tech-style" style="display: none;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        Get the App
-    </button>
-</div>
-
-<style>
-.pwa-btn.tech-style {
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-    color: #ffffff;
-    font-size: 0.88rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 12px 28px;
-    border-radius: 50px; /* Full capsule shape */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.pwa-btn.tech-style:hover {
-    letter-spacing: 1.5px; /* Hover karne par text halka sa failega */
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
-    transform: translateY(-2px);
-}
-</style>
+            <div class="pwa-download-container">
+                <button id="installBtn" class="pwa-btn tech-style" style="display: none;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Get the App
+                </button>
+                
+                <div id="iosPromptCard" class="ios-install-popup">
+                    ✨ To Install on iOS: Tap the Share button <span style="font-size:1.1rem; vertical-align:middle; margin:0 2px;">📤</span> then select <b>'Add to Home Screen'</b> ➕
+                </div>
+            </div>
+        </header>
 
         <div class="search-group">
             <label for="materialSearch">Search Material</label>
@@ -514,8 +536,34 @@
     <script>
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
+        const iosPromptCard = document.getElementById('iosPromptCard');
 
-        // 1. Service Worker Registration (Relative Path Optimized for GitHub Pages)
+        // Function to detect precise device specifications
+        function getDeviceOperatingSystem() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            // Check for iPhone / iPad / iPod touch
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 'iOS';
+            }
+            return 'AndroidOrWeb';
+        }
+
+        // Initialize App Engine Checks
+        window.addEventListener('DOMContentLoaded', () => {
+            const os = getDeviceOperatingSystem();
+            
+            // Check if app is running already as standalone PWA app
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+            if (os === 'iOS' && !isStandalone) {
+                // If user is inside iPhone Safari, directly trigger our custom instruction card
+                if (iosPromptCard) {
+                    iosPromptCard.style.display = 'block';
+                }
+            }
+        });
+
+        // 1. Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -524,28 +572,23 @@
             });
         }
 
-        // 2. Custom Install Handler (Chrome defaults filter hook)
+        // 2. Custom Install Handler (Triggered on Android Chrome / Desktop web)
         window.addEventListener('beforeinstallprompt', (e) => {
-            // Default browser bar blocker
             e.preventDefault();
-            // Storing token structure
             deferredPrompt = e;
-            // Reveal our custom built UI Button
-            if (installBtn) {
+            // Only reveal Android button if device isn't iOS
+            if (installBtn && getDeviceOperatingSystem() !== 'iOS') {
                 installBtn.style.display = 'inline-flex';
             }
         });
 
-        // 3. Execution Action Click
+        // 3. Execution Action Click for Android/Web Users
         if (installBtn) {
             installBtn.addEventListener('click', async () => {
                 if (deferredPrompt) {
-                    // Launch custom prompt bundle
                     deferredPrompt.prompt();
-                    // Intercept user decision matrix
                     const { outcome } = await deferredPrompt.userChoice;
                     console.log(`User execution status: ${outcome}`);
-                    // Flush buffer data
                     deferredPrompt = null;
                     installBtn.style.display = 'none';
                 }
@@ -557,8 +600,11 @@
             if (installBtn) {
                 installBtn.style.display = 'none';
             }
+            if (iosPromptCard) {
+                iosPromptCard.style.display = 'none';
+            }
             deferredPrompt = null;
-            console.log('App Successfully Mounted inside standard user dashboard context!');
+            console.log('App Successfully Mounted inside dashboard context!');
         });
     </script>
 
