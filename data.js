@@ -99,6 +99,14 @@ const resourcesData = [
     {
         course: "B.Sc",
         semester: "2nd Sem",
+        subject: "Physics",
+        type: "Smart One Week Series",
+        title: "OWS Physics 2nd sem 2025-26",
+        link: "https://drive.google.com/file/d/1duVw-y2mcyRms5W7I_pqcBmah9dkbGUe/view?usp=drive_link"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
         subject: "Chemistry",
         type: "Syllabus",
         title: "Chemistry 2nd sem syllabus (2025-26)",
