@@ -237,7 +237,7 @@ function renderCards() {
             <div>
                 <span class="card-tag ${tagClass}">${item.type}</span>
                 <h3 class="card-title">${item.title}</h3>
-                <p class="card-meta"><strong>${item.course}</strong> — ${item.semester} | ${item.subject}</p>
+                <p class="card-meta"><strong>${item.course}</strong> — ${item.semester}</p>
             </div>
             <div class="card-actions">
                 <a ${linkAttrView} class="action-btn btn-view">View PDF</a>
@@ -265,6 +265,24 @@ function loadMoreCards() {
     currentLimit += 6;
     renderCards();
 }
+
+// 📱 MOBILE NATIVE BOTTOM NAVBAR TRACKING DECOUPLER ARCHITECTURE
+window.addEventListener('scroll', () => {
+    const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
+    const devSection = document.getElementById('aboutDeveloper');
+    
+    if (bottomNavItems.length >= 3 && devSection) {
+        const rect = devSection.getBoundingClientRect();
+        // Check if Developer Spec is visible inside viewport
+        if (rect.top <= (window.innerHeight || document.documentElement.clientHeight) - 200) {
+            bottomNavItems[0].classList.remove('active');
+            bottomNavItems[2].classList.add('active');
+        } else {
+            bottomNavItems[2].classList.remove('active');
+            bottomNavItems[0].classList.add('active');
+        }
+    }
+});
 
 window.onload = () => {
     filterResources();
