@@ -53,7 +53,7 @@
             padding: 35px 25px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.4);
             max-width: 500px; margin: 50px auto 0 auto; width: 100%;
         }
-        .auth-card h2 { font-size: 1.7rem; font-weight: 900; margin-bottom: 8px; text-align: center; background: linear-gradient(45deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .auth-card h2 { font-size: 1.7rem; font-weight: 900; margin-bottom: 8px; text-align: center; background: linear-gradient(45deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .auth-card p { font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 25px; }
         
         .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
@@ -80,6 +80,17 @@
         .user-meta h2 { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; }
         .user-meta p { font-size: 0.88rem; color: var(--text-muted); font-weight: 600; margin-top: 4px; }
         
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+
+        /* ⚙️ EDIT PROFILE BUTTON */
+        .edit-profile-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
+            padding: 10px 15px; border-radius: 30px; font-size: 0.85rem; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.3s ease;
+            color: #fff;
+        }
+        .edit-profile-btn:hover { background: rgba(255,255,255,0.12); border-color: var(--primary); }
+
         /* 🏮 COEFFICIENT HANGING LANTERN INTERFACE */
         .hanging-lantern-switch {
             background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
@@ -120,6 +131,16 @@
         }
         .delete-slot-btn { background: none; border: none; color: #f87171; font-weight: 800; cursor: pointer; font-size: 0.85rem; }
 
+        /* 🎛️ NEW MATERIAL FILTER TABS STYLE */
+        .filter-tabs-row { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .filter-tab-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--text-muted);
+            padding: 8px 16px; border-radius: 10px; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.3s;
+        }
+        .filter-tab-btn.active, .filter-tab-btn:hover {
+            background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+        }
+
         /* 📋 STUDY ROOM MATERIAL BROWSER SEARCH GRID */
         .search-inner-box { display: flex; gap: 10px; width: 100%; align-items: center; margin-bottom: 5px; }
         .materials-container-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -142,10 +163,33 @@
         .action-room-btn { flex: 1; text-align: center; padding: 9px; font-size: 0.78rem; font-weight: 700; text-decoration: none; border-radius: 8px; color: white; background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); }
         .action-room-btn.accent-go { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); border: none; }
 
+        /* 🔄 LOAD MORE CONTAINER STYLING */
+        .load-more-container { display: flex; justify-content: center; margin-top: 20px; width: 100%; }
+        .load-more-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: #fff;
+            padding: 10px 24px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.3s;
+        }
+        .load-more-btn:hover { background: var(--primary); border-color: var(--primary); }
+
         /* 🍏 PRIVATE BOOKSHELF NAVIGATION PANELS GRIDS */
         .library-shelf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; }
 
         .exit-btn { text-align: center; color: var(--text-muted); font-size: 0.88rem; font-weight: 700; cursor: pointer; text-decoration: underline; margin-top: 15px; margin-bottom: 40px; -webkit-tap-highlight-color: transparent; }
+
+        /* 🎪 POPUP MODAL ARCHITECTURE FOR PROFILE EDITING */
+        .profile-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 23, 0.75); backdrop-filter: blur(10px);
+            display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px;
+        }
+        .modal-content {
+            background: #0f172a; border: 1px solid var(--card-border);
+            width: 100%; max-width: 450px; padding: 30px; border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 20px;
+        }
+        .modal-title { font-size: 1.3rem; font-weight: 800; background: linear-gradient(45deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .modal-btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        .cancel-btn { background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--card-border); padding: 12px; font-weight: 700; border-radius: 12px; cursor: pointer; flex: 1; text-align: center; }
 
         /* 📱 RESPONSIVE MEDIA CONSTRAINTS SMART ENGINE */
         @media screen and (max-width: 768px) {
@@ -157,6 +201,7 @@
             .user-meta h2 { font-size: 1.3rem; }
             .alarm-inputs-row { flex-direction: column; gap: 10px; }
             .alarm-inputs-row input, .alarm-btn { width: 100%; }
+            .header-actions { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -203,8 +248,13 @@
                     <h2 id="roomTitle">Govind's Study Room</h2>
                     <p id="roomSubtitle">LBS PG College | B.Sc 2nd Sem</p>
                 </div>
-                <div class="hanging-lantern-switch" onclick="toggleHangingLantern()">
-                    <span>🏮</span> <span id="lanternTxt">Lantern Off</span>
+                <div class="header-actions">
+                    <div class="edit-profile-btn" onclick="openProfileModal()">
+                        <span>⚙️</span> Edit Profile
+                    </div>
+                    <div class="hanging-lantern-switch" onclick="toggleHangingLantern()">
+                        <span>🏮</span> <span id="lanternTxt">Lantern Off</span>
+                    </div>
                 </div>
             </div>
 
@@ -241,15 +291,27 @@
 
             <div>
                 <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; color: var(--text-muted); padding-left: 5px;">🎯 Class Study Materials</div>
+                
+                <div class="filter-tabs-row">
+                    <button class="filter-tab-btn active" id="filter-all" onclick="changeTypeFilter('all')">All Materials</button>
+                    <button class="filter-tab-btn" id="filter-syllabus" onclick="changeTypeFilter('syllabus')">Syllabus</button>
+                    <button class="filter-tab-btn" id="filter-notes" onclick="changeTypeFilter('notes')">Notes</button>
+                    <button class="filter-tab-btn" id="filter-paper" onclick="changeTypeFilter('paper')">Old Papers</button>
+                </div>
+
                 <div class="room-header" style="border-radius:18px; padding:15px; margin-bottom:15px;">
                     <div class="search-inner-box">
                         <span style="font-size:1.1rem;">🔍</span>
-                        <input type="text" id="roomSearchInput" class="search-input" style="background:transparent; border:none; width:100%; font-size:0.95rem;" placeholder="Search within your class materials..." onkeyup="executeRoomFilter()">
+                        <input type="text" id="roomSearchInput" class="search-input" style="background:transparent; border:none; width:100%; font-size:0.95rem; color:#fff; outline:none;" placeholder="Search within your class materials..." onkeyup="resetAndFilter()">
                     </div>
                 </div>
                 
                 <div class="materials-container-grid" id="roomMaterialsGrid">
                     </div>
+
+                <div class="load-more-container" id="loadMoreBox" style="display: none;">
+                    <button class="load-more-btn" onclick="loadMoreMaterials()">Load More Files 📑</button>
+                </div>
             </div>
 
             <div>
@@ -269,14 +331,49 @@
 
     </div>
 
+    <div class="profile-modal" id="profileModal">
+        <div class="modal-content">
+            <div class="modal-title">⚙️ Update Profile Details</div>
+            
+            <div class="form-group">
+                <label for="editName">Full Name</label>
+                <input type="text" id="editName" class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="editClass">Select Semester / Year</label>
+                <select id="editClass" class="form-select">
+                    <option value="1st Sem">B.Sc 1st Sem</option>
+                    <option value="2nd Sem">B.Sc 2nd Sem</option>
+                    <option value="3rd Sem">B.Sc 3rd Sem</option>
+                    <option value="4th Sem">B.Sc 4th Sem</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="editCollege">College Name</label>
+                <input type="text" id="editCollege" class="form-input">
+            </div>
+
+            <div class="modal-btn-group">
+                <button class="cancel-btn" onclick="closeProfileModal()">Cancel</button>
+                <button class="submit-btn" style="flex:1;" onclick="saveProfileChanges()">Save Details</button>
+            </div>
+        </div>
+    </div>
+
     <script src="data.js?v=1.1"></script>
 
     <script>
         let currentClassSemester = '2nd Sem';
         let activeAlarmTime = null;
+        
+        // Pagination global variables
+        let selectedTypeFilter = 'all';
+        let visibleFilesCount = 4;
+        let totalFilteredItems = [];
 
         window.onload = () => {
-            // Clock Loop System Initialization Interlocks
             setInterval(updateRoomLiveWatch, 1000);
 
             const savedSession = localStorage.getItem('studyRoomUser');
@@ -285,11 +382,9 @@
                 currentClassSemester = user.semester;
                 mountStudyRoom(user);
             }
-            // Load and re-render existing user editable timetable matrices layout row items
             renderTimetableSlots();
         };
 
-        // ⏰ RUNTIME LIVE ENGINE INTERNAL WATCH RE-RENDER LOGIC
         function updateRoomLiveWatch() {
             const now = new Date();
             let hours = now.getHours();
@@ -330,7 +425,6 @@
             pill.style.display = 'block';
         }
 
-        // 🔐 PROFILE SETUP (Email and Password removed completely)
         function handleRegistration(e) {
             e.preventDefault();
             const userData = {
@@ -351,7 +445,7 @@
             document.getElementById('roomTitle').innerText = `${user.name} — Study Room`;
             document.getElementById('roomSubtitle').innerText = `${user.college} | B.Sc ${user.semester}`;
             
-            executeRoomFilter();
+            resetAndFilter();
             renderLibraryShelfItems();
             renderCompletedShelfItems();
         }
@@ -361,7 +455,21 @@
             document.getElementById('lanternTxt').innerText = active ? 'Lantern On' : 'Lantern Off';
         }
 
-        // 📋 STUDY MATERIALS CORE EXCLUSIVELY AUTOFILTERED BROWSER SEARCH
+        // Reset system view helper
+        function resetAndFilter() {
+            visibleFilesCount = 4;
+            executeRoomFilter();
+        }
+
+        // Change materials tag filter system
+        function changeTypeFilter(type) {
+            selectedTypeFilter = type;
+            document.querySelectorAll('.filter-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-${type}`).classList.add('active');
+            resetAndFilter();
+        }
+
+        // 📋 EXCLUSIVELY AUTOFILTERED ENGINE WITH 4 FILES AND TYPE SELECTION
         function executeRoomFilter() {
             const grid = document.getElementById('roomMaterialsGrid');
             grid.innerHTML = '';
@@ -369,27 +477,38 @@
             const query = document.getElementById('roomSearchInput').value.toLowerCase().trim();
             const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
 
-            // Read configurations arrays stack parameters
             const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
             const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
 
-            // 🎯 CRITICAL RULE FIX: Only keep elements matching explicitly student selection class footprint rules!
-            const semesterFilteredData = dataSrc.filter(item => item.semester === currentClassSemester);
+            // 1. Semester strict lock filter
+            let filtered = dataSrc.filter(item => item.semester === currentClassSemester);
 
-            // Execute local criteria queries loop matching signature key strings safely
-            const finalMatches = semesterFilteredData.filter(item => {
+            // 2. Type tabs filtering (Syllabus, Notes, Papers)
+            if (selectedTypeFilter !== 'all') {
+                filtered = filtered.filter(item => {
+                    if (!item.type) return false;
+                    return item.type.toLowerCase() === selectedTypeFilter;
+                });
+            }
+
+            // 3. Search Bar filter text processing
+            totalFilteredItems = filtered.filter(item => {
                 return query === '' || 
                        (item.title && item.title.toLowerCase().includes(query)) ||
                        (item.subject && item.subject.toLowerCase().includes(query)) ||
                        (item.type && item.type.toLowerCase().includes(query));
             });
 
-            if (finalMatches.length === 0) {
+            if (totalFilteredItems.length === 0) {
                 grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.85rem; color:var(--text-muted); padding:20px;">Bhai, aapki class ka aisa koi material nahi mila!</div>`;
+                document.getElementById('loadMoreBox').style.display = 'none';
                 return;
             }
 
-            finalMatches.forEach(item => {
+            // Slice data arrays index to process 4 items rule limit
+            const currentSlice = totalFilteredItems.slice(0, visibleFilesCount);
+
+            currentSlice.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'room-material-card';
 
@@ -424,6 +543,19 @@
                 `;
                 grid.appendChild(card);
             });
+
+            // Handle Hide/Show behavior criteria configurations on Load More Button
+            if (totalFilteredItems.length > visibleFilesCount) {
+                document.getElementById('loadMoreBox').style.display = 'flex';
+            } else {
+                document.getElementById('loadMoreBox').style.display = 'none';
+            }
+        }
+
+        // Action function trigger loading more files chunks
+        function loadMoreMaterials() {
+            visibleFilesCount += 4;
+            executeRoomFilter();
         }
 
         // 🍏 PRIVATE LIBRARY SHELF CORE CONTROLLERS
@@ -588,6 +720,46 @@
             currentSlots.splice(index, 1);
             localStorage.setItem('roomTimetableData', JSON.stringify(currentSlots));
             renderTimetableSlots();
+        }
+
+        // ⚙️ MANAGE EDIT PROFILE POPUP ENGINE INTERFACING
+        function openProfileModal() {
+            const savedSession = localStorage.getItem('studyRoomUser');
+            if (savedSession) {
+                const user = JSON.parse(savedSession);
+                document.getElementById('editName').value = user.name;
+                document.getElementById('editClass').value = user.semester;
+                document.getElementById('editCollege').value = user.college;
+            }
+            document.getElementById('profileModal').style.display = 'flex';
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        function saveProfileChanges() {
+            const updatedData = {
+                name: document.getElementById('editName').value.trim(),
+                semester: document.getElementById('editClass').value,
+                college: document.getElementById('editCollege').value.trim()
+            };
+
+            if(!updatedData.name || !updatedData.college) {
+                alert('Bhai, details khaali mat chodo!');
+                return;
+            }
+
+            currentClassSemester = updatedData.semester;
+            localStorage.setItem('studyRoomUser', JSON.stringify(updatedData));
+            
+            // Dynamic node layout updates live
+            document.getElementById('roomTitle').innerText = `${updatedData.name} — Study Room`;
+            document.getElementById('roomSubtitle').innerText = `${updatedData.college} | B.Sc ${updatedData.semester}`;
+            
+            closeProfileModal();
+            resetAndFilter(); // Auto-refresh everything matching the new profile footprint instantly!
+            alert('Bhai, profile successfully update ho gayi hai!');
         }
 
         function escapeHtml(str) {
