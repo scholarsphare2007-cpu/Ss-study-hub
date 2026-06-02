@@ -556,9 +556,9 @@
             <span class="bottom-nav-icon">🔍</span>
             <span>Filters</span>
         </div>
-        <a href="#aboutDeveloper" class="bottom-nav-item">
-            <span class="bottom-nav-icon">👤</span>
-            <span>Developer</span>
+        <a href="study-room.html" class="bottom-nav-item">
+            <span class="bottom-nav-icon">✏️</span>
+            <span>Study Room</span>
         </a>
     </div>
 
@@ -622,6 +622,9 @@
         <ul class="drawer-menu-list">
             <li class="drawer-menu-item" onclick="toggleAppDrawer(false);" style="background: rgba(239, 68, 68, 0.15); border-color: #ef4444; color: #f87171; font-weight: 700;">
                 ✕ Close Menu
+            </li>
+            <li class="drawer-menu-item" onclick="toggleAppDrawer(false); document.getElementById('aboutDeveloper').scrollIntoView({behavior: 'smooth'});">
+                👤 Developer Spec
             </li>
             <li class="drawer-menu-item" onclick="openContentPopup('aboutApp')">📱 About App</li>
             <li class="drawer-menu-item" onclick="openContentPopup('marutyTechs')">⚡ About MarutyTechs</li>
