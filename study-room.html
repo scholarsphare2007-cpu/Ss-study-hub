@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Your Personal Study Room Area</title>
+    <style>
+        :root {
+            --sky-top: #020617;
+            --sky-bottom: #0f172a;
+            --card-glass: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-color: #ffffff;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --lantern-glow: radial-gradient(circle at 50% 0%, transparent 0%, transparent 100%);
+        }
+
+        body.lantern-active {
+            --sky-top: #1e1b4b;
+            --sky-bottom: #090d16;
+            --card-glass: rgba(251, 191, 36, 0.04);
+            --card-border: rgba(251, 191, 36, 0.25);
+            --lantern-glow: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.35) 0%, rgba(251,191,36,0.05) 50%, transparent 80%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 25px;
+            overflow-x: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lantern-beam-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--lantern-glow); z-index: 1; pointer-events: none; mix-blend-mode: color-dodge;
+        }
+
+        /* 🌍 BROAD OPEN SPACE CORE ARCHITECTURE */
+        .workspace-wrapper {
+            max-width: 1300px; margin: 0 auto; width: 100%; z-index: 10; position: relative;
+            display: flex; flex-direction: column; gap: 30px;
+        }
+
+        /* 🔐 REGISTRATION AUTH PANEL LAYOUT */
+        .auth-card {
+            background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); backdrop-filter: blur(25px);
+            padding: 35px 25px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            max-width: 500px; margin: 50px auto 0 auto; width: 100%;
+        }
+        .auth-card h2 { font-size: 1.7rem; font-weight: 900; margin-bottom: 8px; text-align: center; background: linear-gradient(45deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .auth-card p { font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 25px; }
+        
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        .form-group label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+        .form-input, .form-select {
+            width: 100%; padding: 14px; border: 1px solid var(--card-border); border-radius: 12px;
+            background: rgba(15, 23, 42, 0.8); color: #fff; font-size: 0.95rem; font-weight: 600; outline: none; transition: all 0.3s;
+        }
+        .form-input:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 12px rgba(99, 102, 241, 0.3); }
+
+        .submit-btn {
+            width: 100%; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white; border: none; padding: 14px; font-size: 1rem; font-weight: 700;
+            border-radius: 12px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        /* 🌲 DYNAMIC ROOM ENVIRONMENT ENGINE LAYOUT */
+        .room-dashboard { display: none; flex-direction: column; gap: 30px; }
+
+        .room-header {
+            background: var(--card-glass); border: 1px solid var(--card-border); backdrop-filter: blur(15px);
+            padding: 25px; border-radius: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;
+        }
+        .user-meta h2 { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; }
+        .user-meta p { font-size: 0.88rem; color: var(--text-muted); font-weight: 600; margin-top: 4px; }
+        
+        /* 🏮 COEFFICIENT HANGING LANTERN INTERFACE */
+        .hanging-lantern-switch {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
+            padding: 10px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body.lantern-active .hanging-lantern-switch { background: rgba(251, 191, 36, 0.2); border-color: #eab308; color: #fcd34d; box-shadow: 0 0 15px rgba(251,191,36,0.3); }
+
+        /* 🧭 DOUBLE GRID WORK DESK ECOSYSTEM CONTROL STRUCTURE */
+        .desk-layout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+
+        .desk-card-widget {
+            background: var(--card-glass); border: 1px solid var(--card-border); backdrop-filter: blur(12px);
+            border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 15px;
+        }
+        .widget-title { font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; }
+
+        /* ⏰ REAL-TIME CLOCK MATRIX ENGINE & ALARM SCHEDULER */
+        .watch-face-display {
+            font-family: monospace; font-size: 1.8rem; font-weight: 800; text-align: center;
+            background: rgba(0,0,0,0.2); padding: 12px; border-radius: 12px; border: 1px dashed var(--card-border); letter-spacing: 1px; color: #38bdf8;
+        }
+        .alarm-inputs-row { display: flex; gap: 8px; align-items: center; width: 100%; }
+        .alarm-btn {
+            background: var(--primary); color: white; border: none; padding: 12px; font-weight: 700; border-radius: 10px; cursor: pointer; font-size: 0.85rem;
+        }
+        .alarm-status-pill {
+            font-size: 0.78rem; font-weight: 700; padding: 6px 12px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #34d399; text-align: center; display: none;
+        }
+
+        /* 📅 REAL-TIME EDITABLE TIMETABLE ENGINE */
+        .timetable-form { display: flex; flex-direction: column; gap: 8px; }
+        .timetable-scroller-box { display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; }
+        .custom-slot-row {
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
+            background: rgba(15,23,42,0.4); border-radius: 10px; border-left: 3px solid var(--primary);
+        }
+        .delete-slot-btn { background: none; border: none; color: #f87171; font-weight: 800; cursor: pointer; font-size: 0.85rem; }
+
+        /* 📋 STUDY ROOM MATERIAL BROWSER SEARCH GRID */
+        .search-inner-box { display: flex; gap: 10px; width: 100%; align-items: center; margin-bottom: 5px; }
+        .materials-container-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        
+        .room-material-card {
+            background: var(--card-glass); border: 1px solid var(--card-border); border-radius: 16px;
+            padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;
+            transition: all 0.3s;
+        }
+        .card-header-tags { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 6px; }
+        .mat-type-pill { padding: 2px 6px; font-size: 0.58rem; font-weight: 800; border-radius: 4px; text-transform: uppercase; background: rgba(99,102,241,0.2); color: #a5b4fc; }
+        
+        /* Interactive Toggle Switch Styling Control Buttons */
+        .action-toggle-pill { font-size: 0.72rem; font-weight: bold; color: #818cf8; cursor: pointer; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--card-border); -webkit-tap-highlight-color: transparent; }
+        .action-toggle-pill.saved-in { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16,185,129,0.3); }
+        .action-toggle-pill.done-in { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245,158,11,0.3); }
+
+        .mat-title { font-size: 0.95rem; font-weight: 700; line-height: 1.3; }
+        .action-links-row { display: flex; gap: 8px; width: 100%; }
+        .action-room-btn { flex: 1; text-align: center; padding: 9px; font-size: 0.78rem; font-weight: 700; text-decoration: none; border-radius: 8px; color: white; background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); }
+        .action-room-btn.accent-go { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); border: none; }
+
+        /* 🍏 PRIVATE BOOKSHELF NAVIGATION PANELS GRIDS */
+        .library-shelf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; }
+
+        .exit-btn { text-align: center; color: var(--text-muted); font-size: 0.88rem; font-weight: 700; cursor: pointer; text-decoration: underline; margin-top: 15px; margin-bottom: 40px; -webkit-tap-highlight-color: transparent; }
+
+        /* 📱 RESPONSIVE MEDIA CONSTRAINTS SMART ENGINE */
+        @media screen and (max-width: 768px) {
+            body { padding: 15px; }
+            .desk-layout-grid { grid-template-columns: 1fr; gap: 20px; }
+            .materials-container-grid { grid-template-columns: 1fr; gap: 12px; }
+            .library-shelf-grid { grid-template-columns: 1fr; gap: 12px; }
+            .room-header { padding: 15px; text-align: center; justify-content: center; flex-direction: column; }
+            .user-meta h2 { font-size: 1.3rem; }
+            .alarm-inputs-row { flex-direction: column; gap: 10px; }
+            .alarm-inputs-row input, .alarm-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lantern-beam-layer"></div>
+
+    <div class="workspace-wrapper">
+
+        <div class="auth-card" id="authCard">
+            <h2>Unlock Study Room</h2>
+            <p>Create your custom profile area to auto-filter and manage files</p>
+            
+            <form id="registrationForm" onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <label for="studentName">Full Name</label>
+                    <input type="text" id="studentName" class="form-input" placeholder="Enter name..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentClass">Select Semester / Year</label>
+                    <select id="studentClass" class="form-select" required>
+                        <option value="1st Sem">B.Sc 1st Sem</option>
+                        <option value="2nd Sem" selected>B.Sc 2nd Sem</option>
+                        <option value="3rd Sem">B.Sc 3rd Sem</option>
+                        <option value="4th Sem">B.Sc 4th Sem</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentCollege">College Name</label>
+                    <input type="text" id="studentCollege" class="form-input" placeholder="e.g. LBS PG College..." required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Open My Room 🔑</button>
+            </form>
+            <div class="exit-btn" style="margin-bottom: 0; margin-top: 15px;" onclick="window.location.href='index.html'">Wapas App Pe Chalo Layout</div>
+        </div>
+
+        <div class="room-dashboard" id="roomDashboard">
+            
+            <div class="room-header">
+                <div class="user-meta">
+                    <h2 id="roomTitle">Govind's Study Room</h2>
+                    <p id="roomSubtitle">LBS PG College | B.Sc 2nd Sem</p>
+                </div>
+                <div class="hanging-lantern-switch" onclick="toggleHangingLantern()">
+                    <span>🏮</span> <span id="lanternTxt">Lantern Off</span>
+                </div>
+            </div>
+
+            <div class="desk-layout-grid">
+                
+                <div class="desk-card-widget">
+                    <div class="widget-title">⏰ Study Clock & Alarm Engine</div>
+                    <div class="watch-face-display" id="roomWatch">00:00:00 AM</div>
+                    
+                    <div class="alarm-inputs-row">
+                        <input type="time" id="alarmTimeField" class="form-input" style="padding:10px;">
+                        <button class="alarm-btn" onclick="setStudyAlarm()">Set Alarm</button>
+                    </div>
+                    <div class="alarm-status-pill" id="alarmStatus">No active alarm tracking flags</div>
+                </div>
+
+                <div class="desk-card-widget">
+                    <div class="widget-title">📅 Custom Daily Schedule Planner</div>
+                    <form class="timetable-form" onsubmit="addTimetableSlot(event)">
+                        <div style="display:flex; gap:8px; width:100%;">
+                            <input type="text" id="slotSubject" class="form-input" style="padding:10px; flex:2;" placeholder="Subject Name..." required>
+                            <input type="time" id="slotTime" class="form-input" style="padding:10px; flex:1;" required>
+                        </div>
+                        <button type="submit" class="alarm-btn" style="background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:white;">➕ Add Entry Slot</button>
+                    </form>
+                    
+                    <div class="timetable-box" style="padding:0; border:none; background:transparent;">
+                        <div class="timetable-scroller-box" id="timetableRowsContainer">
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+                <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; color: var(--text-muted); padding-left: 5px;">🎯 Class Study Materials</div>
+                <div class="room-header" style="border-radius:18px; padding:15px; margin-bottom:15px;">
+                    <div class="search-inner-box">
+                        <span style="font-size:1.1rem;">🔍</span>
+                        <input type="text" id="roomSearchInput" class="search-input" style="background:transparent; border:none; width:100%; font-size:0.95rem;" placeholder="Search within your class materials..." onkeyup="executeRoomFilter()">
+                    </div>
+                </div>
+                
+                <div class="materials-container-grid" id="roomMaterialsGrid">
+                    </div>
+            </div>
+
+            <div>
+                <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; color: var(--text-muted); padding-left: 5px;">🍏 My Saved Library Bookshelf</div>
+                <div class="library-shelf-grid" id="libraryShelfGrid">
+                    </div>
+            </div>
+
+            <div>
+                <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; color: var(--text-muted); padding-left: 5px;">✅ Completed Materials (Syllabus Done)</div>
+                <div class="library-shelf-grid" id="completedShelfGrid">
+                    </div>
+            </div>
+
+            <div class="exit-btn" onclick="logOutRoom()">Exit Personal Room Area</div>
+        </div>
+
+    </div>
+
+    <script src="data.js?v=1.1"></script>
+
+    <script>
+        let currentClassSemester = '2nd Sem';
+        let activeAlarmTime = null;
+
+        window.onload = () => {
+            // Clock Loop System Initialization Interlocks
+            setInterval(updateRoomLiveWatch, 1000);
+
+            const savedSession = localStorage.getItem('studyRoomUser');
+            if (savedSession) {
+                const user = JSON.parse(savedSession);
+                currentClassSemester = user.semester;
+                mountStudyRoom(user);
+            }
+            // Load and re-render existing user editable timetable matrices layout row items
+            renderTimetableSlots();
+        };
+
+        // ⏰ RUNTIME LIVE ENGINE INTERNAL WATCH RE-RENDER LOGIC
+        function updateRoomLiveWatch() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            const exactTime24Str = `${String(hours).padStart(2, '0')}:${minutes}`;
+
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const displayStr = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+            
+            const watchNode = document.getElementById('roomWatch');
+            if (watchNode) watchNode.innerText = displayStr;
+
+            if (activeAlarmTime && exactTime24Str === activeAlarmTime) {
+                alert(`🚨 Bhai, uth jao! Study Room Alarm Baj Gaya Hai! Time to hit the books!`);
+                activeAlarmTime = null;
+                document.getElementById('alarmStatus').style.display = 'none';
+            }
+        }
+
+        function setStudyAlarm() {
+            const val = document.getElementById('alarmTimeField').value;
+            if(!val) { alert('Bhai, pehle valid time toh select kar lo!'); return; }
+            
+            activeAlarmTime = val;
+            
+            const splitParts = val.split(':');
+            let h = parseInt(splitParts[0]);
+            const m = splitParts[1];
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12; h = h ? h : 12;
+
+            const pill = document.getElementById('alarmStatus');
+            pill.innerText = `🔔 Track Enabled: Active Alarm at ${String(h).padStart(2, '0')}:${m} ${ampm}`;
+            pill.style.display = 'block';
+        }
+
+        // 🔐 PROFILE SETUP (Email and Password removed completely)
+        function handleRegistration(e) {
+            e.preventDefault();
+            const userData = {
+                name: document.getElementById('studentName').value.trim(),
+                semester: document.getElementById('studentClass').value,
+                college: document.getElementById('studentCollege').value.trim()
+            };
+            
+            currentClassSemester = userData.semester;
+            localStorage.setItem('studyRoomUser', JSON.stringify(userData));
+            mountStudyRoom(userData);
+        }
+
+        function mountStudyRoom(user) {
+            document.getElementById('authCard').style.display = 'none';
+            document.getElementById('roomDashboard').style.display = 'flex';
+            
+            document.getElementById('roomTitle').innerText = `${user.name} — Study Room`;
+            document.getElementById('roomSubtitle').innerText = `${user.college} | B.Sc ${user.semester}`;
+            
+            executeRoomFilter();
+            renderLibraryShelfItems();
+            renderCompletedShelfItems();
+        }
+
+        function toggleHangingLantern() {
+            const active = document.body.classList.toggle('lantern-active');
+            document.getElementById('lanternTxt').innerText = active ? 'Lantern On' : 'Lantern Off';
+        }
+
+        // 📋 STUDY MATERIALS CORE EXCLUSIVELY AUTOFILTERED BROWSER SEARCH
+        function executeRoomFilter() {
+            const grid = document.getElementById('roomMaterialsGrid');
+            grid.innerHTML = '';
+
+            const query = document.getElementById('roomSearchInput').value.toLowerCase().trim();
+            const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
+
+            // Read configurations arrays stack parameters
+            const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
+            const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
+
+            // 🎯 CRITICAL RULE FIX: Only keep elements matching explicitly student selection class footprint rules!
+            const semesterFilteredData = dataSrc.filter(item => item.semester === currentClassSemester);
+
+            // Execute local criteria queries loop matching signature key strings safely
+            const finalMatches = semesterFilteredData.filter(item => {
+                return query === '' || 
+                       (item.title && item.title.toLowerCase().includes(query)) ||
+                       (item.subject && item.subject.toLowerCase().includes(query)) ||
+                       (item.type && item.type.toLowerCase().includes(query));
+            });
+
+            if (finalMatches.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.85rem; color:var(--text-muted); padding:20px;">Bhai, aapki class ka aisa koi material nahi mila!</div>`;
+                return;
+            }
+
+            finalMatches.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'room-material-card';
+
+                let rawLink = item.link || '';
+                let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
+
+                const isLibrarySaved = libraryList.some(lib => lib.title === item.title);
+                const libBtnClass = isLibrarySaved ? 'action-toggle-pill saved-in' : 'action-toggle-pill';
+                const libBtnText = isLibrarySaved ? '❌ Out Library' : '➕ Add Library';
+
+                const isCompletedSaved = completedList.some(comp => comp.title === item.title);
+                const compBtnClass = isCompletedSaved ? 'action-toggle-pill done-in' : 'action-toggle-pill';
+                const compBtnText = isCompletedSaved ? '🔄 Study Again' : '✅ Mark Done';
+
+                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, Govind ne abhi iska PDF upload nahi kiya hai!')"`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header-tags">
+                            <span class="mat-type-pill">${item.type}</span>
+                            <div style="display:flex; gap:6px;">
+                                <span class="${libBtnClass}" onclick="toggleLibraryItemEngine('${escapeHtml(item.title)}')">${libBtnText}</span>
+                                <span class="${compBtnClass}" onclick="toggleCompletedItemEngine('${escapeHtml(item.title)}')">${compBtnText}</span>
+                            </div>
+                        </div>
+                        <div class="mat-title" style="margin-top:12px;">${item.title}</div>
+                        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Subject: ${item.subject}</div>
+                    </div>
+                    <div class="action-links-row" style="margin-top:12px;">
+                        <a ${linkAttrView} class="action-room-btn accent-go">Study Now File</a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 🍏 PRIVATE LIBRARY SHELF CORE CONTROLLERS
+        function toggleLibraryItemEngine(targetTitle) {
+            const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
+            let libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
+
+            const existingIndex = libraryList.findIndex(item => item.title === targetTitle);
+            if (existingIndex > -1) {
+                libraryList.splice(existingIndex, 1);
+            } else {
+                const matchedObj = dataSrc.find(item => item.title === targetTitle);
+                if (matchedObj) libraryList.push(matchedObj);
+            }
+
+            localStorage.setItem('userRoomLibrary', JSON.stringify(libraryList));
+            executeRoomFilter();
+            renderLibraryShelfItems();
+        }
+
+        function renderLibraryShelfItems() {
+            const container = document.getElementById('libraryShelfGrid');
+            container.innerHTML = '';
+            const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
+
+            if (libraryList.length === 0) {
+                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.82rem; color:var(--text-muted); padding:15px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px dashed var(--card-border);">Bhai, aapki private library khaali hai! Files ko yahan jama karo.</div>`;
+                return;
+            }
+
+            libraryList.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'room-material-card';
+                card.style.borderColor = 'rgba(16, 185, 129, 0.2)';
+
+                let rawLink = item.link || '';
+                let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
+                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, PDF link jaldi aane wala hai!')"`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header-tags">
+                            <span class="mat-type-pill" style="background:rgba(16,185,129,0.2); color:#6ee7b7;">${item.type}</span>
+                            <span class="action-toggle-pill saved-in" onclick="toggleLibraryItemEngine('${escapeHtml(item.title)}')">❌ Out Shelf</span>
+                        </div>
+                        <div class="mat-title" style="margin-top:8px;">${item.title}</div>
+                        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">${item.subject}</div>
+                    </div>
+                    <div class="action-links-row">
+                        <a ${linkAttrView} class="action-room-btn accent-go" style="background:linear-gradient(135deg, #10b981 0%, #059669 100%);">Read Document</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // ✅ COMPLETED MATERIALS WORKSPACE CONTROLLERS SHIFTS
+        function toggleCompletedItemEngine(targetTitle) {
+            const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
+            let completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
+
+            const existingIndex = completedList.findIndex(item => item.title === targetTitle);
+            if (existingIndex > -1) {
+                completedList.splice(existingIndex, 1);
+            } else {
+                const matchedObj = dataSrc.find(item => item.title === targetTitle);
+                if (matchedObj) completedList.push(matchedObj);
+            }
+
+            localStorage.setItem('userRoomCompleted', JSON.stringify(completedList));
+            executeRoomFilter();
+            renderCompletedShelfItems();
+        }
+
+        function renderCompletedShelfItems() {
+            const container = document.getElementById('completedShelfGrid');
+            container.innerHTML = '';
+            const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
+
+            if (completedList.length === 0) {
+                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.82rem; color:var(--text-muted); padding:15px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px dashed var(--card-border);">Abhi tak koi material complete nahi hua hai. Padhne ke baad Mark Done par click karo bhai!</div>`;
+                return;
+            }
+
+            completedList.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'room-material-card';
+                card.style.borderColor = 'rgba(245, 158, 11, 0.2)';
+
+                let rawLink = item.link || '';
+                let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
+                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, PDF link jaldi aane wala hai!')"`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header-tags">
+                            <span class="mat-type-pill" style="background:rgba(245,158,11,0.15); color:#fcd34d;">👍 ${item.type} Done</span>
+                            <span class="action-toggle-pill done-in" onclick="toggleCompletedItemEngine('${escapeHtml(item.title)}')">🔄 Review Again</span>
+                        </div>
+                        <div class="mat-title" style="margin-top:8px;">${item.title}</div>
+                        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">${item.subject}</div>
+                    </div>
+                    <div class="action-links-row">
+                        <a ${linkAttrView} class="action-room-btn" style="background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border:none;">Re-Read File</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 📅 TIME TABLE SCHEDULER SYSTEM WIDGET BACKLOG 
+        function addTimetableSlot(e) {
+            e.preventDefault();
+            const subject = document.getElementById('slotSubject').value.trim();
+            const time = document.getElementById('slotTime').value;
+
+            let currentSlots = JSON.parse(localStorage.getItem('roomTimetableData')) || [];
+            currentSlots.push({ subject, time });
+            currentSlots.sort((a, b) => a.time.localeCompare(b.time));
+
+            localStorage.setItem('roomTimetableData', JSON.stringify(currentSlots));
+            document.getElementById('slotSubject').value = '';
+            document.getElementById('slotTime').value = '';
+            
+            renderTimetableSlots();
+        }
+
+        function renderTimetableSlots() {
+            const container = document.getElementById('timetableRowsContainer');
+            container.innerHTML = '';
+            const currentSlots = JSON.parse(localStorage.getItem('roomTimetableData')) || [];
+
+            if (currentSlots.length === 0) {
+                container.innerHTML = `<div style="text-align:center; font-size:0.78rem; color:var(--text-muted); padding:10px;">No schedule items listed yet. Apne hisaab se slot banao bhai!</div>`;
+                return;
+            }
+
+            currentSlots.forEach((slot, index) => {
+                const row = document.createElement('div');
+                row.className = 'custom-slot-row';
+
+                const splitParts = slot.time.split(':');
+                let h = parseInt(splitParts[0]);
+                const m = splitParts[1];
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12; h = h ? h : 12;
+                const standardTimeDisplay = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
+
+                row.innerHTML = `
+                    <div>
+                        <div class="slot-subject">${slot.subject}</div>
+                        <div class="slot-time">⏱️ Time Set: ${standardTimeDisplay}</div>
+                    </div>
+                    <button class="delete-slot-btn" onclick="deleteTimetableSlot(${index})">✕ Delete</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function deleteTimetableSlot(index) {
+            let currentSlots = JSON.parse(localStorage.getItem('roomTimetableData')) || [];
+            currentSlots.splice(index, 1);
+            localStorage.setItem('roomTimetableData', JSON.stringify(currentSlots));
+            renderTimetableSlots();
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
+        function logOutRoom() {
+            if(confirm('Bhai, Study Room se exit karna hai?')) {
+                localStorage.removeItem('studyRoomUser');
+                document.body.classList.remove('lantern-active');
+                document.getElementById('roomDashboard').style.display = 'none';
+                document.getElementById('authCard').style.display = 'block';
+                document.getElementById('registrationForm').reset();
+            }
+        }
+    </script>
+</body>
+</html>
