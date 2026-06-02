@@ -501,9 +501,10 @@
         // Multi Alarm Tracker Memory Store Array
         let registeredAlarmsList = [];
         
-        // 🔥 LOCAL ASSET AUDIO PIPELINE: Ab ye seedhe tumhare folder ki local file ko play karega
+        // 🔥 LOCAL ASSET AUDIO PIPELINE WITH STANDARDIZED CORE INTERLOCKS
         const alarmAudioStream = new Audio('alarm.mp3');
-        alarmAudioStream.loop = true; // Loop continuously until manually stopped
+        alarmAudioStream.loop = true; 
+        alarmAudioStream.preload = 'auto'; // Browser memory mein pehle se load rakhega file ko
 
         let selectedTypeFilter = 'all';
         let visibleFilesCount = 4;
@@ -512,10 +513,21 @@
         window.onload = () => {
             setInterval(updateRoomLiveWatch, 1000);
 
-            // User gesture ke sath audio context activate karne ke liye trigger
-            document.body.addEventListener('click', () => {
-                warmUpAudioEngine();
-            }, { once: true }); // Sirf ek baar pehle click par trigger hoga
+            // 🎯 CRITICAL UNLOCKER: Screen par kahin bhi pehla touch ya click hote hi audio context unlock ho jayega
+            const unlockAudioContext = () => {
+                alarmAudioStream.play().then(() => {
+                    alarmAudioStream.pause();
+                    alarmAudioStream.currentTime = 0;
+                    console.log("🔊 System: Audio Pipeline Unlocked for Alarms!");
+                }).catch(e => console.log("Waiting for proper user interaction trigger context"));
+                
+                // Ek baar unlock hone ke baad listener ko saaf kar do
+                document.removeEventListener('click', unlockAudioContext);
+                document.removeEventListener('touchstart', unlockAudioContext);
+            };
+
+            document.addEventListener('click', unlockAudioContext);
+            document.addEventListener('touchstart', unlockAudioContext);
 
             registeredAlarmsList = JSON.parse(localStorage.getItem('roomSavedAlarmsStack')) || [];
             refreshAlarmsQueueLayout();
@@ -529,17 +541,6 @@
             }
             renderTimetableSlots();
         };
-
-        // Browser security lock todne ke liye warmup function
-        function warmUpAudioEngine() {
-            try {
-                alarmAudioStream.play().then(() => {
-                    alarmAudioStream.pause();
-                    alarmAudioStream.currentTime = 0;
-                    console.log("Audio pipeline unlocked successfully!");
-                }).catch(e => console.log("Audio warmup waiting for user interaction..."));
-            } catch(err){}
-        }
 
         function updateRoomLiveWatch() {
             const now = new Date();
@@ -557,14 +558,14 @@
             const watchNode = document.getElementById('roomWatch');
             if (watchNode) watchNode.innerText = displayStr;
 
-            // Active multi-alarm matching criteria
+            // Multi alarm clock tracker loop processing
             const hitIndex = registeredAlarmsList.findIndex(timeStr => timeStr === exactTime24Str);
             if (hitIndex > -1) {
                 registeredAlarmsList.splice(hitIndex, 1);
                 localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
                 refreshAlarmsQueueLayout();
                 
-                // Real local audio ring trigger
+                // Fire Real Sound Audio Ringing Trigger!
                 triggerActiveAlarmRinger(exactTime24Str);
             }
         }
@@ -583,7 +584,8 @@
                 return;
             }
 
-            warmUpAudioEngine(); // Explicit warmup on adding alarm
+            // Explicitly reload stream asset directly on click action for mobile devices runtime boost
+            try { alarmAudioStream.load(); } catch(e){}
 
             registeredAlarmsList.push(val);
             registeredAlarmsList.sort(); 
@@ -628,10 +630,15 @@
         }
 
         function triggerActiveAlarmRinger(timeLabel) {
-            try {
-                alarmAudioStream.play();
-            } catch(err) {
-                console.log("Local audio file play blocked or not found:", err);
+            // 🔥 REAL SOUND AUDIO PLAY BACK CORE EXECUTION
+            const playPromise = alarmAudioStream.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log("Ringtone running fine!");
+                }).catch(error => {
+                    console.log("Browser policy interlocked runtime error caught:", error);
+                    // Force backup alert fallback window if still blocked
+                });
             }
             document.getElementById('alarmTriggerOverlay').style.display = 'flex';
         }
@@ -651,7 +658,7 @@
                 college: document.getElementById('studentCollege').value.trim()
             };
             
-            warmUpAudioEngine(); // Warmup on explicit submission click
+            try { alarmAudioStream.load(); } catch(e){}
 
             currentClassCourse = userData.course;
             currentClassSemester = userData.semester;
