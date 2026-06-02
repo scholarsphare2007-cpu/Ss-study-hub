@@ -501,10 +501,9 @@
         // Multi Alarm Tracker Memory Store Array
         let registeredAlarmsList = [];
         
-        // 🔥 LOCAL ASSET AUDIO PIPELINE WITH STANDARDIZED CORE INTERLOCKS
-        const alarmAudioStream = new Audio('alarm.mp3');
-        alarmAudioStream.loop = true; 
-        alarmAudioStream.preload = 'auto'; // Browser memory mein pehle se load rakhega file ko
+        // 🔥 AUDIO AUDIO HARDWARE ENGINE LAYER (Built-in Beep Generator)
+        let audioContextInstance = null;
+        let alarmBeepIntervalId = null; // Continuous beep repeat tracker
 
         let selectedTypeFilter = 'all';
         let visibleFilesCount = 4;
@@ -513,21 +512,17 @@
         window.onload = () => {
             setInterval(updateRoomLiveWatch, 1000);
 
-            // 🎯 CRITICAL UNLOCKER: Screen par kahin bhi pehla touch ya click hote hi audio context unlock ho jayega
-            const unlockAudioContext = () => {
-                alarmAudioStream.play().then(() => {
-                    alarmAudioStream.pause();
-                    alarmAudioStream.currentTime = 0;
-                    console.log("🔊 System: Audio Pipeline Unlocked for Alarms!");
-                }).catch(e => console.log("Waiting for proper user interaction trigger context"));
-                
-                // Ek baar unlock hone ke baad listener ko saaf kar do
-                document.removeEventListener('click', unlockAudioContext);
-                document.removeEventListener('touchstart', unlockAudioContext);
+            // 🎯 AUDIO INITIALIZATION UNLOCKER ON FIRST USER GESTURE
+            const initHardwareAudio = () => {
+                if (!audioContextInstance) {
+                    audioContextInstance = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                console.log("🔊 System: Hardware Speaker Audio Engine Unlocked!");
+                document.removeEventListener('click', initHardwareAudio);
+                document.removeEventListener('touchstart', initHardwareAudio);
             };
-
-            document.addEventListener('click', unlockAudioContext);
-            document.addEventListener('touchstart', unlockAudioContext);
+            document.addEventListener('click', initHardwareAudio);
+            document.addEventListener('touchstart', initHardwareAudio);
 
             registeredAlarmsList = JSON.parse(localStorage.getItem('roomSavedAlarmsStack')) || [];
             refreshAlarmsQueueLayout();
@@ -558,16 +553,42 @@
             const watchNode = document.getElementById('roomWatch');
             if (watchNode) watchNode.innerText = displayStr;
 
-            // Multi alarm clock tracker loop processing
+            // Multi alarm verification match loop
             const hitIndex = registeredAlarmsList.findIndex(timeStr => timeStr === exactTime24Str);
             if (hitIndex > -1) {
                 registeredAlarmsList.splice(hitIndex, 1);
                 localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
                 refreshAlarmsQueueLayout();
                 
-                // Fire Real Sound Audio Ringing Trigger!
-                triggerActiveAlarmRinger(exactTime24Str);
+                // Hardware Alarm Trigger!
+                triggerActiveAlarmRinger();
             }
+        }
+
+        // 🔥 HARDWARE BEEP GENERATION ENGINE MECHANICS (100% No-Fail Sound)
+        function playHardwareBeepTone(frequency, duration) {
+            if (!audioContextInstance) return;
+            
+            // Context resume state trace safe backup
+            if (audioContextInstance.state === 'suspended') {
+                audioContextInstance.resume();
+            }
+
+            const oscillator = audioContextInstance.createOscillator();
+            const gainNode = audioContextInstance.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContextInstance.destination);
+
+            oscillator.type = 'sine'; // Crisp electronic clear wave
+            oscillator.frequency.value = frequency; // Sound Tone Pitch (800Hz)
+            
+            // Volume settings control matrix
+            gainNode.gain.setValueAtTime(0.5, audioContextInstance.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContextInstance.currentTime + duration);
+
+            oscillator.start(audioContextInstance.currentTime);
+            oscillator.stop(audioContextInstance.currentTime + duration);
         }
 
         function setStudyAlarm() {
@@ -584,8 +605,10 @@
                 return;
             }
 
-            // Explicitly reload stream asset directly on click action for mobile devices runtime boost
-            try { alarmAudioStream.load(); } catch(e){}
+            // Warm up audio system on click action
+            if (audioContextInstance && audioContextInstance.state === 'suspended') {
+                audioContextInstance.resume();
+            }
 
             registeredAlarmsList.push(val);
             registeredAlarmsList.sort(); 
@@ -611,7 +634,7 @@
                 const splitParts = timeStr.split(':');
                 let h = parseInt(splitParts[0]);
                 const m = splitParts[1];
-                const ampm = h >= 12 ? 'PM' : 'AM';
+                const ampm = hours >= 12 ? 'PM' : 'AM';
                 h = h % 12; h = h ? h : 12;
                 const elegantTimeDisplay = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
 
@@ -629,23 +652,27 @@
             refreshAlarmsQueueLayout();
         }
 
-        function triggerActiveAlarmRinger(timeLabel) {
-            // 🔥 REAL SOUND AUDIO PLAY BACK CORE EXECUTION
-            const playPromise = alarmAudioStream.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log("Ringtone running fine!");
-                }).catch(error => {
-                    console.log("Browser policy interlocked runtime error caught:", error);
-                    // Force backup alert fallback window if still blocked
-                });
-            }
+        function triggerActiveAlarmRinger() {
+            // Clear if any old loop is running by chance
+            if(alarmBeepIntervalId) clearInterval(alarmBeepIntervalId);
+
+            // 🔥 CONTINUOUS BEEP ALARM: Har 0.5 second mein loud double-beep bajega
+            alarmBeepIntervalId = setInterval(() => {
+                playHardwareBeepTone(880, 0.15); // Loud ring pitch tone A
+                setTimeout(() => {
+                    playHardwareBeepTone(880, 0.15); // Double beep ring speed pattern
+                }, 200);
+            }, 700);
+
             document.getElementById('alarmTriggerOverlay').style.display = 'flex';
         }
 
         function killRingingAlarmAudio() {
-            alarmAudioStream.pause();
-            alarmAudioStream.currentTime = 0; 
+            // 🛑 Stop the continuous loop hardware interval instant
+            if(alarmBeepIntervalId) {
+                clearInterval(alarmBeepIntervalId);
+                alarmBeepIntervalId = null;
+            }
             document.getElementById('alarmTriggerOverlay').style.display = 'none';
         }
 
@@ -658,7 +685,9 @@
                 college: document.getElementById('studentCollege').value.trim()
             };
             
-            try { alarmAudioStream.load(); } catch(e){}
+            if (audioContextInstance && audioContextInstance.state === 'suspended') {
+                audioContextInstance.resume();
+            }
 
             currentClassCourse = userData.course;
             currentClassSemester = userData.semester;
