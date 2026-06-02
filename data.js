@@ -206,7 +206,7 @@ const resourcesData = [
         subject: "General English",
         type: "Syllabus",
         title: "General English Syllabus (2025-26)",
-        link: "#"
+        link: "https://drive.google.com/file/d/1B3ifIEmDWMtXB1T1GvILUAP5I13lx2Pf/view?usp=sharing"
     },
     {
         course: "B.Sc",
@@ -222,7 +222,7 @@ const resourcesData = [
         subject: "General Hindi",
         type: "Syllabus",
         title: "General Hindi Syllabus (2025-26) ",
-        link: "#" 
+        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing" 
     },
     {
         course: "B.Sc",
@@ -422,7 +422,7 @@ const resourcesData = [
         subject: "General English",
         type: "Syllabus",
         title: "General English Syllabus (2025-26)",
-        link: "#"
+        link: "https://drive.google.com/file/d/1B3ifIEmDWMtXB1T1GvILUAP5I13lx2Pf/view?usp=sharing"
     },
     {
         course: "B.Sc",
@@ -438,7 +438,7 @@ const resourcesData = [
         subject: "General Hindi",
         type: "Syllabus",
         title: "General Hindi Syllabus (2025-26) ",
-        link: "#" 
+        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing" 
     },
     {
         course: "B.Sc",
