@@ -416,6 +416,14 @@ const resourcesData = [
         title: "Zoology lab file 1st sem",
         link: "#"
     },
+     {
+        course: "B.Sc",
+        semester: "1st Sem",
+        subject: "Botany",
+        type: "Notes",
+        title: "Botany Notes unit-1",
+        link: "https://drive.google.com/file/d/12YOWtmKU836xlMkFyqAas0-9Hfho459i/view?usp=sharing"
+    },
     {
         course: "B.Sc",
         semester: "1st Sem",
@@ -550,7 +558,7 @@ const resourcesData = [
         subject: "Chemistry",
         type: "Notes",
         title: "Chemistry Notes unit-1",
-        link: "#"
+        link: "https://drive.google.com/file/d/1V0UEqu5s7Y_9qhoYYVXizxFyVX7mPPgB/view?usp=sharing"
     },
     {
         course: "B.Sc",
