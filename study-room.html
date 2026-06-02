@@ -64,6 +64,49 @@
             padding: 25px;
             overflow-x: hidden;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        /* 🏮 REALISTIC HANGING ROPE LANTERN DESIGN ARCHITECTURE */
+        .lantern-assembly-node {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+        .lantern-rope {
+            width: 2px;
+            height: 45px;
+            background: linear-gradient(to bottom, #475569, #1e293b);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .lantern-chassis {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--card-border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            pointer-events: auto;
+            transform-origin: top center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            background-color: #0f172a;
+        }
+        body.lantern-active .lantern-chassis {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: #eab308;
+            color: #fcd34d;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
         }
 
         .lantern-beam-layer {
@@ -75,6 +118,7 @@
         .workspace-wrapper {
             max-width: 1300px; margin: 0 auto; width: 100%; z-index: 10; position: relative;
             display: flex; flex-direction: column; gap: 30px;
+            padding-top: 50px; /* Space for hanging lantern */
         }
 
         /* 🔐 REGISTRATION AUTH PANEL LAYOUT */
@@ -103,32 +147,25 @@
         /* 🌲 DYNAMIC ROOM ENVIRONMENT ENGINE LAYOUT */
         .room-dashboard { display: none; flex-direction: column; gap: 30px; }
 
+        /* FIXED SETTINGS CONTAINER ON TOP RIGHT EXTENSION */
         .room-header {
             background: var(--card-glass); border: 1px solid var(--card-border); backdrop-filter: blur(15px);
             padding: 25px; border-radius: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;
+            position: relative;
         }
         .user-meta h2 { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; }
         .user-meta p { font-size: 0.88rem; color: var(--text-muted); font-weight: 600; margin-top: 4px; }
         
-        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .header-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
 
-        /* ⚙️ EDIT PROFILE BUTTON */
+        /* ⚙️ EDIT PROFILE BUTTON STYLING */
         .edit-profile-btn {
             background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
-            padding: 10px 15px; border-radius: 30px; font-size: 0.85rem; font-weight: 700;
-            cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.3s ease;
-            color: #fff;
-        }
-        .edit-profile-btn:hover { background: rgba(255,255,255,0.12); border-color: var(--primary); }
-
-        /* 🏮 COEFFICIENT HANGING LANTERN INTERFACE */
-        .hanging-lantern-switch {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
             padding: 10px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 700;
-            cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
+            cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.3s ease;
+            color: #fff; -webkit-tap-highlight-color: transparent;
         }
-        body.lantern-active .hanging-lantern-switch { background: rgba(251, 191, 36, 0.2); border-color: #eab308; color: #fcd34d; box-shadow: 0 0 15px rgba(251,191,36,0.3); }
+        .edit-profile-btn:hover { background: rgba(255,255,255,0.12); border-color: var(--primary); box-shadow: 0 0 10px rgba(99,102,241,0.2); }
 
         /* 🧭 DOUBLE GRID WORK DESK ECOSYSTEM CONTROL STRUCTURE */
         .desk-layout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
@@ -146,11 +183,19 @@
         }
         .alarm-inputs-row { display: flex; gap: 8px; align-items: center; width: 100%; }
         .alarm-btn {
-            background: var(--primary); color: white; border: none; padding: 12px; font-weight: 700; border-radius: 10px; cursor: pointer; font-size: 0.85rem;
+            background: var(--primary); color: white; border: none; padding: 12px; font-weight: 700; border-radius: 10px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
         }
-        .alarm-status-pill {
-            font-size: 0.78rem; font-weight: 700; padding: 6px 12px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #34d399; text-align: center; display: none;
+        .alarm-btn:hover { opacity: 0.9; }
+        
+        /* MULTI ALARM SCROLLER CONTAINER LIST */
+        .alarm-queue-scroller {
+            display: flex; flex-direction: column; gap: 8px; max-height: 140px; overflow-y: auto; margin-top: 5px;
         }
+        .queue-alarm-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 10px;
+        }
+        .queue-time-txt { font-weight: 700; font-size: 0.9rem; color: #fcd34d; display: flex; align-items: center; gap: 6px; }
 
         /* 📅 REAL-TIME EDITABLE TIMETABLE ENGINE */
         .timetable-form { display: flex; flex-direction: column; gap: 8px; }
@@ -221,6 +266,14 @@
         .modal-btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .cancel-btn { background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--card-border); padding: 12px; font-weight: 700; border-radius: 12px; cursor: pointer; flex: 1; text-align: center; }
 
+        /* 🚨 ALARM TRIGGER OVERLAY SYSTEM DOCK */
+        .alarm-alert-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(220, 38, 38, 0.4); backdrop-filter: blur(15px);
+            z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 20px;
+            animation: lightBreathe 1s infinite alternate;
+        }
+
         /* 📱 RESPONSIVE MEDIA CONSTRAINTS SMART ENGINE */
         @media screen and (max-width: 768px) {
             body { padding: 15px; }
@@ -228,14 +281,21 @@
             .materials-container-grid { grid-template-columns: 1fr; gap: 12px; }
             .library-shelf-grid { grid-template-columns: 1fr; gap: 12px; }
             .room-header { padding: 15px; text-align: center; justify-content: center; flex-direction: column; }
-            .user-meta h2 { font-size: 1.3rem; }
+            .user-meta h2 { font-size: 1.3rem; text-align: center; }
             .alarm-inputs-row { flex-direction: column; gap: 10px; }
             .alarm-inputs-row input, .alarm-btn { width: 100%; }
-            .header-actions { width: 100%; justify-content: center; }
+            .header-actions { width: 100%; justify-content: center; margin-left: 0; margin-top: 10px; }
         }
     </style>
 </head>
 <body>
+
+    <div class="lantern-assembly-node">
+        <div class="lantern-rope"></div>
+        <div class="lantern-chassis" onclick="toggleHangingLantern()">
+            <span>🏮</span> <span id="lanternTxt">Lantern Off</span>
+        </div>
+    </div>
 
     <div class="lantern-beam-layer"></div>
 
@@ -250,7 +310,7 @@
                     <label for="studentName">Full Name</label>
                     <input type="text" id="studentName" class="form-input" placeholder="Enter name..." required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="studentCourse">Select Course</label>
                     <select id="studentCourse" class="form-select" required>
@@ -298,23 +358,22 @@
                     <div class="edit-profile-btn" onclick="openProfileModal()">
                         <span>⚙️</span> Edit Profile
                     </div>
-                    <div class="hanging-lantern-switch" onclick="toggleHangingLantern()">
-                        <span>🏮</span> <span id="lanternTxt">Lantern Off</span>
-                    </div>
                 </div>
             </div>
 
             <div class="desk-layout-grid">
                 
                 <div class="desk-card-widget">
-                    <div class="widget-title">⏰ Study Clock & Alarm Engine</div>
+                    <div class="widget-title">⏰ Study Clock & Multi-Alarm Hub</div>
                     <div class="watch-face-display" id="roomWatch">00:00:00 AM</div>
                     
                     <div class="alarm-inputs-row">
                         <input type="time" id="alarmTimeField" class="form-input" style="padding:10px;">
-                        <button class="alarm-btn" onclick="setStudyAlarm()">Set Alarm</button>
+                        <button class="alarm-btn" onclick="setStudyAlarm()">Add Alarm</button>
                     </div>
-                    <div class="alarm-status-pill" id="alarmStatus">No active alarm tracking flags</div>
+                    
+                    <div class="alarm-queue-scroller" id="alarmQueueScroller">
+                        </div>
                 </div>
 
                 <div class="desk-card-widget">
@@ -424,20 +483,34 @@
         </div>
     </div>
 
+    <div class="alarm-alert-overlay" id="alarmTriggerOverlay">
+        <h1 style="font-size: 3rem; font-weight: 900; text-shadow: 0 0 20px black;">🚨 ALARM RINGING 🚨</h1>
+        <p style="font-size: 1.2rem; font-weight: 600;" id="alarmTriggerMsg">Time to focus Govind Bhai!</p>
+        <button onclick="killRingingAlarmAudio()" class="submit-btn" style="max-width: 250px; background: white; color: red; font-size: 1.2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">🛑 Stop Alarm</button>
+    </div>
+
     <script src="data.js?v=1.1"></script>
 
     <script>
         let currentClassSemester = '2nd Sem';
-        let currentClassCourse = 'B.Sc'; // Track Locked Course Environment Matrix
-        let activeAlarmTime = null;
+        let currentClassCourse = 'B.Sc'; 
         
-        // Pagination global variables
+        // Multi Alarm Tracker Memory Store Array Vector
+        let registeredAlarmsList = [];
+        // High fidelity online ringtone audio track object injection
+        const alarmAudioStream = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-120.wav');
+        alarmAudioStream.loop = true; // Continuous loop back till manually killed
+
         let selectedTypeFilter = 'all';
         let visibleFilesCount = 4;
         let totalFilteredItems = [];
 
         window.onload = () => {
             setInterval(updateRoomLiveWatch, 1000);
+
+            // Load multi alarms backup memory state trace indexes from cache
+            registeredAlarmsList = JSON.parse(localStorage.getItem('roomSavedAlarmsStack')) || [];
+            refreshAlarmsQueueLayout();
 
             const savedSession = localStorage.getItem('studyRoomUser');
             if (savedSession) {
@@ -465,28 +538,89 @@
             const watchNode = document.getElementById('roomWatch');
             if (watchNode) watchNode.innerText = displayStr;
 
-            if (activeAlarmTime && exactTime24Str === activeAlarmTime) {
-                alert(`🚨 Bhai, uth jao! Study Room Alarm Baj Gaya Hai! Time to hit the books!`);
-                activeAlarmTime = null;
-                document.getElementById('alarmStatus').style.display = 'none';
+            // Deep match processing row matching multi-alarm vector blocks index keys
+            const hitIndex = registeredAlarmsList.findIndex(timeStr => timeStr === exactTime24Str);
+            if (hitIndex > -1) {
+                // Remove the matched alarm footprint row snapshot data vector from loop
+                registeredAlarmsList.splice(hitIndex, 1);
+                localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
+                refreshAlarmsQueueLayout();
+                
+                // Fire Real Sound Audio Ringing Trigger!
+                triggerActiveAlarmRinger(exactTime24Str);
             }
         }
 
+        // 🔊 MULTI-ALARM CONTROL MATRIX LOGICS SYSTEM
         function setStudyAlarm() {
             const val = document.getElementById('alarmTimeField').value;
-            if(!val) { alert('Bhai, pehle valid time toh select kar lo!'); return; }
+            if(!val) { alert('Bhai, pehle valid time select karo!'); return; }
             
-            activeAlarmTime = val;
-            
-            const splitParts = val.split(':');
-            let h = parseInt(splitParts[0]);
-            const m = splitParts[1];
-            const ampm = h >= 12 ? 'PM' : 'AM';
-            h = h % 12; h = h ? h : 12;
+            if(registeredAlarmsList.length >= 10) {
+                alert('Bhai, maximum 10 alarms hi bhar sakte ho personal room mein!');
+                return;
+            }
 
-            const pill = document.getElementById('alarmStatus');
-            pill.innerText = `🔔 Track Enabled: Active Alarm at ${String(h).padStart(2, '0')}:${m} ${ampm}`;
-            pill.style.display = 'block';
+            if(registeredAlarmsList.includes(val)) {
+                alert('Bhai, yeh alarm toh pehle se hi line up mein laga hai!');
+                return;
+            }
+
+            registeredAlarmsList.push(val);
+            registeredAlarmsList.sort(); // Arrange chronological rows index
+            localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
+            
+            document.getElementById('alarmTimeField').value = '';
+            refreshAlarmsQueueLayout();
+        }
+
+        function refreshAlarmsQueueLayout() {
+            const container = document.getElementById('alarmQueueScroller');
+            container.innerHTML = '';
+
+            if (registeredAlarmsList.length === 0) {
+                container.innerHTML = `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:5px;">No active alarms set in stack grid.</div>`;
+                return;
+            }
+
+            registeredAlarmsList.forEach((timeStr, index) => {
+                const item = document.createElement('div');
+                item.className = 'queue-alarm-item';
+
+                const splitParts = timeStr.split(':');
+                let h = parseInt(splitParts[0]);
+                const m = splitParts[1];
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12; h = h ? h : 12;
+                const elegantTimeDisplay = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
+
+                item.innerHTML = `
+                    <div class="queue-time-txt">🔔 Slot ${index + 1}: ${elegantTimeDisplay}</div>
+                    <button class="delete-slot-btn" onclick="clearSpecificAlarm(${index})">✕ Remove</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function clearSpecificAlarm(index) {
+            registeredAlarmsList.splice(index, 1);
+            localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
+            refreshAlarmsQueueLayout();
+        }
+
+        function triggerActiveAlarmRinger(timeLabel) {
+            try {
+                alarmAudioStream.play();
+            } catch(err) {
+                console.log("Audio pipeline interaction wait flag caught:", err);
+            }
+            document.getElementById('alarmTriggerOverlay').style.display = 'flex';
+        }
+
+        function killRingingAlarmAudio() {
+            alarmAudioStream.pause();
+            alarmAudioStream.currentTime = 0; // Reset trace pointer line
+            document.getElementById('alarmTriggerOverlay').style.display = 'none';
         }
 
         function handleRegistration(e) {
@@ -544,7 +678,6 @@
             const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
             const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
 
-            // 🎯 Course + Semester strict lock match logic bounds
             let filtered = dataSrc.filter(item => {
                 const matchCourse = item.course && item.course.toLowerCase() === currentClassCourse.toLowerCase();
                 const matchSem = item.semester && item.semester.toLowerCase() === currentClassSemester.toLowerCase();
@@ -613,6 +746,7 @@
             }
         }
 
+        // Action function trigger loading more files chunks
         function loadMoreMaterials() {
             visibleFilesCount += 4;
             executeRoomFilter();
