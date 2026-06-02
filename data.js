@@ -566,7 +566,7 @@ const resourcesData = [
         subject: "Chemistry",
         type: "Notes",
         title: "Chemistry Notes unit-2",
-        link: "#"
+        link: "https://drive.google.com/file/d/15VZK8ou8Q81UNAfZ7FtuBraRb9iwFjqU/view?usp=sharing"
     },
     {
         course: "B.Sc",
