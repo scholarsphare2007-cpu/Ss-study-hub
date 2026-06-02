@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <!-- Google tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0YKP54FRQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  // Govind Bhai Ki Real Measurement ID Setup
+  gtag('config', 'G-N0YKP54FRQ');
+
+  // 🔥 SPECIAL PWA APP TRACKING JUGAD:
+  window.addEventListener('DOMContentLoaded', () => {
+    // Check karte hain ki bacche ne website browser mein kholi hai ya PWA App icon se
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    
+    if (isStandalone) {
+      // Agar bacche ne phone mein download kiye huye App se khola hai
+      gtag('event', 'pwa_app_open', {
+        'platform': 'PWA_Native_App',
+        'status': 'opened_from_homescreen'
+      });
+    } else {
+      // Agar baccha normal website browser par padh raha hai
+      gtag('event', 'website_open', {
+        'platform': 'Web_Browser',
+        'status': 'opened_from_browser'
+      });
+    }
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Your Personal Study Room Area</title>
