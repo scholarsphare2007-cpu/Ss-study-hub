@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 
-    <!-- Google tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0YKP54FRQ"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N0YKP54FRQ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -253,12 +252,28 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="studentCourse">Select Course</label>
+                    <select id="studentCourse" class="form-select" required>
+                        <option value="B.Sc" selected>B.Sc</option>
+                        <option value="M.Sc">M.Sc</option>
+                        <option value="B.C.A">BCA</option>
+                        <option value="M.C.A">MCA</option>
+                        <option value="B.A">B.A</option>
+                        <option value="M.A">M.A</option>
+                        <option value="B.Com">B.Com</option>
+                        <option value="M.com">M.Com</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
                     <label for="studentClass">Select Semester / Year</label>
                     <select id="studentClass" class="form-select" required>
-                        <option value="1st Sem">B.Sc 1st Sem</option>
-                        <option value="2nd Sem" selected>B.Sc 2nd Sem</option>
-                        <option value="3rd Sem">B.Sc 3rd Sem</option>
-                        <option value="4th Sem">B.Sc 4th Sem</option>
+                        <option value="1st Sem">1st Sem</option>
+                        <option value="2nd Sem" selected>2nd Sem</option>
+                        <option value="3rd Sem">3rd Sem</option>
+                        <option value="4th Sem">4th Sem</option>
+                        <option value="5th sem">5th sem</option>
+                        <option value="6th sem">6th sem</option>
                     </select>
                 </div>
                 
@@ -314,7 +329,7 @@
                     
                     <div class="timetable-box" style="padding:0; border:none; background:transparent;">
                         <div class="timetable-scroller-box" id="timetableRowsContainer">
-                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -338,7 +353,7 @@
                 </div>
                 
                 <div class="materials-container-grid" id="roomMaterialsGrid">
-                    </div>
+                </div>
 
                 <div class="load-more-container" id="loadMoreBox" style="display: none;">
                     <button class="load-more-btn" onclick="loadMoreMaterials()">Load More Files 📑</button>
@@ -348,13 +363,13 @@
             <div>
                 <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; color: var(--text-muted); padding-left: 5px;">🍏 My Saved Library Bookshelf</div>
                 <div class="library-shelf-grid" id="libraryShelfGrid">
-                    </div>
+                </div>
             </div>
 
             <div>
                 <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; color: var(--text-muted); padding-left: 5px;">✅ Completed Materials (Syllabus Done)</div>
                 <div class="library-shelf-grid" id="completedShelfGrid">
-                    </div>
+                </div>
             </div>
 
             <div class="exit-btn" onclick="logOutRoom()">Exit Personal Room Area</div>
@@ -372,12 +387,28 @@
             </div>
             
             <div class="form-group">
+                <label for="editCourse">Select Course</label>
+                <select id="editCourse" class="form-select">
+                    <option value="B.Sc">B.Sc</option>
+                    <option value="M.Sc">M.Sc</option>
+                    <option value="B.C.A">BCA</option>
+                    <option value="M.C.A">MCA</option>
+                    <option value="B.A">B.A</option>
+                    <option value="M.A">M.A</option>
+                    <option value="B.Com">B.Com</option>
+                    <option value="M.com">M.Com</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
                 <label for="editClass">Select Semester / Year</label>
                 <select id="editClass" class="form-select">
-                    <option value="1st Sem">B.Sc 1st Sem</option>
-                    <option value="2nd Sem">B.Sc 2nd Sem</option>
-                    <option value="3rd Sem">B.Sc 3rd Sem</option>
-                    <option value="4th Sem">B.Sc 4th Sem</option>
+                    <option value="1st Sem">1st Sem</option>
+                    <option value="2nd Sem">2nd Sem</option>
+                    <option value="3rd Sem">3rd Sem</option>
+                    <option value="4th Sem">4th Sem</option>
+                    <option value="5th sem">5th sem</option>
+                    <option value="6th sem">6th sem</option>
                 </select>
             </div>
             
@@ -397,6 +428,7 @@
 
     <script>
         let currentClassSemester = '2nd Sem';
+        let currentClassCourse = 'B.Sc'; // Track Locked Course Environment Matrix
         let activeAlarmTime = null;
         
         // Pagination global variables
@@ -411,6 +443,7 @@
             if (savedSession) {
                 const user = JSON.parse(savedSession);
                 currentClassSemester = user.semester;
+                currentClassCourse = user.course || 'B.Sc';
                 mountStudyRoom(user);
             }
             renderTimetableSlots();
@@ -460,10 +493,12 @@
             e.preventDefault();
             const userData = {
                 name: document.getElementById('studentName').value.trim(),
+                course: document.getElementById('studentCourse').value,
                 semester: document.getElementById('studentClass').value,
                 college: document.getElementById('studentCollege').value.trim()
             };
             
+            currentClassCourse = userData.course;
             currentClassSemester = userData.semester;
             localStorage.setItem('studyRoomUser', JSON.stringify(userData));
             mountStudyRoom(userData);
@@ -474,7 +509,7 @@
             document.getElementById('roomDashboard').style.display = 'flex';
             
             document.getElementById('roomTitle').innerText = `${user.name} — Study Room`;
-            document.getElementById('roomSubtitle').innerText = `${user.college} | B.Sc ${user.semester}`;
+            document.getElementById('roomSubtitle').innerText = `${user.college} | ${user.course} ${user.semester}`;
             
             resetAndFilter();
             renderLibraryShelfItems();
@@ -486,13 +521,11 @@
             document.getElementById('lanternTxt').innerText = active ? 'Lantern On' : 'Lantern Off';
         }
 
-        // Reset system view helper
         function resetAndFilter() {
             visibleFilesCount = 4;
             executeRoomFilter();
         }
 
-        // Change materials tag filter system
         function changeTypeFilter(type) {
             selectedTypeFilter = type;
             document.querySelectorAll('.filter-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -500,7 +533,7 @@
             resetAndFilter();
         }
 
-        // 📋 EXCLUSIVELY AUTOFILTERED ENGINE WITH 4 FILES AND TYPE SELECTION
+        // 📋 DUAL DEEP ROUTING FILTERING CORE MATRIX ENGINE (Course + Semester Lock)
         function executeRoomFilter() {
             const grid = document.getElementById('roomMaterialsGrid');
             grid.innerHTML = '';
@@ -511,18 +544,17 @@
             const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
             const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
 
-            // 1. Semester strict lock filter
-            let filtered = dataSrc.filter(item => item.semester === currentClassSemester);
+            // 🎯 Course + Semester strict lock match logic bounds
+            let filtered = dataSrc.filter(item => {
+                const matchCourse = item.course && item.course.toLowerCase() === currentClassCourse.toLowerCase();
+                const matchSem = item.semester && item.semester.toLowerCase() === currentClassSemester.toLowerCase();
+                return matchCourse && matchSem;
+            });
 
-            // 2. Type tabs filtering (Syllabus, Notes, Papers)
             if (selectedTypeFilter !== 'all') {
-                filtered = filtered.filter(item => {
-                    if (!item.type) return false;
-                    return item.type.toLowerCase() === selectedTypeFilter;
-                });
+                filtered = filtered.filter(item => item.type && item.type.toLowerCase() === selectedTypeFilter);
             }
 
-            // 3. Search Bar filter text processing
             totalFilteredItems = filtered.filter(item => {
                 return query === '' || 
                        (item.title && item.title.toLowerCase().includes(query)) ||
@@ -531,12 +563,11 @@
             });
 
             if (totalFilteredItems.length === 0) {
-                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.85rem; color:var(--text-muted); padding:20px;">Bhai, aapki class ka aisa koi material nahi mila!</div>`;
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.85rem; color:var(--text-muted); padding:20px;">Bhai, aapke course (${currentClassCourse} - ${currentClassSemester}) ka aisa koi material nahi mila!</div>`;
                 document.getElementById('loadMoreBox').style.display = 'none';
                 return;
             }
 
-            // Slice data arrays index to process 4 items rule limit
             const currentSlice = totalFilteredItems.slice(0, visibleFilesCount);
 
             currentSlice.forEach(item => {
@@ -575,7 +606,6 @@
                 grid.appendChild(card);
             });
 
-            // Handle Hide/Show behavior criteria configurations on Load More Button
             if (totalFilteredItems.length > visibleFilesCount) {
                 document.getElementById('loadMoreBox').style.display = 'flex';
             } else {
@@ -583,7 +613,6 @@
             }
         }
 
-        // Action function trigger loading more files chunks
         function loadMoreMaterials() {
             visibleFilesCount += 4;
             executeRoomFilter();
@@ -759,6 +788,7 @@
             if (savedSession) {
                 const user = JSON.parse(savedSession);
                 document.getElementById('editName').value = user.name;
+                document.getElementById('editCourse').value = user.course || 'B.Sc';
                 document.getElementById('editClass').value = user.semester;
                 document.getElementById('editCollege').value = user.college;
             }
@@ -772,6 +802,7 @@
         function saveProfileChanges() {
             const updatedData = {
                 name: document.getElementById('editName').value.trim(),
+                course: document.getElementById('editCourse').value,
                 semester: document.getElementById('editClass').value,
                 college: document.getElementById('editCollege').value.trim()
             };
@@ -781,15 +812,16 @@
                 return;
             }
 
+            currentClassCourse = updatedData.course;
             currentClassSemester = updatedData.semester;
             localStorage.setItem('studyRoomUser', JSON.stringify(updatedData));
             
             // Dynamic node layout updates live
             document.getElementById('roomTitle').innerText = `${updatedData.name} — Study Room`;
-            document.getElementById('roomSubtitle').innerText = `${updatedData.college} | B.Sc ${updatedData.semester}`;
+            document.getElementById('roomSubtitle').innerText = `${updatedData.college} | ${updatedData.course} ${updatedData.semester}`;
             
             closeProfileModal();
-            resetAndFilter(); // Auto-refresh everything matching the new profile footprint instantly!
+            resetAndFilter(); // Auto-refresh instantly
             alert('Bhai, profile successfully update ho gayi hai!');
         }
 
