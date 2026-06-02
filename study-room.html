@@ -498,9 +498,12 @@
         let currentClassSemester = '2nd Sem';
         let currentClassCourse = 'B.Sc'; 
         
+        // Multi Alarm Tracker Memory Store Array
         let registeredAlarmsList = [];
+        
+        // 🔥 ALARM TUNE INJECTION: Online classic ringtone stream audio object
         const alarmAudioStream = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-120.wav');
-        alarmAudioStream.loop = true; 
+        alarmAudioStream.loop = true; // Jab tak stop na karein, bajta rahega continuously
 
         let selectedTypeFilter = 'all';
         let visibleFilesCount = 4;
@@ -538,11 +541,14 @@
             const watchNode = document.getElementById('roomWatch');
             if (watchNode) watchNode.innerText = displayStr;
 
+            // Alarms matching pipeline row check
             const hitIndex = registeredAlarmsList.findIndex(timeStr => timeStr === exactTime24Str);
             if (hitIndex > -1) {
                 registeredAlarmsList.splice(hitIndex, 1);
                 localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
                 refreshAlarmsQueueLayout();
+                
+                // 🔥 Trigger active audio ringer
                 triggerActiveAlarmRinger(exactTime24Str);
             }
         }
@@ -560,6 +566,14 @@
                 alert('Bhai, yeh alarm toh pehle se hi line up mein laga hai!');
                 return;
             }
+
+            // Browser permissions warm up trigger
+            try {
+                alarmAudioStream.play().then(() => {
+                    alarmAudioStream.pause();
+                    alarmAudioStream.currentTime = 0;
+                }).catch(e => console.log("Warmup audio system trace"));
+            } catch(err){}
 
             registeredAlarmsList.push(val);
             registeredAlarmsList.sort(); 
@@ -603,15 +617,17 @@
             refreshAlarmsQueueLayout();
         }
 
+        // 🔥 ACTIVATE AUDIO AND RE-RENDER ENGINE SCREEN POPUP
         function triggerActiveAlarmRinger(timeLabel) {
             try {
                 alarmAudioStream.play();
             } catch(err) {
-                console.log("Audio pipeline interaction flag caught:", err);
+                console.log("Audio trigger context issue:", err);
             }
             document.getElementById('alarmTriggerOverlay').style.display = 'flex';
         }
 
+        // 🛑 KILL MUSIC SYSTEM PIPELINE LOOP RESET
         function killRingingAlarmAudio() {
             alarmAudioStream.pause();
             alarmAudioStream.currentTime = 0; 
@@ -627,6 +643,14 @@
                 college: document.getElementById('studentCollege').value.trim()
             };
             
+            // Warmup audio context permissions directly on login submit framework action
+            try {
+                alarmAudioStream.play().then(() => {
+                    alarmAudioStream.pause();
+                    alarmAudioStream.currentTime = 0;
+                });
+            } catch(err){}
+
             currentClassCourse = userData.course;
             currentClassSemester = userData.semester;
             localStorage.setItem('studyRoomUser', JSON.stringify(userData));
@@ -904,6 +928,22 @@
             currentSlots.splice(index, 1);
             localStorage.setItem('roomTimetableData', JSON.stringify(currentSlots));
             renderTimetableSlots();
+        }
+
+        function openProfileModal() {
+            const savedSession = localStorage.getItem('studyRoomUser');
+            if (savedSession) {
+                const user = JSON.parse(savedSession);
+                document.getElementById('editName').value = user.name;
+                document.getElementById('editCourse').value = user.course || 'B.Sc';
+                document.getElementById('editClass').value = user.semester;
+                document.getElementById('editCollege').value = user.college;
+            }
+            document.getElementById('profileModal').style.display = 'flex';
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
         }
 
         function saveProfileChanges() {
