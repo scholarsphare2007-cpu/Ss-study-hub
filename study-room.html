@@ -501,9 +501,9 @@
         // Multi Alarm Tracker Memory Store Array
         let registeredAlarmsList = [];
         
-        // 🔥 ALARM TUNE INJECTION: Online classic ringtone stream audio object
-        const alarmAudioStream = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-120.wav');
-        alarmAudioStream.loop = true; // Jab tak stop na karein, bajta rahega continuously
+        // 🔥 LOCAL ASSET AUDIO PIPELINE: Ab ye seedhe tumhare folder ki local file ko play karega
+        const alarmAudioStream = new Audio('alarm.mp3');
+        alarmAudioStream.loop = true; // Loop continuously until manually stopped
 
         let selectedTypeFilter = 'all';
         let visibleFilesCount = 4;
@@ -511,6 +511,11 @@
 
         window.onload = () => {
             setInterval(updateRoomLiveWatch, 1000);
+
+            // User gesture ke sath audio context activate karne ke liye trigger
+            document.body.addEventListener('click', () => {
+                warmUpAudioEngine();
+            }, { once: true }); // Sirf ek baar pehle click par trigger hoga
 
             registeredAlarmsList = JSON.parse(localStorage.getItem('roomSavedAlarmsStack')) || [];
             refreshAlarmsQueueLayout();
@@ -524,6 +529,17 @@
             }
             renderTimetableSlots();
         };
+
+        // Browser security lock todne ke liye warmup function
+        function warmUpAudioEngine() {
+            try {
+                alarmAudioStream.play().then(() => {
+                    alarmAudioStream.pause();
+                    alarmAudioStream.currentTime = 0;
+                    console.log("Audio pipeline unlocked successfully!");
+                }).catch(e => console.log("Audio warmup waiting for user interaction..."));
+            } catch(err){}
+        }
 
         function updateRoomLiveWatch() {
             const now = new Date();
@@ -541,14 +557,14 @@
             const watchNode = document.getElementById('roomWatch');
             if (watchNode) watchNode.innerText = displayStr;
 
-            // Alarms matching pipeline row check
+            // Active multi-alarm matching criteria
             const hitIndex = registeredAlarmsList.findIndex(timeStr => timeStr === exactTime24Str);
             if (hitIndex > -1) {
                 registeredAlarmsList.splice(hitIndex, 1);
                 localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
                 refreshAlarmsQueueLayout();
                 
-                // 🔥 Trigger active audio ringer
+                // Real local audio ring trigger
                 triggerActiveAlarmRinger(exactTime24Str);
             }
         }
@@ -567,13 +583,7 @@
                 return;
             }
 
-            // Browser permissions warm up trigger
-            try {
-                alarmAudioStream.play().then(() => {
-                    alarmAudioStream.pause();
-                    alarmAudioStream.currentTime = 0;
-                }).catch(e => console.log("Warmup audio system trace"));
-            } catch(err){}
+            warmUpAudioEngine(); // Explicit warmup on adding alarm
 
             registeredAlarmsList.push(val);
             registeredAlarmsList.sort(); 
@@ -617,17 +627,15 @@
             refreshAlarmsQueueLayout();
         }
 
-        // 🔥 ACTIVATE AUDIO AND RE-RENDER ENGINE SCREEN POPUP
         function triggerActiveAlarmRinger(timeLabel) {
             try {
                 alarmAudioStream.play();
             } catch(err) {
-                console.log("Audio trigger context issue:", err);
+                console.log("Local audio file play blocked or not found:", err);
             }
             document.getElementById('alarmTriggerOverlay').style.display = 'flex';
         }
 
-        // 🛑 KILL MUSIC SYSTEM PIPELINE LOOP RESET
         function killRingingAlarmAudio() {
             alarmAudioStream.pause();
             alarmAudioStream.currentTime = 0; 
@@ -643,13 +651,7 @@
                 college: document.getElementById('studentCollege').value.trim()
             };
             
-            // Warmup audio context permissions directly on login submit framework action
-            try {
-                alarmAudioStream.play().then(() => {
-                    alarmAudioStream.pause();
-                    alarmAudioStream.currentTime = 0;
-                });
-            } catch(err){}
+            warmUpAudioEngine(); // Warmup on explicit submission click
 
             currentClassCourse = userData.course;
             currentClassSemester = userData.semester;
@@ -928,22 +930,6 @@
             currentSlots.splice(index, 1);
             localStorage.setItem('roomTimetableData', JSON.stringify(currentSlots));
             renderTimetableSlots();
-        }
-
-        function openProfileModal() {
-            const savedSession = localStorage.getItem('studyRoomUser');
-            if (savedSession) {
-                const user = JSON.parse(savedSession);
-                document.getElementById('editName').value = user.name;
-                document.getElementById('editCourse').value = user.course || 'B.Sc';
-                document.getElementById('editClass').value = user.semester;
-                document.getElementById('editCollege').value = user.college;
-            }
-            document.getElementById('profileModal').style.display = 'flex';
-        }
-
-        function closeProfileModal() {
-            document.getElementById('profileModal').style.display = 'none';
         }
 
         function saveProfileChanges() {
