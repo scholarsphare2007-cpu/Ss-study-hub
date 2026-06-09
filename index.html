@@ -997,7 +997,79 @@
         };
     </script>
     
-    <script src="data.js?v=1.1" onerror="console.log('Local backup data array target skip verified.')"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let resourcesData = []; 
+        window.resourcesData = resourcesData;
+
+        const resourcesCollectionRef = collection(db, "study_materials");
+        
+        // 🔄 Real-time Firestore Cloud Live Streaming
+        onSnapshot(resourcesCollectionRef, (snapshot) => {
+            resourcesData.length = 0; 
+            snapshot.forEach((doc) => {
+                resourcesData.push(doc.data());
+            });
+            window.resourcesData = resourcesData;
+            console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
+            
+            // Trigger filter inside script.js whenever new data flows in
+            if(typeof window.filterResources === 'function') {
+                window.filterResources();
+            }
+        });
+
+        // 🔥 AUTOMATED DATA UPLOADER FUNCTION FOR LOCAL MIGRATION
+        async function uploadOldDataToFirebase() {
+            // Check karte hain ki script.js ya data.js se resourcesData load ho chuka hai ya nahi
+            const localSource = (typeof resourcesData !== 'undefined' && resourcesData.length > 0) ? resourcesData : (typeof window.resourcesData !== 'undefined' ? window.resourcesData : []);
+            
+            if (localSource.length > 0) {
+                console.log("⏳ Uploading old materials to Firebase Firestore...");
+                
+                for (let i = 0; i < localSource.length; i++) {
+                    const item = localSource[i];
+                    const customDocId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+                    
+                    try {
+                        await setDoc(doc(db, "study_materials", customDocId), {
+                            title: item.title,
+                            subject: item.subject,
+                            type: item.type,
+                            course: item.course || 'B.Sc',
+                            semester: item.semester || '2nd Sem',
+                            link: item.link || '#'
+                        });
+                        console.log(`✅ Cloud Filled: ${item.title}`);
+                    } catch (error) {
+                        console.log(`❌ Error uploading ${item.title}:`, error);
+                    }
+                }
+                alert("Bhai, saara data.js ka material Firebase Cloud par upload ho gaya hai! Ab is window.addEventListener wali trigger line ko wapas block kar dena.");
+            }
+        }
+
+        // 🎯 DATA UPLOAD TRIGGER: Jab data chadhana ho, tab is line ke aage se '//' hata kar save karna!
+        // window.addEventListener('load', () => { setTimeout(uploadOldDataToFirebase, 2000); });
+
+    </script>
+    
+    <script src="data.js?v=1.1"></script>
     <script src="script.js?v=1.1"></script>
 
 </body>
