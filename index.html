@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 
-    <!-- Google tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0YKP54FRQ"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N0YKP54FRQ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -223,6 +222,9 @@
         }
         header h1 { font-size: 2.3rem; font-weight: 900; margin-bottom: 8px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
+        /* 📋 DYNAMIC FILE METRICS DISPLAY STYLING */
+        .load-more-count { font-size: 0.82rem; color: var(--text-muted); font-weight: 700; margin-top: 8px; }
+
         /* 🔥 PWA DOWNLOAD ACTIONS */
         .pwa-download-container { margin: 15px 0; display: flex; justify-content: center; }
         .pwa-btn {
@@ -283,7 +285,7 @@
             border-top: 2px solid var(--primary); box-shadow: 0 -10px 35px rgba(0,0,0,0.5);
         }
         .filter-mobile-modal.open { bottom: 0; }
-        .modal-drag-bar { width: 50px; height: 50px; background: rgba(255,255,255,0.1); margin: -15px auto 15px auto; border-radius: 10px; height: 5px; }
+        .modal-drag-bar { width: 50px; background: rgba(255,255,255,0.1); margin: -15px auto 15px auto; border-radius: 10px; height: 5px; }
         .modal-header-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; text-align: center; }
         .modal-close-btn {
             background: var(--primary); color: white; width: 100%; border: none; padding: 12px;
@@ -359,6 +361,8 @@
         .tag-pyq { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
 
         .card-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-title-link { color: inherit; text-decoration: none; }
+        .card-title-link:hover { color: #818cf8; }
         .card-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; }
         
         .card-actions { display: flex; gap: 10px; width: 100%; }
@@ -368,7 +372,8 @@
         .btn-download { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); }
 
         .load-more-container { text-align: center; margin-bottom: 50px; }
-        .load-more-btn { background: var(--card-glass); color: white; border: 1px solid var(--card-border); padding: 12px 35px; font-size: 0.95rem; font-weight: 700; border-radius: 30px; cursor: pointer; }
+        .load-more-btn { background: var(--card-glass); color: white; border: 1px solid var(--card-border); padding: 12px 35px; font-size: 0.95rem; font-weight: 700; border-radius: 30px; cursor: pointer; transition: all 0.3s; }
+        .load-more-btn:hover { background: var(--primary); border-color: var(--primary); }
 
         /* About Dev Spec Card */
         .about-developer-card { background: var(--card-glass); border-radius: 28px; padding: 45px 25px; border: 1px solid var(--card-border); text-align: center; margin-top: 20px; }
@@ -381,7 +386,7 @@
         .connect-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
         .btn-connect { padding: 10px 22px; border-radius: 10px; font-size: 0.9rem; font-weight: 700; text-decoration: none; color: white; background: rgba(255,255,255,0.1); border: 1px solid var(--card-border); }
 
-        .no-results { text-align: center; grid-column: 1 / -1; padding: 40px; display: none; }
+        .no-results { text-align: center; grid-column: 1 / -1; padding: 40px; display: none; font-size: 0.95rem; color: var(--text-muted); }
 
         /* 📱 PREMIUM NATIVE APP BOTTOM NAVIGATION BAR CSS */
         .bottom-app-nav {
@@ -396,7 +401,7 @@
             color: var(--text-muted); text-decoration: none; font-size: 0.7rem; font-weight: 700;
             gap: 4px; transition: all 0.2s; -webkit-tap-highlight-color: transparent; cursor: pointer;
         }
-        .bottom-nav-item.active, .bottom-nav-item:scale(1.05) { color: #818cf8; }
+        .bottom-nav-item.active { color: #818cf8; }
         .bottom-nav-icon { font-size: 1.35rem; }
 
         /* 📱 ULTRA PROFESSIONAL MOBILE SCREEN SYSTEM ARCHITECTURE */
@@ -546,7 +551,7 @@
         </div>
 
         <div class="resources-grid" id="resourcesGrid">
-            <div class="no-results" id="noResults">No resources found matching the filters. Stay tuned!</div>
+            <div class="no-results" id="noResults">Bhai, matches nahi mile database mein!</div>
         </div>
 
         <div class="load-more-container" id="loadMoreContainer" style="display: none;">
@@ -660,7 +665,7 @@
             <li class="drawer-menu-item" onclick="openContentPopup('aboutApp')">📱 About App</li>
             <li class="drawer-menu-item" onclick="openContentPopup('marutyTechs')">⚡ About MarutyTechs</li>
             <li class="drawer-menu-item" onclick="openContentPopup('terms')">📄 Terms & Conditions</li>
-            <li class="drawer-menu-item" onclick="openContentPopup('terms')">⚠️ Disclamer</li>
+            <li class="drawer-menu-item" onclick="openContentPopup('terms')">⚠️ Disclaimer</li>
         </ul>
         <div class="drawer-footer-text">Powered by MarutyTechs</div>
     </div>
@@ -718,7 +723,6 @@
             }
         });
 
-        // 📱 NATIVE SYSTEM INTERACTIVE MODAL ROUTING CONTROLLERS
         function toggleMobileFilterModal(open) {
             const backdrop = document.getElementById('filterModalBackdrop');
             const modal = document.getElementById('mobileFilterModal');
@@ -731,7 +735,6 @@
             }
         }
 
-        // 🔄 Sync mobile select fields directly with desktop hidden variables before triggering main logic
         function syncAndFilterMobile(type) {
             if (type === 'course') {
                 document.getElementById('courseFilter').value = document.getElementById('courseFilterMobile').value;
@@ -740,12 +743,10 @@
             } else if (type === 'type') {
                 document.getElementById('typeFilter').value = document.getElementById('typeFilterMobile').value;
             }
-            if (typeof filterResources === 'function') {
-                filterResources();
-            }
+            // Trigger dynamic global filter call inside the module
+            window.filterResources();
         }
 
-        // 🚪 INTERACTIVE SIDE DRAWER TOGGLE CORE CONTROLLERS
         function toggleAppDrawer(open) {
             const backdrop = document.getElementById('appDrawerBackdrop');
             const drawer = document.getElementById('appSideDrawer');
@@ -758,15 +759,12 @@
             }
         }
 
-        // 📋 MODAL POPUP WINDOWS INJECTION INTERACTIVE UTILITIES
         function openContentPopup(popupId) {
             toggleAppDrawer(false);
-            
             const mainOverlay = document.getElementById('contentPopupOverlay');
             document.getElementById('popup-aboutApp').style.display = 'none';
             document.getElementById('popup-marutyTechs').style.display = 'none';
             document.getElementById('popup-terms').style.display = 'none';
-            
             mainOverlay.style.display = 'flex';
             document.getElementById(`popup-${popupId}`).style.display = 'block';
         }
@@ -794,9 +792,7 @@
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
             if (os === 'iOS' && !isStandalone) {
-                if (iosPromptCard) {
-                    iosPromptCard.style.display = 'block';
-                }
+                if (iosPromptCard) iosPromptCard.style.display = 'block';
             }
         });
 
@@ -821,7 +817,6 @@
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
                     const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`User execution status: ${outcome}`);
                     deferredPrompt = null;
                     installBtn.style.display = 'none';
                 }
@@ -832,58 +827,177 @@
             if (installBtn) installBtn.style.display = 'none';
             if (iosPromptCard) iosPromptCard.style.display = 'none';
             deferredPrompt = null;
-            console.log('App Successfully Mounted inside dashboard context!');
         });
     </script>
 
     <script type="module">
-    // Firebase App aur Firestore Database ke modules import karna
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO (Step 3 waala)
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
+        // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO (G-N0YKP54FRQ waale account se)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-    // Firebase ko initialize kiya
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-    // Global variables jo pehle se chal rahe hain
-    let currentClassSemester = '2nd Sem';
-    let currentClassCourse = 'B.Sc';
-    let registeredAlarmsList = [];
-    let selectedTypeFilter = 'all';
-    let visibleFilesCount = 4;
-    
-    // 🧠 REAL-TIME RESOURCE MEMORY: Ab resourcesData direct Firebase se live update hoga
-    let resourcesData = []; 
-    let totalFilteredItems = [];
+        let resourcesData = []; 
+        let visibleCardsLimit = 8; // Global visibility step limit index
 
-    // 🔄 FIREBASE REAL-TIME LISTENER ENGINE
-    // Isse jab bhi tu database mein kuch badlega, bina refresh bache ki screen par data badal jayega!
-    const resourcesCollectionRef = collection(db, "study_materials");
-    
-    onSnapshot(resourcesCollectionRef, (snapshot) => {
-        resourcesData = []; // Purana local data saaf kiya
-        snapshot.forEach((doc) => {
-            resourcesData.push(doc.data());
-        });
-        console.log("🔥 Firebase Live Data Fetched Successfully!", resourcesData);
+        // Expose variables globally to be compatible with your scripts
+        window.resourcesData = resourcesData;
+
+        const resourcesCollectionRef = collection(db, "study_materials");
         
-        // Data aate hi filter engine ko chalado taaki grid render ho jaye
-        executeRoomFilter();
-    });
+        // 🔄 Real-time Firestore Cloud Streaming
+        onSnapshot(resourcesCollectionRef, (snapshot) => {
+            resourcesData.length = 0; // Pure memory arrays clear out
+            snapshot.forEach((doc) => {
+                resourcesData.push(doc.data());
+            });
+            window.resourcesData = resourcesData;
+            console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
+            
+            // Auto data migration validation layer check
+            triggerDataAutoMigrationCheck();
 
-    // Tumhara baaki ka pura purana functions (updateRoomLiveWatch, setStudyAlarm, executeRoomFilter, etc.) iske niche as-is chalega...
-</script>
+            // Fire UI Filter execution matching rows instantly
+            window.filterResources();
+        });
+
+        // 📥 TEMPORARY AUTOMATIC MIGRATION MECHANISM FOR GOVIND BHAI
+        async function triggerDataAutoMigrationCheck() {
+            // Agar cloud database ekdum khaali hai aur local window.backupResources (purani data.js) present hai
+            if (resourcesData.length === 0 && typeof window.backupResources !== 'undefined' && window.backupResources.length > 0) {
+                console.log("⏳ Cloud is empty! Starting local data.js migration pipeline...");
+                
+                for (let i = 0; i < window.backupResources.length; i++) {
+                    const item = window.backupResources[i];
+                    const documentId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+                    
+                    try {
+                        await setDoc(doc(db, "study_materials", documentId), {
+                            title: item.title,
+                            subject: item.subject,
+                            type: item.type,
+                            course: item.course || 'B.Sc',
+                            semester: item.semester || '2nd Sem',
+                            link: item.link || '#'
+                        });
+                    } catch (e) { console.error("Migration trace error:", e); }
+                }
+                alert("Bhai, saara purana data data.js se udkar Firebase Firestore Cloud par successfully upload ho gaya hai!");
+            }
+        }
+
+        // 📋 DYNAMIC MULTI-FILTER COMPILING MATRIX ENGINE FOR CLOUD ARRAYS
+        window.filterResources = function() {
+            visibleCardsLimit = 8; // Reset pagination bounds on search/select triggers
+            window.renderResourcesGrid();
+        };
+
+        window.renderResourcesGrid = function() {
+            const gridNode = document.getElementById('resourcesGrid');
+            const noResultsNode = document.getElementById('noResults');
+            const loadMoreBox = document.getElementById('loadMoreContainer');
+            const loadMoreCountNode = document.getElementById('loadMoreCount');
+
+            if(!gridNode) return;
+
+            // Fetch live components query criteria states values
+            const searchTxt = document.getElementById('materialSearch').value.toLowerCase().trim();
+            const courseVal = document.getElementById('courseFilter').value;
+            const semVal = document.getElementById('semFilter').value;
+            const typeVal = document.getElementById('typeFilter').value;
+
+            // Process main layout filters logic stack loops
+            let matchedItems = resourcesData.filter(item => {
+                const matchSearch = searchTxt === '' || 
+                                    (item.title && item.title.toLowerCase().includes(searchTxt)) ||
+                                    (item.subject && item.subject.toLowerCase().includes(searchTxt));
+                
+                const matchCourse = courseVal === 'all' || (item.course && item.course.toLowerCase() === courseVal.toLowerCase());
+                const matchSem = semVal === 'all' || (item.semester && item.semester.toLowerCase() === semVal.toLowerCase());
+                const matchType = typeVal === 'all' || (item.type && item.type.toLowerCase() === typeVal.toLowerCase());
+
+                return matchSearch && matchCourse && matchSem && matchType;
+            });
+
+            // Clean the visual workspace grid area
+            gridNode.querySelectorAll('.card').forEach(node => node.remove());
+
+            if (matchedItems.length === 0) {
+                noResultsNode.style.display = 'block';
+                loadMoreBox.style.display = 'none';
+                return;
+            }
+            noResultsNode.style.display = 'none';
+
+            // Process slices matching client visibility page step constraints
+            const slicedOutput = matchedItems.slice(0, visibleCardsLimit);
+
+            slicedOutput.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                let badgeClass = 'tag-file';
+                if(item.type && item.type.toLowerCase().includes('note')) badgeClass = 'tag-notes';
+                if(item.type && (item.type.toLowerCase().includes('pyq') || item.type.toLowerCase().includes('paper'))) badgeClass = 'tag-pyq';
+
+                let rawLink = item.link || '';
+                let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
+                let actionAttr = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, Govind ne abhi iska PDF upload nahi kiya hai!')"`;
+
+                card.innerHTML = `
+                    <div>
+                        <span class="card-tag ${badgeClass}">${item.type || 'Resource'}</span>
+                        <h3 class="card-title">
+                            <a ${actionAttr} class="card-title-link">${item.title}</a>
+                        </h3>
+                        <div class="card-meta">Subject: ${item.subject || 'N/A'} | ${item.course || 'B.Sc'} (${item.semester || 'Sem'})</div>
+                    </div>
+                    <div class="card-actions">
+                        <a ${actionAttr} class="action-btn btn-view">View Online</a>
+                        <a ${actionAttr} class="action-btn btn-download">Download File</a>
+                    </div>
+                `;
+                gridNode.appendChild(card);
+            });
+
+            // Sync structural parameters on load more box overlays fields bounds
+            if (matchedItems.length > visibleCardsLimit) {
+                loadMoreBox.style.display = 'block';
+                loadMoreCountNode.innerText = `Showing ${visibleCardsLimit} of ${matchedItems.length} items`;
+            } else {
+                loadMoreBox.style.display = 'none';
+            }
+        };
+
+        window.loadMoreCards = function() {
+            visibleCardsLimit += 8;
+            window.renderResourcesGrid();
+        };
+
+        // Connect the global layout sync targets safely across mobile dropdown bindings interfaces
+        window.syncAndFilterMobile = function(type) {
+            if (type === 'course') {
+                document.getElementById('courseFilter').value = document.getElementById('courseFilterMobile').value;
+            } else if (type === 'sem') {
+                document.getElementById('semFilter').value = document.getElementById('semFilterMobile').value;
+            } else if (type === 'type') {
+                document.getElementById('typeFilter').value = document.getElementById('typeFilterMobile').value;
+            }
+            window.filterResources();
+        };
+    </script>
     
+    <script src="data.js?v=1.1" onerror="console.log('Local backup data array target skip verified.')"></script>
     <script src="script.js?v=1.1"></script>
 
 </body>
