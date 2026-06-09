@@ -833,7 +833,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🔑 Ss-study-hub ka exact config array configuration matrix
+        // 🔑 Ss-study-hub ka exact configuration matrix
         const firebaseConfig = {
             apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
             authDomain: "ss-study-hub-fc1da.firebaseapp.com",
@@ -852,7 +852,7 @@
 
         const resourcesCollectionRef = collection(db, "study_materials");
         
-        // 🔄 Real-time Firestore Cloud Live Streaming Pipeline
+        // 🔄 Real-time Firestore Cloud Live Streaming
         onSnapshot(resourcesCollectionRef, (snapshot) => {
             resourcesData.length = 0; 
             snapshot.forEach((doc) => {
@@ -861,21 +861,21 @@
             window.resourcesData = resourcesData;
             console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
             
-            // Script.js ka filter call trigger engine execute
+            // Trigger filter inside script.js whenever new data flows in
             if(typeof window.filterResources === 'function') {
                 window.filterResources();
             }
         });
 
-        // 🔥 BULLETPROOF RECTIFIED DIRECT UPLOADER FOR GOVIND BHAI
-        async function forceDirectCloudMigration() {
-            // Agar normal context ya global layers mein data.js mil jaye
-            const targetArray = (typeof resourcesData !== 'undefined' && resourcesData.length > 0) ? resourcesData : 
-                              ((typeof window.resourcesData !== 'undefined' && window.resourcesData.length > 0) ? window.resourcesData : 
-                              ((typeof window.filteredData !== 'undefined') ? window.filteredData : []));
+        // 🔥 GOVIND BHAI KA MANUAL PUSH CONTROLLER ENGINE
+        async function forceManualCloudMigration() {
+            // Hum teenon tarike se array ko dhoondenge taaki galti ki gunjaish na rahe
+            const targetArray = (typeof window.resourcesData !== 'undefined' && window.resourcesData.length > 0) ? window.resourcesData : 
+                              ((typeof resourcesData !== 'undefined' && resourcesData.length > 0) ? resourcesData : 
+                              ((typeof window.filteredData !== 'undefined' && window.filteredData.length > 0) ? window.filteredData : []));
 
             if (targetArray.length > 0) {
-                console.log("⏳ Direct Push Pipeline Triggered! Documents uploading to cloud database...");
+                console.log("⏳ Manual Push Pipeline Activated! Uploading...");
                 
                 for (let i = 0; i < targetArray.length; i++) {
                     const item = targetArray[i];
@@ -890,23 +890,27 @@
                             semester: item.semester || '2nd Sem',
                             link: item.link || '#'
                         });
-                        console.log(`✅ Document Transferred Successfully: ${item.title}`);
+                        console.log(`✅ Cloud Filled: ${item.title}`);
                     } catch (error) {
-                        console.error("Firebase runtime error trace:", error);
+                        console.error("Upload Error:", error);
                     }
                 }
-                alert("Bhai, badhai ho! Saara data.js ka material cloud database mein safely chala gaya hai.");
+                alert("Bhai, kamaal ho gaya! Saara data.js ka material database mein chala gaya hai. Ab tum is button aur uploader function ko code se mita sakte ho.");
             } else {
-                console.log("⏳ Waiting for data.js backup compilation arrays...");
+                alert("Bhai, data.js abhi memory mein load nahi hui hai! Ek baar page ko full refresh karke dobara button dabao.");
             }
         }
 
-        // 🎯 DIRECT RUNTIME TRIGGER: Yeh bina kisi click ya alert ke direct 3 second baad force upload chala dega!
-        window.addEventListener('load', () => { 
-            setTimeout(forceDirectCloudMigration, 3500); 
-        });
+        // Global window object par function expose kiya taaki HTML button isko click kar sake
+        window.forceManualCloudMigration = forceManualCloudMigration;
 
     </script>
+    
+    <div style="position: fixed; bottom: 85px; right: 20px; z-index: 9999;">
+        <button onclick="window.forceManualCloudMigration()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 12px 20px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(16,185,129,0.4);">
+            Push Data to Cloud Database 🚀
+        </button>
+    </div>
     
     <script src="data.js?v=1.1"></script>
     <script src="script.js?v=1.1"></script>
