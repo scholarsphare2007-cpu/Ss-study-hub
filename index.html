@@ -829,7 +829,7 @@
         });
     </script>
 
-    <script type="module">
+   <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -861,47 +861,62 @@
             window.resourcesData = resourcesData;
             console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
             
-            // Trigger filter inside script.js whenever new data flows in
             if(typeof window.filterResources === 'function') {
                 window.filterResources();
             }
         });
 
-        // 🔥 GOVIND BHAI KA MANUAL PUSH CONTROLLER ENGINE
-        async function forceManualCloudMigration() {
-            // Hum teenon tarike se array ko dhoondenge taaki galti ki gunjaish na rahe
-            const targetArray = (typeof window.resourcesData !== 'undefined' && window.resourcesData.length > 0) ? window.resourcesData : 
-                              ((typeof resourcesData !== 'undefined' && resourcesData.length > 0) ? resourcesData : 
-                              ((typeof window.filteredData !== 'undefined' && window.filteredData.length > 0) ? window.filteredData : []));
+        // 🔥 GOVIND BHAI YAHAN APNE NOTES/PAPERS KI DETAILS DAAL DO (Direct Injection)
+        // Tumhe data.js file ki zaroorat hi nahi padegi, code yahin se direct data utha lega!
+        const govindBhaiLocalNotes = [
+            {
+                title: "Matrix Theory Complete Handwritten Notes",
+                subject: "Mathematics",
+                type: "Notes",
+                course: "B.Sc",
+                semester: "2nd Sem",
+                link: "https://drive.google.com/YOUR_DRIVE_LINK_1" // <-- Apna asli drive link yahan daalna
+            },
+            {
+                title: "B.Sc 2nd Sem Physics Syllabus 2026",
+                subject: "Physics",
+                type: "Syllabus",
+                course: "B.Sc",
+                semester: "2nd Sem",
+                link: "https://drive.google.com/YOUR_DRIVE_LINK_2" // <-- Apna asli drive link yahan daalna
+            }
+            // 💡 Agar aur daalne ho toh isi tarah comma (,) laga kar niche aur jadd sakte ho bhai!
+        ];
 
-            if (targetArray.length > 0) {
-                console.log("⏳ Manual Push Pipeline Activated! Uploading...");
+        async function forceManualCloudMigration() {
+            if (govindBhaiLocalNotes.length > 0) {
+                console.log("⏳ Direct Injection Upload Activated...");
                 
-                for (let i = 0; i < targetArray.length; i++) {
-                    const item = targetArray[i];
+                for (let i = 0; i < govindBhaiLocalNotes.length; i++) {
+                    const item = govindBhaiLocalNotes[i];
+                    // Name se document ID create hogi lowercase mein
                     const documentId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
                     
                     try {
                         await setDoc(doc(db, "study_materials", documentId), {
                             title: item.title,
-                            subject: item.subject || 'General',
-                            type: item.type || 'Notes',
-                            course: item.course || 'B.Sc',
-                            semester: item.semester || '2nd Sem',
-                            link: item.link || '#'
+                            subject: item.subject,
+                            type: item.type,
+                            course: item.course,
+                            semester: item.semester,
+                            link: item.link
                         });
                         console.log(`✅ Cloud Filled: ${item.title}`);
                     } catch (error) {
                         console.error("Upload Error:", error);
                     }
                 }
-                alert("Bhai, kamaal ho gaya! Saara data.js ka material database mein chala gaya hai. Ab tum is button aur uploader function ko code se mita sakte ho.");
+                alert("Bhai, badhai ho! Saara injected data database mein safely chala gaya hai. Ab tum is hara wale button ko code se mita sakte ho.");
             } else {
-                alert("Bhai, data.js abhi memory mein load nahi hui hai! Ek baar page ko full refresh karke dobara button dabao.");
+                alert("Bhai, pehle upar 'govindBhaiLocalNotes' array mein apne notes ki details toh bharo!");
             }
         }
 
-        // Global window object par function expose kiya taaki HTML button isko click kar sake
         window.forceManualCloudMigration = forceManualCloudMigration;
 
     </script>
@@ -912,7 +927,6 @@
         </button>
     </div>
     
-    <script src="data.js?v=1.1"></script>
     <script src="script.js?v=1.1"></script>
 
 </body>
