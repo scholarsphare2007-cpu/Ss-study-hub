@@ -833,16 +833,17 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO (Ss-study-hub waale account ka)
+        // 🚨 GOVIND BHAI: PEHLE APNI IN APNI 6 ENTRIES KO APNE FIREBASE CONSOLE SE DEKHKAR FILL KARO!
         const firebaseConfig = {
-    apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
-    authDomain: "ss-study-hub-fc1da.firebaseapp.com",
-    projectId: "ss-study-hub-fc1da",
-    storageBucket: "ss-study-hub-fc1da.firebasestorage.app",
-    messagingSenderId: "795768089126",
-    appId: "1:795768089126:web:2b768397067cc44d5854e7",
-    measurementId: "G-2FBM4BFM3D"
-};
+            apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
+  authDomain: "ss-study-hub-fc1da.firebaseapp.com",
+  projectId: "ss-study-hub-fc1da",
+  storageBucket: "ss-study-hub-fc1da.firebasestorage.app",
+  messagingSenderId: "795768089126",
+  appId: "1:795768089126:web:2b768397067cc44d5854e7",
+        };
+
+        // Initialize Engine safely
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -860,53 +861,34 @@
             window.resourcesData = resourcesData;
             console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
             
+            // 🚀 AUTOMATED BACK-UP ENGINE INTERLOCK (No Alert Required)
+            // Agar cloud ekdum khaali hai aur niche data.js load ho chuki hai, toh bina poochhe data cloud par bhej do!
+            if (resourcesData.length === 0) {
+                const localSource = (typeof window.filteredData !== 'undefined' && window.filteredData.length > 0) ? window.filteredData : [];
+                
+                if (localSource.length > 0) {
+                    console.log("⏳ Cloud is empty! Auto-uploading entries from local data.js...");
+                    localSource.forEach(async (item) => {
+                        const customDocId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+                        try {
+                            await setDoc(doc(db, "study_materials", customDocId), {
+                                title: item.title,
+                                subject: item.subject || 'General',
+                                type: item.type || 'Notes',
+                                course: item.course || 'B.Sc',
+                                semester: item.semester || '2nd Sem',
+                                link: item.link || '#'
+                            });
+                        } catch (error) { console.log(error); }
+                    });
+                }
+            }
+
             // Trigger filter inside script.js whenever new data flows in
             if(typeof window.filterResources === 'function') {
                 window.filterResources();
             }
         });
-
-        // 🔥 AUTOMATED DATA UPLOADER FUNCTION FOR LOCAL MIGRATION
-        async function uploadOldDataToFirebase() {
-            // Check karte hain ki script.js ya data.js se data load ho chuka hai ya nahi
-            const localSource = (typeof resourcesData !== 'undefined' && resourcesData.length > 0) ? resourcesData : (typeof window.resourcesData !== 'undefined' ? window.resourcesData : []);
-            
-            // Safe fallback check agar local grid resources blank ho
-            if (localSource.length === 0 && typeof window.filteredData !== 'undefined') {
-                localSource.push(...window.filteredData);
-            }
-
-            if (localSource.length > 0) {
-                console.log("⏳ Uploading old materials to Firebase Firestore...");
-                
-                for (let i = 0; i < localSource.length; i++) {
-                    const item = localSource[i];
-                    const customDocId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
-                    
-                    try {
-                        await setDoc(doc(db, "study_materials", customDocId), {
-                            title: item.title,
-                            subject: item.subject || 'General',
-                            type: item.type || 'Notes',
-                            course: item.course || 'B.Sc',
-                            semester: item.semester || '2nd Sem',
-                            link: item.link || '#'
-                        });
-                        console.log(`✅ Cloud Filled: ${item.title}`);
-                    } catch (error) {
-                        console.log(`❌ Error uploading ${item.title}:`, error);
-                    }
-                }
-                alert("Bhai, badhai ho! Saara data.js ka material Firebase Cloud par safely chala gaya hai.");
-            } else {
-                alert("Bhai, lagta hai data.js abhi browser mein load nahi hui hai! Ek baar apna local data structure check karo.");
-            }
-        }
-
-        // 🎯 DATA PUSH TRIGGER CONTROL PANEL
-        // Pehli baar database khali hone par data chadhane ke liye is neeche waali line ke aage se '//' hata dena, phir local refresh marna!
-        // window.addEventListener('load', () => { setTimeout(uploadOldDataToFirebase, 2500); });
-
     </script>
     
     <script src="data.js?v=1.1" onerror="console.log('Data layer fallback verified.')"></script>
