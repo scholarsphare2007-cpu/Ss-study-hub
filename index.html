@@ -829,11 +829,11 @@
         });
     </script>
 
-   <script type="module">
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🔑 Ss-study-hub ka exact configuration matrix
+        // 🔑 Ss-study-hub Real Production Credentials (G-N0YKP54FRQ)
         const firebaseConfig = {
             apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
             authDomain: "ss-study-hub-fc1da.firebaseapp.com",
@@ -852,7 +852,7 @@
 
         const resourcesCollectionRef = collection(db, "study_materials");
         
-        // 🔄 Real-time Firestore Cloud Live Streaming
+        // 🔄 Real-time Firestore Cloud Live Streaming Pipeline
         onSnapshot(resourcesCollectionRef, (snapshot) => {
             resourcesData.length = 0; 
             snapshot.forEach((doc) => {
@@ -861,287 +861,12 @@
             window.resourcesData = resourcesData;
             console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
             
+            // Trigger script.js filter logic immediately upon cloud stream sync updates
             if(typeof window.filterResources === 'function') {
                 window.filterResources();
             }
         });
-
-        // 🔥 GOVIND BHAI YAHAN APNE NOTES/PAPERS KI DETAILS DAAL DO (Direct Injection)
-        // Tumhe data.js file ki zaroorat hi nahi padegi, code yahin se direct data utha lega!
-        const govindBhaiLocalNotes = [
-            {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Syllabus",
-        title: "Mathematics 2nd sem Syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1dCy4U9F4qlwwmiTGUz5Tz8fjtZOufbRd/view?usp=drivesdk"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics", 
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Smart One Week Series",
-        title: "OWS Maths 2nd sem 2025-26",
-        link: "https://drive.google.com/file/d/183XpDPt_MMlvy3VlUSlaVtCxgev9lPQ9/view?usp=drivesdk"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Syllabus",
-        title: "Physics 2nd sem syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1-dU37HUpf8ZCSFD9z9XX99QYMh7grFpO/view?usp=drive_link"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-1",
-        link: "https://drive.google.com/file/d/1K15rmp37ZQQ-061KHdxQNbDC0W_zlVkL/view?usp=sharing"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Practical-Files",
-        title: "Physics lab file 2nd sem",
-        link: "#"
-    },
-     {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Smart One Week Series",
-        title: "OWS Physics 2nd sem 2025-26",
-        link: "https://drive.google.com/file/d/1duVw-y2mcyRms5W7I_pqcBmah9dkbGUe/view?usp=drive_link"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
-        type: "Syllabus",
-        title: "Chemistry 2nd sem syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1VOUyhNjNCV0vM5FRaBklEgBqdzPhzFS5/view?usp=drivesdk"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
-        type: "Practical-Files",
-        title: "Chemistry lab file 2nd sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Syllabus",
-        title: "Zoology 2nd sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Practical-Files",
-        title: "Zoology lab file 2nd sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General English",
-        type: "Syllabus",
-        title: "General English Syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General English",
-        type: "Notes",
-        title: "General English Notes",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Syllabus",
-        title: "General Hindi Syllabus (2025-26) ",
-        link: "#" 
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Notes",
-        title: "General Hindi Notes ",
-        link: "#" 
-    }
-            // 💡 Agar aur daalne ho toh isi tarah comma (,) laga kar niche aur jadd sakte ho bhai!
-        ];
-
-        async function forceManualCloudMigration() {
-            if (govindBhaiLocalNotes.length > 0) {
-                console.log("⏳ Direct Injection Upload Activated...");
-                
-                for (let i = 0; i < govindBhaiLocalNotes.length; i++) {
-                    const item = govindBhaiLocalNotes[i];
-                    // Name se document ID create hogi lowercase mein
-                    const documentId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
-                    
-                    try {
-                        await setDoc(doc(db, "study_materials", documentId), {
-                            title: item.title,
-                            subject: item.subject,
-                            type: item.type,
-                            course: item.course,
-                            semester: item.semester,
-                            link: item.link
-                        });
-                        console.log(`✅ Cloud Filled: ${item.title}`);
-                    } catch (error) {
-                        console.error("Upload Error:", error);
-                    }
-                }
-                alert("Bhai, badhai ho! Saara injected data database mein safely chala gaya hai. Ab tum is hara wale button ko code se mita sakte ho.");
-            } else {
-                alert("Bhai, pehle upar 'govindBhaiLocalNotes' array mein apne notes ki details toh bharo!");
-            }
-        }
-
-        window.forceManualCloudMigration = forceManualCloudMigration;
-
     </script>
-    
-    <div style="position: fixed; bottom: 85px; right: 20px; z-index: 9999;">
-        <button onclick="window.forceManualCloudMigration()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 12px 20px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(16,185,129,0.4);">
-            Push Data to Cloud Database 🚀
-        </button>
-    </div>
     
     <script src="script.js?v=1.1"></script>
 
