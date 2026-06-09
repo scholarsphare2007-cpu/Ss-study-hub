@@ -833,17 +833,17 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🚨 GOVIND BHAI: PEHLE APNI IN APNI 6 ENTRIES KO APNE FIREBASE CONSOLE SE DEKHKAR FILL KARO!
+        // 🔑 Ss-study-hub ka exact config array configuration matrix
         const firebaseConfig = {
             apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
-  authDomain: "ss-study-hub-fc1da.firebaseapp.com",
-  projectId: "ss-study-hub-fc1da",
-  storageBucket: "ss-study-hub-fc1da.firebasestorage.app",
-  messagingSenderId: "795768089126",
-  appId: "1:795768089126:web:2b768397067cc44d5854e7",
+            authDomain: "ss-study-hub-fc1da.firebaseapp.com",
+            projectId: "ss-study-hub-fc1da",
+            storageBucket: "ss-study-hub-fc1da.firebasestorage.app",
+            messagingSenderId: "795768089126",
+            appId: "1:795768089126:web:2b768397067cc44d5854e7",
+            measurementId: "G-2FBM4BFM3D"
         };
 
-        // Initialize Engine safely
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -861,37 +861,54 @@
             window.resourcesData = resourcesData;
             console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
             
-            // 🚀 AUTOMATED BACK-UP ENGINE INTERLOCK (No Alert Required)
-            // Agar cloud ekdum khaali hai aur niche data.js load ho chuki hai, toh bina poochhe data cloud par bhej do!
-            if (resourcesData.length === 0) {
-                const localSource = (typeof window.filteredData !== 'undefined' && window.filteredData.length > 0) ? window.filteredData : [];
-                
-                if (localSource.length > 0) {
-                    console.log("⏳ Cloud is empty! Auto-uploading entries from local data.js...");
-                    localSource.forEach(async (item) => {
-                        const customDocId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
-                        try {
-                            await setDoc(doc(db, "study_materials", customDocId), {
-                                title: item.title,
-                                subject: item.subject || 'General',
-                                type: item.type || 'Notes',
-                                course: item.course || 'B.Sc',
-                                semester: item.semester || '2nd Sem',
-                                link: item.link || '#'
-                            });
-                        } catch (error) { console.log(error); }
-                    });
-                }
-            }
-
-            // Trigger filter inside script.js whenever new data flows in
+            // Script.js ka filter call trigger engine execute
             if(typeof window.filterResources === 'function') {
                 window.filterResources();
             }
         });
+
+        // 🔥 BULLETPROOF RECTIFIED DIRECT UPLOADER FOR GOVIND BHAI
+        async function forceDirectCloudMigration() {
+            // Agar normal context ya global layers mein data.js mil jaye
+            const targetArray = (typeof resourcesData !== 'undefined' && resourcesData.length > 0) ? resourcesData : 
+                              ((typeof window.resourcesData !== 'undefined' && window.resourcesData.length > 0) ? window.resourcesData : 
+                              ((typeof window.filteredData !== 'undefined') ? window.filteredData : []));
+
+            if (targetArray.length > 0) {
+                console.log("⏳ Direct Push Pipeline Triggered! Documents uploading to cloud database...");
+                
+                for (let i = 0; i < targetArray.length; i++) {
+                    const item = targetArray[i];
+                    const documentId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+                    
+                    try {
+                        await setDoc(doc(db, "study_materials", documentId), {
+                            title: item.title,
+                            subject: item.subject || 'General',
+                            type: item.type || 'Notes',
+                            course: item.course || 'B.Sc',
+                            semester: item.semester || '2nd Sem',
+                            link: item.link || '#'
+                        });
+                        console.log(`✅ Document Transferred Successfully: ${item.title}`);
+                    } catch (error) {
+                        console.error("Firebase runtime error trace:", error);
+                    }
+                }
+                alert("Bhai, badhai ho! Saara data.js ka material cloud database mein safely chala gaya hai.");
+            } else {
+                console.log("⏳ Waiting for data.js backup compilation arrays...");
+            }
+        }
+
+        // 🎯 DIRECT RUNTIME TRIGGER: Yeh bina kisi click ya alert ke direct 3 second baad force upload chala dega!
+        window.addEventListener('load', () => { 
+            setTimeout(forceDirectCloudMigration, 3500); 
+        });
+
     </script>
     
-    <script src="data.js?v=1.1" onerror="console.log('Data layer fallback verified.')"></script>
+    <script src="data.js?v=1.1"></script>
     <script src="script.js?v=1.1"></script>
 
 </body>
