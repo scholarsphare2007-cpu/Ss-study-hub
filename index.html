@@ -831,9 +831,9 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🔑 Ss-study-hub Real Production Credentials (G-N0YKP54FRQ)
+        // 🔑 Ss-study-hub ka exact configuration matrix
         const firebaseConfig = {
             apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
             authDomain: "ss-study-hub-fc1da.firebaseapp.com",
@@ -852,7 +852,7 @@
 
         const resourcesCollectionRef = collection(db, "study_materials");
         
-        // 🔄 Real-time Firestore Cloud Live Streaming Pipeline
+        // 🔄 Real-time Firestore Cloud Live Streaming
         onSnapshot(resourcesCollectionRef, (snapshot) => {
             resourcesData.length = 0; 
             snapshot.forEach((doc) => {
@@ -861,14 +861,75 @@
             window.resourcesData = resourcesData;
             console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
             
-            // Trigger script.js filter logic immediately upon cloud stream sync updates
             if(typeof window.filterResources === 'function') {
                 window.filterResources();
             }
         });
+
+        // 🔥 GOVIND BHAI YAHAN APNI DATA.JS KI SAARI ENTRYS PASTE KAR DO!
+        const govindBhaiLocalNotes = [
+            {
+                title: "Matrix Theory Complete Handwritten Notes",
+                subject: "Mathematics",
+                type: "Notes",
+                course: "B.Sc",
+                semester: "2nd Sem",
+                link: "https://drive.google.com/YOUR_DRIVE_LINK_1"
+            },
+            {
+                title: "B.Sc 2nd Sem Physics Syllabus 2026",
+                subject: "Physics",
+                type: "Syllabus",
+                course: "B.Sc",
+                semester: "2nd Sem",
+                link: "https://drive.google.com/YOUR_DRIVE_LINK_2"
+            }
+            // 👈 Bas apni baki bachi hui saari entrys yahan niche copy-paste karte jao bhai!
+        ];
+
+        async function forceManualCloudMigration() {
+            if (govindBhaiLocalNotes.length > 0) {
+                console.log(`⏳ Direct Injection Upload Activated! ${govindBhaiLocalNotes.length} entries uploading...`);
+                
+                for (let i = 0; i < govindBhaiLocalNotes.length; i++) {
+                    const item = govindBhaiLocalNotes[i];
+                    // Name se document ID create hogi lowercase mein
+                    const documentId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+                    
+                    try {
+                        await setDoc(doc(db, "study_materials", documentId), {
+                            title: item.title,
+                            subject: item.subject || 'General',
+                            type: item.type || 'Notes',
+                            course: item.course || 'B.Sc',
+                            semester: item.semester || '2nd Sem',
+                            link: item.link || '#'
+                        });
+                        console.log(`✅ Cloud Filled: ${item.title}`);
+                    } catch (error) {
+                        console.error("Upload Error:", error);
+                    }
+                }
+                alert(`Bhai, kamaal ho gaya! data.js ki saari ${govindBhaiLocalNotes.length} entries Firebase database mein safely chali gayi hain.`);
+            } else {
+                alert("Bhai, pehle 'govindBhaiLocalNotes' array ke andar apna data toh paste karo!");
+            }
+        }
+
+        window.forceManualCloudMigration = forceManualCloudMigration;
+
     </script>
     
+    <div style="position: fixed; bottom: 85px; right: 20px; z-index: 9999;">
+        <button onclick="window.forceManualCloudMigration()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 12px 20px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(16,185,129,0.4);">
+            Push Data to Cloud Database 🚀
+        </button>
+    </div>
+    
     <script src="script.js?v=1.1"></script>
+
+</body>
+</html>
 
 </body>
 </html>
