@@ -494,25 +494,44 @@
 
     <script src="data.js?v=1.1"></script>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO (index.html wala sehi key check kar lena)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Core variables linked with local configuration matrices
         let currentClassSemester = '2nd Sem';
         let currentClassCourse = 'B.Sc'; 
-        
-        // Multi Alarm Tracker Memory Store Array
         let registeredAlarmsList = [];
         
-        // 🔥 AUDIO AUDIO HARDWARE ENGINE LAYER (Built-in Beep Generator)
+        // Audio generation controller parameters
         let audioContextInstance = null;
-        let alarmBeepIntervalId = null; // Continuous beep repeat tracker
+        let alarmBeepIntervalId = null;
 
         let selectedTypeFilter = 'all';
         let visibleFilesCount = 4;
+        
+        // Dynamic arrays memory block
+        let resourcesData = []; 
         let totalFilteredItems = [];
 
         window.onload = () => {
             setInterval(updateRoomLiveWatch, 1000);
 
-            // 🎯 AUDIO INITIALIZATION UNLOCKER ON FIRST USER GESTURE
+            // Hardware Audio Interlock permissions warmup
             const initHardwareAudio = () => {
                 if (!audioContextInstance) {
                     audioContextInstance = new (window.AudioContext || window.webkitAudioContext)();
@@ -537,218 +556,46 @@
             renderTimetableSlots();
         };
 
-        function updateRoomLiveWatch() {
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            
-            const exactTime24Str = `${String(hours).padStart(2, '0')}:${minutes}`;
-
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            const displayStr = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
-            
-            const watchNode = document.getElementById('roomWatch');
-            if (watchNode) watchNode.innerText = displayStr;
-
-            // Multi alarm verification match loop
-            const hitIndex = registeredAlarmsList.findIndex(timeStr => timeStr === exactTime24Str);
-            if (hitIndex > -1) {
-                registeredAlarmsList.splice(hitIndex, 1);
-                localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
-                refreshAlarmsQueueLayout();
-                
-                // Hardware Alarm Trigger!
-                triggerActiveAlarmRinger();
-            }
-        }
-
-        // 🔥 HARDWARE BEEP GENERATION ENGINE MECHANICS (100% No-Fail Sound)
-        function playHardwareBeepTone(frequency, duration) {
-            if (!audioContextInstance) return;
-            
-            // Context resume state trace safe backup
-            if (audioContextInstance.state === 'suspended') {
-                audioContextInstance.resume();
-            }
-
-            const oscillator = audioContextInstance.createOscillator();
-            const gainNode = audioContextInstance.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContextInstance.destination);
-
-            oscillator.type = 'sine'; // Crisp electronic clear wave
-            oscillator.frequency.value = frequency; // Sound Tone Pitch (800Hz)
-            
-            // Volume settings control matrix
-            gainNode.gain.setValueAtTime(0.5, audioContextInstance.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContextInstance.currentTime + duration);
-
-            oscillator.start(audioContextInstance.currentTime);
-            oscillator.stop(audioContextInstance.currentTime + duration);
-        }
-
-        function setStudyAlarm() {
-            const val = document.getElementById('alarmTimeField').value;
-            if(!val) { alert('Bhai, pehle valid time select karo!'); return; }
-            
-            if(registeredAlarmsList.length >= 10) {
-                alert('Bhai, maximum 10 alarms hi bhar sakte ho personal room mein!');
-                return;
-            }
-
-            if(registeredAlarmsList.includes(val)) {
-                alert('Bhai, yeh alarm toh pehle se hi line up mein laga hai!');
-                return;
-            }
-
-            // Warm up audio system on click action
-            if (audioContextInstance && audioContextInstance.state === 'suspended') {
-                audioContextInstance.resume();
-            }
-
-            registeredAlarmsList.push(val);
-            registeredAlarmsList.sort(); 
-            localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
-            
-            document.getElementById('alarmTimeField').value = '';
-            refreshAlarmsQueueLayout();
-        }
-
-        function refreshAlarmsQueueLayout() {
-            const container = document.getElementById('alarmQueueScroller');
-            container.innerHTML = '';
-
-            if (registeredAlarmsList.length === 0) {
-                container.innerHTML = `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:5px;">No active alarms set in stack grid.</div>`;
-                return;
-            }
-
-            registeredAlarmsList.forEach((timeStr, index) => {
-                const item = document.createElement('div');
-                item.className = 'queue-alarm-item';
-
-                const splitParts = timeStr.split(':');
-                let h = parseInt(splitParts[0]);
-                const m = splitParts[1];
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                h = h % 12; h = h ? h : 12;
-                const elegantTimeDisplay = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
-
-                item.innerHTML = `
-                    <div class="queue-time-txt">🔔 Slot ${index + 1}: ${elegantTimeDisplay}</div>
-                    <button class="delete-slot-btn" onclick="clearSpecificAlarm(${index})">✕ Remove</button>
-                `;
-                container.appendChild(item);
+        // 🔄 REAL-TIME CLOUD SYNC: Database se real-time data connect kiya
+        const resourcesCollectionRef = collection(db, "study_materials");
+        onSnapshot(resourcesCollectionRef, (snapshot) => {
+            resourcesData = []; // Clear current arrays memory state
+            snapshot.forEach((doc) => {
+                resourcesData.push(doc.data());
             });
-        }
-
-        function clearSpecificAlarm(index) {
-            registeredAlarmsList.splice(index, 1);
-            localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
-            refreshAlarmsQueueLayout();
-        }
-
-        function triggerActiveAlarmRinger() {
-            // Clear if any old loop is running by chance
-            if(alarmBeepIntervalId) clearInterval(alarmBeepIntervalId);
-
-            // 🔥 CONTINUOUS BEEP ALARM: Har 0.5 second mein loud double-beep bajega
-            alarmBeepIntervalId = setInterval(() => {
-                playHardwareBeepTone(880, 0.15); // Loud ring pitch tone A
-                setTimeout(() => {
-                    playHardwareBeepTone(880, 0.15); // Double beep ring speed pattern
-                }, 200);
-            }, 700);
-
-            document.getElementById('alarmTriggerOverlay').style.display = 'flex';
-        }
-
-        function killRingingAlarmAudio() {
-            // 🛑 Stop the continuous loop hardware interval instant
-            if(alarmBeepIntervalId) {
-                clearInterval(alarmBeepIntervalId);
-                alarmBeepIntervalId = null;
-            }
-            document.getElementById('alarmTriggerOverlay').style.display = 'none';
-        }
-
-        function handleRegistration(e) {
-            e.preventDefault();
-            const userData = {
-                name: document.getElementById('studentName').value.trim(),
-                course: document.getElementById('studentCourse').value,
-                semester: document.getElementById('studentClass').value,
-                college: document.getElementById('studentCollege').value.trim()
-            };
+            console.log("🔥 Personal Room Framework: Live Cloud Material Stream Synced!", resourcesData);
             
-            if (audioContextInstance && audioContextInstance.state === 'suspended') {
-                audioContextInstance.resume();
-            }
-
-            currentClassCourse = userData.course;
-            currentClassSemester = userData.semester;
-            localStorage.setItem('studyRoomUser', JSON.stringify(userData));
-            mountStudyRoom(userData);
-        }
-
-        function mountStudyRoom(user) {
-            document.getElementById('authCard').style.display = 'none';
-            document.getElementById('roomDashboard').style.display = 'flex';
-            
-            document.getElementById('roomTitle').innerText = `${user.name} — Study Room`;
-            document.getElementById('roomSubtitle').innerText = `${user.college} | ${user.course} ${user.semester}`;
-            
-            resetAndFilter();
-            renderLibraryShelfItems();
-            renderCompletedShelfItems();
-        }
-
-        function toggleHangingLantern() {
-            const active = document.body.classList.toggle('lantern-active');
-            document.getElementById('lanternTxt').innerText = active ? 'Lantern On' : 'Lantern Off';
-        }
-
-        function resetAndFilter() {
-            visibleFilesCount = 4;
+            // Jaise hi cloud par koi naya data aayega, bache ka room auto-refresh ho jayega
             executeRoomFilter();
-        }
+        });
 
-        function changeTypeFilter(type) {
-            selectedTypeFilter = type;
-            document.querySelectorAll('.filter-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`filter-${type}`).classList.add('active');
-            resetAndFilter();
-        }
-
-        function executeRoomFilter() {
+        // 📋 DUAL DEEP ROUTING FILTERING MATRIX ENGINE (Course + Semester Cloud Filter)
+        window.executeRoomFilter = function() {
             const grid = document.getElementById('roomMaterialsGrid');
+            if(!grid) return;
             grid.innerHTML = '';
 
             const query = document.getElementById('roomSearchInput').value.toLowerCase().trim();
-            const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
-
             const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
             const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
 
-            let filtered = dataSrc.filter(item => {
+            // 🎯 CRITICAL LOCK CRITERIA: Cloud ke saare data mein se sirf bache ka chuna hua Course aur Sem nikalenge
+            let filtered = resourcesData.filter(item => {
                 const matchCourse = item.course && item.course.toLowerCase() === currentClassCourse.toLowerCase();
                 const matchSem = item.semester && item.semester.toLowerCase() === currentClassSemester.toLowerCase();
                 return matchCourse && matchSem;
             });
 
+            // Syllabus, Notes, Paper filter tabs tracking
             if (selectedTypeFilter !== 'all') {
                 filtered = filtered.filter(item => item.type && item.type.toLowerCase() === selectedTypeFilter);
             }
 
+            // Text search tracking
             totalFilteredItems = filtered.filter(item => {
                 return query === '' || 
                        (item.title && item.title.toLowerCase().includes(query)) ||
-                       (item.subject && item.subject.toLowerCase().includes(query)) ||
-                       (item.type && item.type.toLowerCase().includes(query));
+                       (item.subject && item.subject.toLowerCase().includes(query));
             });
 
             if (totalFilteredItems.length === 0) {
@@ -757,6 +604,7 @@
                 return;
             }
 
+            // 📑 strict 4-files pagination limit processing slice
             const currentSlice = totalFilteredItems.slice(0, visibleFilesCount);
 
             currentSlice.forEach(item => {
@@ -800,25 +648,174 @@
             } else {
                 document.getElementById('loadMoreBox').style.display = 'none';
             }
-        }
+        };
 
-        function loadMoreMaterials() {
+        window.loadMoreMaterials = function() {
             visibleFilesCount += 4;
             executeRoomFilter();
+        };
+
+        window.resetAndFilter = function() {
+            visibleFilesCount = 4;
+            executeRoomFilter();
+        };
+
+        window.changeTypeFilter = function(type) {
+            selectedTypeFilter = type;
+            document.querySelectorAll('.filter-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-${type}`).classList.add('active');
+            resetAndFilter();
+        };
+
+        function updateRoomLiveWatch() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            const exactTime24Str = `${String(hours).padStart(2, '0')}:${minutes}`;
+
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const displayStr = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+            
+            const watchNode = document.getElementById('roomWatch');
+            if (watchNode) watchNode.innerText = displayStr;
+
+            const hitIndex = registeredAlarmsList.findIndex(timeStr => timeStr === exactTime24Str);
+            if (hitIndex > -1) {
+                registeredAlarmsList.splice(hitIndex, 1);
+                localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
+                refreshAlarmsQueueLayout();
+                triggerActiveAlarmRinger();
+            }
         }
 
-        function toggleLibraryItemEngine(targetTitle) {
-            const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
-            let libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
+        // 🔥 HARDWARE SPECIALLY BACKED OSCILLATOR BEEP machine logic
+        function playHardwareBeepTone(frequency, duration) {
+            if (!audioContextInstance) return;
+            if (audioContextInstance.state === 'suspended') {
+                audioContextInstance.resume();
+            }
+            const oscillator = audioContextInstance.createOscillator();
+            const gainNode = audioContextInstance.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContextInstance.destination);
+            oscillator.type = 'sine';
+            oscillator.frequency.value = frequency;
+            gainNode.gain.setValueAtTime(0.5, audioContextInstance.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContextInstance.currentTime + duration);
+            oscillator.start(audioContextInstance.currentTime);
+            oscillator.stop(audioContextInstance.currentTime + duration);
+        }
 
+        window.setStudyAlarm = function() {
+            const val = document.getElementById('alarmTimeField').value;
+            if(!val) { alert('Bhai, pehle valid time select karo!'); return; }
+            if(registeredAlarmsList.length >= 10) { alert('Bhai, maximum 10 alarms hi bhar sakte ho!'); return; }
+            if(registeredAlarmsList.includes(val)) { alert('Bhai, yeh alarm toh pehle se laga hai!'); return; }
+
+            if (audioContextInstance && audioContextInstance.state === 'suspended') {
+                audioContextInstance.resume();
+            }
+
+            registeredAlarmsList.push(val);
+            registeredAlarmsList.sort(); 
+            localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
+            document.getElementById('alarmTimeField').value = '';
+            refreshAlarmsQueueLayout();
+        };
+
+        function refreshAlarmsQueueLayout() {
+            const container = document.getElementById('alarmQueueScroller');
+            if(!container) return;
+            container.innerHTML = '';
+
+            if (registeredAlarmsList.length === 0) {
+                container.innerHTML = `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:5px;">No active alarms set in stack grid.</div>`;
+                return;
+            }
+
+            registeredAlarmsList.forEach((timeStr, index) => {
+                const item = document.createElement('div');
+                item.className = 'queue-alarm-item';
+                const splitParts = timeStr.split(':');
+                let h = parseInt(splitParts[0]);
+                const m = splitParts[1];
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12; h = h ? h : 12;
+                item.innerHTML = `
+                    <div class="queue-time-txt">🔔 Slot ${index + 1}: ${String(h).padStart(2, '0')}:${m} ${ampm}</div>
+                    <button class="delete-slot-btn" onclick="clearSpecificAlarm(${index})">✕ Remove</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        window.clearSpecificAlarm = function(index) {
+            registeredAlarmsList.splice(index, 1);
+            localStorage.setItem('roomSavedAlarmsStack', JSON.stringify(registeredAlarmsList));
+            refreshAlarmsQueueLayout();
+        };
+
+        function triggerActiveAlarmRinger() {
+            if(alarmBeepIntervalId) clearInterval(alarmBeepIntervalId);
+            alarmBeepIntervalId = setInterval(() => {
+                playHardwareBeepTone(880, 0.15);
+                setTimeout(() => { playHardwareBeepTone(880, 0.15); }, 200);
+            }, 700);
+            document.getElementById('alarmTriggerOverlay').style.display = 'flex';
+        }
+
+        window.killRingingAlarmAudio = function() {
+            if(alarmBeepIntervalId) { clearInterval(alarmBeepIntervalId); alarmBeepIntervalId = null; }
+            document.getElementById('alarmTriggerOverlay').style.display = 'none';
+        }
+
+        window.handleRegistration = function(e) {
+            e.preventDefault();
+            const userData = {
+                name: document.getElementById('studentName').value.trim(),
+                course: document.getElementById('studentCourse').value,
+                semester: document.getElementById('studentClass').value,
+                college: document.getElementById('studentCollege').value.trim()
+            };
+            
+            if (audioContextInstance && audioContextInstance.state === 'suspended') {
+                audioContextInstance.resume();
+            }
+
+            currentClassCourse = userData.course;
+            currentClassSemester = userData.semester;
+            localStorage.setItem('studyRoomUser', JSON.stringify(userData));
+            mountStudyRoom(userData);
+        }
+
+        function mountStudyRoom(user) {
+            document.getElementById('authCard').style.display = 'none';
+            document.getElementById('roomDashboard').style.display = 'flex';
+            document.getElementById('roomTitle').innerText = `${user.name} — Study Room`;
+            document.getElementById('roomSubtitle').innerText = `${user.college} | ${user.course} ${user.semester}`;
+            resetAndFilter();
+            renderLibraryShelfItems();
+            renderCompletedShelfItems();
+        }
+
+        window.toggleHangingLantern = function() {
+            const active = document.body.classList.toggle('lantern-active');
+            document.getElementById('lanternTxt').innerText = active ? 'Lantern On' : 'Lantern Off';
+        }
+
+        window.toggleLibraryItemEngine = function(targetTitle) {
+            let libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
             const existingIndex = libraryList.findIndex(item => item.title === targetTitle);
             if (existingIndex > -1) {
                 libraryList.splice(existingIndex, 1);
             } else {
-                const matchedObj = dataSrc.find(item => item.title === targetTitle);
+                const matchedObj = resourcesData.find(item => item.title === targetTitle);
                 if (matchedObj) libraryList.push(matchedObj);
             }
-
             localStorage.setItem('userRoomLibrary', JSON.stringify(libraryList));
             executeRoomFilter();
             renderLibraryShelfItems();
@@ -826,6 +823,7 @@
 
         function renderLibraryShelfItems() {
             const container = document.getElementById('libraryShelfGrid');
+            if(!container) return;
             container.innerHTML = '';
             const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
 
@@ -838,7 +836,6 @@
                 const card = document.createElement('div');
                 card.className = 'room-material-card';
                 card.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-
                 let rawLink = item.link || '';
                 let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
                 let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, PDF link jaldi aane wala hai!')"`;
@@ -850,7 +847,6 @@
                             <span class="action-toggle-pill saved-in" onclick="toggleLibraryItemEngine('${escapeHtml(item.title)}')">❌ Out Shelf</span>
                         </div>
                         <div class="mat-title" style="margin-top:8px;">${item.title}</div>
-                        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">${item.subject}</div>
                     </div>
                     <div class="action-links-row">
                         <a ${linkAttrView} class="action-room-btn accent-go" style="background:linear-gradient(135deg, #10b981 0%, #059669 100%);">Read Document</a>
@@ -860,18 +856,15 @@
             });
         }
 
-        function toggleCompletedItemEngine(targetTitle) {
-            const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
+        window.toggleCompletedItemEngine = function(targetTitle) {
             let completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
-
             const existingIndex = completedList.findIndex(item => item.title === targetTitle);
             if (existingIndex > -1) {
                 completedList.splice(existingIndex, 1);
             } else {
-                const matchedObj = dataSrc.find(item => item.title === targetTitle);
+                const matchedObj = resourcesData.find(item => item.title === targetTitle);
                 if (matchedObj) completedList.push(matchedObj);
             }
-
             localStorage.setItem('userRoomCompleted', JSON.stringify(completedList));
             executeRoomFilter();
             renderCompletedShelfItems();
@@ -879,6 +872,7 @@
 
         function renderCompletedShelfItems() {
             const container = document.getElementById('completedShelfGrid');
+            if(!container) return;
             container.innerHTML = '';
             const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
 
@@ -891,7 +885,6 @@
                 const card = document.createElement('div');
                 card.className = 'room-material-card';
                 card.style.borderColor = 'rgba(245, 158, 11, 0.2)';
-
                 let rawLink = item.link || '';
                 let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
                 let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, PDF link jaldi aane wala hai!')"`;
@@ -903,7 +896,6 @@
                             <span class="action-toggle-pill done-in" onclick="toggleCompletedItemEngine('${escapeHtml(item.title)}')">🔄 Review Again</span>
                         </div>
                         <div class="mat-title" style="margin-top:8px;">${item.title}</div>
-                        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">${item.subject}</div>
                     </div>
                     <div class="action-links-row">
                         <a ${linkAttrView} class="action-room-btn" style="background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border:none;">Re-Read File</a>
@@ -913,24 +905,22 @@
             });
         }
 
-        function addTimetableSlot(e) {
+        window.addTimetableSlot = function(e) {
             e.preventDefault();
             const subject = document.getElementById('slotSubject').value.trim();
             const time = document.getElementById('slotTime').value;
-
             let currentSlots = JSON.parse(localStorage.getItem('roomTimetableData')) || [];
             currentSlots.push({ subject, time });
             currentSlots.sort((a, b) => a.time.localeCompare(b.time));
-
             localStorage.setItem('roomTimetableData', JSON.stringify(currentSlots));
             document.getElementById('slotSubject').value = '';
             document.getElementById('slotTime').value = '';
-            
             renderTimetableSlots();
         }
 
         function renderTimetableSlots() {
             const container = document.getElementById('timetableRowsContainer');
+            if(!container) return;
             container.innerHTML = '';
             const currentSlots = JSON.parse(localStorage.getItem('roomTimetableData')) || [];
 
@@ -942,18 +932,15 @@
             currentSlots.forEach((slot, index) => {
                 const row = document.createElement('div');
                 row.className = 'custom-slot-row';
-
                 const splitParts = slot.time.split(':');
                 let h = parseInt(splitParts[0]);
                 const m = splitParts[1];
                 const ampm = h >= 12 ? 'PM' : 'AM';
                 h = h % 12; h = h ? h : 12;
-                const standardTimeDisplay = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
-
                 row.innerHTML = `
                     <div>
                         <div class="slot-subject">${slot.subject}</div>
-                        <div class="slot-time">⏱️ Time Set: ${standardTimeDisplay}</div>
+                        <div class="slot-time">⏱️ Time Set: ${String(h).padStart(2, '0')}:${m} ${ampm}</div>
                     </div>
                     <button class="delete-slot-btn" onclick="deleteTimetableSlot(${index})">✕ Delete</button>
                 `;
@@ -961,14 +948,30 @@
             });
         }
 
-        function deleteTimetableSlot(index) {
+        window.deleteTimetableSlot = function(index) {
             let currentSlots = JSON.parse(localStorage.getItem('roomTimetableData')) || [];
             currentSlots.splice(index, 1);
             localStorage.setItem('roomTimetableData', JSON.stringify(currentSlots));
             renderTimetableSlots();
         }
 
-        function saveProfileChanges() {
+        window.openProfileModal = function() {
+            const savedSession = localStorage.getItem('studyRoomUser');
+            if (savedSession) {
+                const user = JSON.parse(savedSession);
+                document.getElementById('editName').value = user.name;
+                document.getElementById('editCourse').value = user.course || 'B.Sc';
+                document.getElementById('editClass').value = user.semester;
+                document.getElementById('editCollege').value = user.college;
+            }
+            document.getElementById('profileModal').style.display = 'flex';
+        }
+
+        window.closeProfileModal = function() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        window.saveProfileChanges = function() {
             const updatedData = {
                 name: document.getElementById('editName').value.trim(),
                 course: document.getElementById('editCourse').value,
@@ -997,7 +1000,7 @@
             return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         }
 
-        function logOutRoom() {
+        window.logOutRoom = function() {
             if(confirm('Bhai, Study Room se exit karna hai?')) {
                 localStorage.removeItem('studyRoomUser');
                 document.body.classList.remove('lantern-active');
@@ -1007,5 +1010,7 @@
             }
         }
     </script>
+</body>
+</html>
 </body>
 </html>
