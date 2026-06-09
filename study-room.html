@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 
-    <!-- Google tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0YKP54FRQ"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N0YKP54FRQ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -288,7 +287,6 @@
 </head>
 <body>
 
-    <!-- 🕯️ UNIQUE FIXED ROPE HANGING LANTERN ASSEMBLY -->
     <div class="lantern-assembly-node">
         <div class="lantern-rope"></div>
         <div class="lantern-chassis" onclick="toggleHangingLantern()">
@@ -354,7 +352,6 @@
                     <p id="roomSubtitle">LBS PG College | B.Sc 2nd Sem</p>
                 </div>
                 <div class="header-actions">
-                    <!-- ⚙️ Stable Edit Profile Button Placed on Top Right -->
                     <div class="edit-profile-btn" onclick="openProfileModal()">
                         <span>⚙️</span> Edit Profile
                     </div>
@@ -363,7 +360,6 @@
 
             <div class="desk-layout-grid">
                 
-                <!-- Card Component A: System Timer Watch & Multi Alarm Hub -->
                 <div class="desk-card-widget">
                     <div class="widget-title">⏰ Study Clock & Multi-Alarm Hub</div>
                     <div class="watch-face-display" id="roomWatch">00:00:00 AM</div>
@@ -373,7 +369,6 @@
                         <button class="alarm-btn" onclick="setStudyAlarm()">Add Alarm</button>
                     </div>
                     
-                    <!-- Real-time Active Multi-Alarm Track Stack Node -->
                     <div class="alarm-queue-scroller" id="alarmQueueScroller">
                     </div>
                 </div>
@@ -485,53 +480,46 @@
         </div>
     </div>
 
-    <!-- 🔊 ACTIVE REAL-TIME ALARM POPUP INJECTION CONTAINER MESH -->
     <div class="alarm-alert-overlay" id="alarmTriggerOverlay">
         <h1 style="font-size: 3rem; font-weight: 900; text-shadow: 0 0 20px black; color: white;">🚨 ALARM RINGING 🚨</h1>
         <p style="font-size: 1.2rem; font-weight: 600; color: white;" id="alarmTriggerMsg">Time to focus Govind Bhai!</p>
         <button onclick="killRingingAlarmAudio()" class="submit-btn" style="max-width: 250px; background: white; color: red; font-size: 1.2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-weight: 900; border-radius: 12px; border: none; padding: 14px; cursor: pointer;">🛑 Stop Alarm</button>
     </div>
 
-    <script src="data.js?v=1.1"></script>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO (index.html wala sehi key check kar lena)
+        // 🔑 PRODUCTION CONNECTIVITY KEYS (Ss-study-hub Verified)
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
+            authDomain: "ss-study-hub-fc1da.firebaseapp.com",
+            projectId: "ss-study-hub-fc1da",
+            storageBucket: "ss-study-hub-fc1da.firebasestorage.app",
+            messagingSenderId: "795768089126",
+            appId: "1:795768089126:web:2b768397067cc44d5854e7",
+            measurementId: "G-2FBM4BFM3D"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Core variables linked with local configuration matrices
         let currentClassSemester = '2nd Sem';
         let currentClassCourse = 'B.Sc'; 
         let registeredAlarmsList = [];
         
-        // Audio generation controller parameters
         let audioContextInstance = null;
         let alarmBeepIntervalId = null;
 
         let selectedTypeFilter = 'all';
         let visibleFilesCount = 4;
         
-        // Dynamic arrays memory block
         let resourcesData = []; 
         let totalFilteredItems = [];
 
         window.onload = () => {
             setInterval(updateRoomLiveWatch, 1000);
 
-            // Hardware Audio Interlock permissions warmup
             const initHardwareAudio = () => {
                 if (!audioContextInstance) {
                     audioContextInstance = new (window.AudioContext || window.webkitAudioContext)();
@@ -556,20 +544,16 @@
             renderTimetableSlots();
         };
 
-        // 🔄 REAL-TIME CLOUD SYNC: Database se real-time data connect kiya
         const resourcesCollectionRef = collection(db, "study_materials");
         onSnapshot(resourcesCollectionRef, (snapshot) => {
-            resourcesData = []; // Clear current arrays memory state
+            resourcesData = []; 
             snapshot.forEach((doc) => {
                 resourcesData.push(doc.data());
             });
-            console.log("🔥 Personal Room Framework: Live Cloud Material Stream Synced!", resourcesData);
-            
-            // Jaise hi cloud par koi naya data aayega, bache ka room auto-refresh ho jayega
+            console.log("🔥 Personal Room Cloud Pipeline Synced!", resourcesData);
             executeRoomFilter();
         });
 
-        // 📋 DUAL DEEP ROUTING FILTERING MATRIX ENGINE (Course + Semester Cloud Filter)
         window.executeRoomFilter = function() {
             const grid = document.getElementById('roomMaterialsGrid');
             if(!grid) return;
@@ -579,19 +563,27 @@
             const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
             const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
 
-            // 🎯 CRITICAL LOCK CRITERIA: Cloud ke saare data mein se sirf bache ka chuna hua Course aur Sem nikalenge
             let filtered = resourcesData.filter(item => {
                 const matchCourse = item.course && item.course.toLowerCase() === currentClassCourse.toLowerCase();
                 const matchSem = item.semester && item.semester.toLowerCase() === currentClassSemester.toLowerCase();
                 return matchCourse && matchSem;
             });
 
-            // Syllabus, Notes, Paper filter tabs tracking
+            // ⚡ FIXED COMPILING MATRIX LOOP FOR CASE INTERLOCK KEYS
             if (selectedTypeFilter !== 'all') {
-                filtered = filtered.filter(item => item.type && item.type.toLowerCase() === selectedTypeFilter);
+                filtered = filtered.filter(item => {
+                    if(!item.type) return false;
+                    const typeLower = item.type.toLowerCase();
+                    // Syllabus mapping
+                    if(selectedTypeFilter === 'syllabus') return typeLower.includes('syllabus');
+                    // Notes mapping
+                    if(selectedTypeFilter === 'notes') return typeLower.includes('note');
+                    // Old papers configuration mapping
+                    if(selectedTypeFilter === 'paper') return typeLower.includes('paper') || typeLower.includes('pyq');
+                    return typeLower === selectedTypeFilter;
+                });
             }
 
-            // Text search tracking
             totalFilteredItems = filtered.filter(item => {
                 return query === '' || 
                        (item.title && item.title.toLowerCase().includes(query)) ||
@@ -604,7 +596,6 @@
                 return;
             }
 
-            // 📑 strict 4-files pagination limit processing slice
             const currentSlice = totalFilteredItems.slice(0, visibleFilesCount);
 
             currentSlice.forEach(item => {
@@ -692,7 +683,6 @@
             }
         }
 
-        // 🔥 HARDWARE SPECIALLY BACKED OSCILLATOR BEEP machine logic
         function playHardwareBeepTone(frequency, duration) {
             if (!audioContextInstance) return;
             if (audioContextInstance.state === 'suspended') {
@@ -1010,7 +1000,5 @@
             }
         }
     </script>
-</body>
-</html>
 </body>
 </html>
