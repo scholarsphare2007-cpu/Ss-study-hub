@@ -136,7 +136,7 @@ function clearSurvivalLights() {
 }
 
 // ==========================================
-// 📄 RENDER MECHANICS
+// 📄 FIREBASE COMPATIBLE RENDER MECHANICS
 // ==========================================
 function filterResources() {
     const courseValue = document.getElementById('courseFilter').value;
@@ -147,19 +147,19 @@ function filterResources() {
     const grid = document.getElementById('resourcesGrid');
     const noResults = document.getElementById('noResults');
     
-    // Safety check for resourcesData
-    const dataSrc = typeof resourcesData !== 'undefined' ? resourcesData : [];
+    // 🧠 SAFETY SYNC LAYER: Pehle check karenge global Firebase array load hua ya nahi
+    const dataSrc = (typeof window.resourcesData !== 'undefined') ? window.resourcesData : [];
     
+    // Grid cleaner bounds loop execution
     const cards = grid.querySelectorAll('.card');
     cards.forEach(card => card.remove());
     
-    currentLimit = 6;
     filteredData = [];
 
     dataSrc.forEach(item => {
-        const matchCourse = (courseValue === 'all' || item.course === courseValue);
-        const matchSem = (semValue === 'all' || item.semester === semValue);
-        const matchType = (typeValue === 'all' || item.type === typeValue);
+        const matchCourse = (courseValue === 'all' || (item.course && item.course.toLowerCase() === courseValue.toLowerCase()));
+        const matchSem = (semValue === 'all' || (item.semester && item.semester.toLowerCase() === semValue.toLowerCase()));
+        const matchType = (typeValue === 'all' || (item.type && item.type.toLowerCase() === typeValue.toLowerCase()));
         
         const matchSearch = searchValue === '' || 
                             (item.title && item.title.toLowerCase().includes(searchValue)) ||
@@ -184,6 +184,8 @@ function filterResources() {
 
 function renderCards() {
     const grid = document.getElementById('resourcesGrid');
+    if(!grid) return;
+    
     const dataToRender = filteredData.slice(0, currentLimit);
 
     const oldCards = grid.querySelectorAll('.card');
@@ -191,12 +193,14 @@ function renderCards() {
 
     dataToRender.forEach((item, index) => {
         let tagClass = 'tag-notes';
-        if (item.type === 'Practical-Files' || item.type === 'Practical File') tagClass = 'tag-file';
-        if (item.type === 'PYQ') tagClass = 'tag-pyq';
-        if (item.type === 'Syllabus') tagClass = 'tag-syllabus';
-        if (item.type === 'Assignment') tagClass = 'tag-assignment';
-        if (item.type === 'Important-Topics') tagClass = 'tag-topics';
-        if (item.type === 'Paper') tagClass = 'tag-paper';
+        const itemTypeLower = item.type ? item.type.toLowerCase() : '';
+        
+        if (itemTypeLower === 'practical-files' || itemTypeLower === 'practical file') tagClass = 'tag-file';
+        if (itemTypeLower === 'pyq') tagClass = 'tag-pyq';
+        if (itemTypeLower === 'syllabus') tagClass = 'tag-syllabus';
+        if (itemTypeLower === 'assignment') tagClass = 'tag-assignment';
+        if (itemTypeLower === 'important-topics') tagClass = 'tag-topics';
+        if (itemTypeLower === 'paper') tagClass = 'tag-paper';
 
         const card = document.createElement('div');
         card.className = 'card';
@@ -206,7 +210,6 @@ function renderCards() {
         let originalDriveLink = rawLink.trim();
         let directDownloadLink = '';
 
-        // 🚨 CRITICAL CHECK: Agar link '#' hai, khali hai, ya undefined hai
         let isLinkValid = originalDriveLink !== '' && originalDriveLink !== '#';
 
         if (isLinkValid && originalDriveLink.includes('drive.google.com')) {
@@ -229,15 +232,14 @@ function renderCards() {
             }
         }
 
-        // Setup Attributes based on validity (No more blank pages for '#')
         let linkAttrView = isLinkValid ? `href="${originalDriveLink}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, Govind ne abhi iska PDF upload nahi kiya hai! Stay tuned.')"`;
         let linkAttrDownload = isLinkValid ? `href="${directDownloadLink || originalDriveLink}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, jab file hi nahi hai toh download kya karega! Pehle link aane de.')"`;
 
         card.innerHTML = `
             <div>
-                <span class="card-tag ${tagClass}">${item.type}</span>
+                <span class="card-tag ${tagClass}">${item.type || 'Resource'}</span>
                 <h3 class="card-title">${item.title}</h3>
-                <p class="card-meta"><strong>${item.course}</strong> — ${item.semester}</p>
+                <p class="card-meta"><strong>${item.course || 'B.Sc'}</strong> — ${item.semester || 'Sem'}</p>
             </div>
             <div class="card-actions">
                 <a ${linkAttrView} class="action-btn btn-view">View PDF</a>
@@ -273,7 +275,6 @@ window.addEventListener('scroll', () => {
     
     if (bottomNavItems.length >= 3 && devSection) {
         const rect = devSection.getBoundingClientRect();
-        // Check if Developer Spec is visible inside viewport
         if (rect.top <= (window.innerHeight || document.documentElement.clientHeight) - 200) {
             bottomNavItems[0].classList.remove('active');
             bottomNavItems[2].classList.add('active');
@@ -283,6 +284,9 @@ window.addEventListener('scroll', () => {
         }
     }
 });
+
+// 🔥 Global binding hook for Firebase context refresh initialization
+window.filterResources = filterResources;
 
 window.onload = () => {
     filterResources();
