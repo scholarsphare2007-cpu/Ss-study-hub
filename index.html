@@ -836,7 +836,54 @@
         });
     </script>
 
-    <script src="data.js?v=1.1"></script>
+    <script type="module">
+    // Firebase App aur Firestore Database ke modules import karna
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO (Step 3 waala)
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Firebase ko initialize kiya
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Global variables jo pehle se chal rahe hain
+    let currentClassSemester = '2nd Sem';
+    let currentClassCourse = 'B.Sc';
+    let registeredAlarmsList = [];
+    let selectedTypeFilter = 'all';
+    let visibleFilesCount = 4;
+    
+    // 🧠 REAL-TIME RESOURCE MEMORY: Ab resourcesData direct Firebase se live update hoga
+    let resourcesData = []; 
+    let totalFilteredItems = [];
+
+    // 🔄 FIREBASE REAL-TIME LISTENER ENGINE
+    // Isse jab bhi tu database mein kuch badlega, bina refresh bache ki screen par data badal jayega!
+    const resourcesCollectionRef = collection(db, "study_materials");
+    
+    onSnapshot(resourcesCollectionRef, (snapshot) => {
+        resourcesData = []; // Purana local data saaf kiya
+        snapshot.forEach((doc) => {
+            resourcesData.push(doc.data());
+        });
+        console.log("🔥 Firebase Live Data Fetched Successfully!", resourcesData);
+        
+        // Data aate hi filter engine ko chalado taaki grid render ho jaye
+        executeRoomFilter();
+    });
+
+    // Tumhara baaki ka pura purana functions (updateRoomLiveWatch, setStudyAlarm, executeRoomFilter, etc.) iske niche as-is chalega...
+</script>
+    
     <script src="script.js?v=1.1"></script>
 
 </body>
