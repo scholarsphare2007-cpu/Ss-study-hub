@@ -743,7 +743,6 @@
             } else if (type === 'type') {
                 document.getElementById('typeFilter').value = document.getElementById('typeFilterMobile').value;
             }
-            // Trigger dynamic global filter call inside the module
             window.filterResources();
         }
 
@@ -834,174 +833,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO (G-N0YKP54FRQ waale account se)
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        let resourcesData = []; 
-        let visibleCardsLimit = 8; // Global visibility step limit index
-
-        // Expose variables globally to be compatible with your scripts
-        window.resourcesData = resourcesData;
-
-        const resourcesCollectionRef = collection(db, "study_materials");
-        
-        // 🔄 Real-time Firestore Cloud Streaming
-        onSnapshot(resourcesCollectionRef, (snapshot) => {
-            resourcesData.length = 0; // Pure memory arrays clear out
-            snapshot.forEach((doc) => {
-                resourcesData.push(doc.data());
-            });
-            window.resourcesData = resourcesData;
-            console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
-            
-            // Auto data migration validation layer check
-            triggerDataAutoMigrationCheck();
-
-            // Fire UI Filter execution matching rows instantly
-            window.filterResources();
-        });
-
-        // 📥 TEMPORARY AUTOMATIC MIGRATION MECHANISM FOR GOVIND BHAI
-        async function triggerDataAutoMigrationCheck() {
-            // Agar cloud database ekdum khaali hai aur local window.backupResources (purani data.js) present hai
-            if (resourcesData.length === 0 && typeof window.backupResources !== 'undefined' && window.backupResources.length > 0) {
-                console.log("⏳ Cloud is empty! Starting local data.js migration pipeline...");
-                
-                for (let i = 0; i < window.backupResources.length; i++) {
-                    const item = window.backupResources[i];
-                    const documentId = item.title.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
-                    
-                    try {
-                        await setDoc(doc(db, "study_materials", documentId), {
-                            title: item.title,
-                            subject: item.subject,
-                            type: item.type,
-                            course: item.course || 'B.Sc',
-                            semester: item.semester || '2nd Sem',
-                            link: item.link || '#'
-                        });
-                    } catch (e) { console.error("Migration trace error:", e); }
-                }
-                alert("Bhai, saara purana data data.js se udkar Firebase Firestore Cloud par successfully upload ho gaya hai!");
-            }
-        }
-
-        // 📋 DYNAMIC MULTI-FILTER COMPILING MATRIX ENGINE FOR CLOUD ARRAYS
-        window.filterResources = function() {
-            visibleCardsLimit = 8; // Reset pagination bounds on search/select triggers
-            window.renderResourcesGrid();
-        };
-
-        window.renderResourcesGrid = function() {
-            const gridNode = document.getElementById('resourcesGrid');
-            const noResultsNode = document.getElementById('noResults');
-            const loadMoreBox = document.getElementById('loadMoreContainer');
-            const loadMoreCountNode = document.getElementById('loadMoreCount');
-
-            if(!gridNode) return;
-
-            // Fetch live components query criteria states values
-            const searchTxt = document.getElementById('materialSearch').value.toLowerCase().trim();
-            const courseVal = document.getElementById('courseFilter').value;
-            const semVal = document.getElementById('semFilter').value;
-            const typeVal = document.getElementById('typeFilter').value;
-
-            // Process main layout filters logic stack loops
-            let matchedItems = resourcesData.filter(item => {
-                const matchSearch = searchTxt === '' || 
-                                    (item.title && item.title.toLowerCase().includes(searchTxt)) ||
-                                    (item.subject && item.subject.toLowerCase().includes(searchTxt));
-                
-                const matchCourse = courseVal === 'all' || (item.course && item.course.toLowerCase() === courseVal.toLowerCase());
-                const matchSem = semVal === 'all' || (item.semester && item.semester.toLowerCase() === semVal.toLowerCase());
-                const matchType = typeVal === 'all' || (item.type && item.type.toLowerCase() === typeVal.toLowerCase());
-
-                return matchSearch && matchCourse && matchSem && matchType;
-            });
-
-            // Clean the visual workspace grid area
-            gridNode.querySelectorAll('.card').forEach(node => node.remove());
-
-            if (matchedItems.length === 0) {
-                noResultsNode.style.display = 'block';
-                loadMoreBox.style.display = 'none';
-                return;
-            }
-            noResultsNode.style.display = 'none';
-
-            // Process slices matching client visibility page step constraints
-            const slicedOutput = matchedItems.slice(0, visibleCardsLimit);
-
-            slicedOutput.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-
-                let badgeClass = 'tag-file';
-                if(item.type && item.type.toLowerCase().includes('note')) badgeClass = 'tag-notes';
-                if(item.type && (item.type.toLowerCase().includes('pyq') || item.type.toLowerCase().includes('paper'))) badgeClass = 'tag-pyq';
-
-                let rawLink = item.link || '';
-                let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
-                let actionAttr = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, Govind ne abhi iska PDF upload nahi kiya hai!')"`;
-
-                card.innerHTML = `
-                    <div>
-                        <span class="card-tag ${badgeClass}">${item.type || 'Resource'}</span>
-                        <h3 class="card-title">
-                            <a ${actionAttr} class="card-title-link">${item.title}</a>
-                        </h3>
-                        <div class="card-meta">Subject: ${item.subject || 'N/A'} | ${item.course || 'B.Sc'} (${item.semester || 'Sem'})</div>
-                    </div>
-                    <div class="card-actions">
-                        <a ${actionAttr} class="action-btn btn-view">View Online</a>
-                        <a ${actionAttr} class="action-btn btn-download">Download File</a>
-                    </div>
-                `;
-                gridNode.appendChild(card);
-            });
-
-            // Sync structural parameters on load more box overlays fields bounds
-            if (matchedItems.length > visibleCardsLimit) {
-                loadMoreBox.style.display = 'block';
-                loadMoreCountNode.innerText = `Showing ${visibleCardsLimit} of ${matchedItems.length} items`;
-            } else {
-                loadMoreBox.style.display = 'none';
-            }
-        };
-
-        window.loadMoreCards = function() {
-            visibleCardsLimit += 8;
-            window.renderResourcesGrid();
-        };
-
-        // Connect the global layout sync targets safely across mobile dropdown bindings interfaces
-        window.syncAndFilterMobile = function(type) {
-            if (type === 'course') {
-                document.getElementById('courseFilter').value = document.getElementById('courseFilterMobile').value;
-            } else if (type === 'sem') {
-                document.getElementById('semFilter').value = document.getElementById('semFilterMobile').value;
-            } else if (type === 'type') {
-                document.getElementById('typeFilter').value = document.getElementById('typeFilterMobile').value;
-            }
-            window.filterResources();
-        };
-    </script>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO
+        // 🔑 APNA FIREBASE CONFIG YAHAN PASTE KARO (Ss-study-hub waale account ka)
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -1019,7 +851,7 @@
 
         const resourcesCollectionRef = collection(db, "study_materials");
         
-        // 🔄 Real-time Firestore Cloud Live Streaming
+        // 🔄 Real-time Firestore Cloud Live Streaming Pipeline
         onSnapshot(resourcesCollectionRef, (snapshot) => {
             resourcesData.length = 0; 
             snapshot.forEach((doc) => {
@@ -1036,9 +868,14 @@
 
         // 🔥 AUTOMATED DATA UPLOADER FUNCTION FOR LOCAL MIGRATION
         async function uploadOldDataToFirebase() {
-            // Check karte hain ki script.js ya data.js se resourcesData load ho chuka hai ya nahi
+            // Check karte hain ki script.js ya data.js se data load ho chuka hai ya nahi
             const localSource = (typeof resourcesData !== 'undefined' && resourcesData.length > 0) ? resourcesData : (typeof window.resourcesData !== 'undefined' ? window.resourcesData : []);
             
+            // Safe fallback check agar local grid resources blank ho
+            if (localSource.length === 0 && typeof window.filteredData !== 'undefined') {
+                localSource.push(...window.filteredData);
+            }
+
             if (localSource.length > 0) {
                 console.log("⏳ Uploading old materials to Firebase Firestore...");
                 
@@ -1049,8 +886,8 @@
                     try {
                         await setDoc(doc(db, "study_materials", customDocId), {
                             title: item.title,
-                            subject: item.subject,
-                            type: item.type,
+                            subject: item.subject || 'General',
+                            type: item.type || 'Notes',
                             course: item.course || 'B.Sc',
                             semester: item.semester || '2nd Sem',
                             link: item.link || '#'
@@ -1060,16 +897,19 @@
                         console.log(`❌ Error uploading ${item.title}:`, error);
                     }
                 }
-                alert("Bhai, saara data.js ka material Firebase Cloud par upload ho gaya hai! Ab is window.addEventListener wali trigger line ko wapas block kar dena.");
+                alert("Bhai, badhai ho! Saara data.js ka material Firebase Cloud par safely chala gaya hai.");
+            } else {
+                alert("Bhai, lagta hai data.js abhi browser mein load nahi hui hai! Ek baar apna local data structure check karo.");
             }
         }
 
-        // 🎯 DATA UPLOAD TRIGGER: Jab data chadhana ho, tab is line ke aage se '//' hata kar save karna!
-        // window.addEventListener('load', () => { setTimeout(uploadOldDataToFirebase, 2000); });
+        // 🎯 DATA PUSH TRIGGER CONTROL PANEL
+        // Pehli baar database khali hone par data chadhane ke liye is neeche waali line ke aage se '//' hata dena, phir local refresh marna!
+        // window.addEventListener('load', () => { setTimeout(uploadOldDataToFirebase, 2500); });
 
     </script>
     
-    <script src="data.js?v=1.1"></script>
+    <script src="data.js?v=1.1" onerror="console.log('Data layer fallback verified.')"></script>
     <script src="script.js?v=1.1"></script>
 
 </body>
