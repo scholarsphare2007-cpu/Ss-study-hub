@@ -7,7 +7,7 @@ const resourcesData= [
         subject: "Mathematics",
         type: "Notes",
         title: "Class 12 Maths - All Differentiation Formulas (English Version)",
-        link: "https://drive.google.com/file/d/1_ZORKsCiRFaaW-zx9GvsqY6A3DHe7sxX/view?usp=drivesdk"
+        link: "https://drive.google.com/file/d/1_ZORKsCIrFaaW-zx9GvsqY6A3DHe7sxX/view?usp=drivesdk"
     },
 
     // ==================== B.Sc 2nd Sem - Chemistry ====================
