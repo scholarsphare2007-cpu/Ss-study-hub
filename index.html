@@ -7,10 +7,10 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Govind Bhai Ki Real Measurement ID Setup
+      // Measurement ID Setup
       gtag('config', 'G-N0YKP54FRQ');
 
-      // 🔥 SPECIAL PWA APP TRACKING JUGAD:
+      // PWA APP TRACKING
       window.addEventListener('DOMContentLoaded', () => {
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
         if (isStandalone) {
@@ -57,11 +57,11 @@
             min-height: 100vh;
             overflow-x: hidden;
             padding-top: 95px;
-            padding-bottom: 80px; /* Space for bottom nav on mobile */
+            padding-bottom: 80px;
             transition: background 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 🌌 VIRTUAL 3D JUNGLE ENVIRONMENT BACKDROP ENGINE */
+        /* VIRTUAL 3D JUNGLE ENVIRONMENT BACKDROP */
         .universe-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -339,6 +339,8 @@
         .tag-notes { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
         .tag-file { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
         .tag-pyq { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+        .tag-syllabus { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+        .tag-ows { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
 
         .card-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .card-title-link { color: inherit; text-decoration: none; }
@@ -686,225 +688,12 @@
             <button class="popup-close-btn" onclick="closeAllContentPopups()">Close Panel</button>
         </div>
     </div>
-
-    <script>
-        let visibleCount = 6; // Standard visible pagination limits
-
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('mainNavbar');
-            if (window.scrollY > 40) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // ⏱️ Real live clock synchronization logic 
-        function updateLiveClock() {
-            const clockEl = document.getElementById('liveClock');
-            if(clockEl) {
-                const now = new Date();
-                clockEl.innerText = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            }
-        }
-        setInterval(updateLiveClock, 1000);
-
-        function toggleMobileFilterModal(open) {
-            const backdrop = document.getElementById('filterModalBackdrop');
-            const modal = document.getElementById('mobileFilterModal');
-            if (open) {
-                backdrop.style.display = 'block';
-                setTimeout(() => modal.classList.add('open'), 10);
-            } else {
-                modal.classList.remove('open');
-                setTimeout(() => backdrop.style.display = 'none', 350);
-            }
-        }
-
-        // Two-Way Dropdown Synchronization Engine (Desktop <-> Mobile)
-        function syncAndFilterMobile(type) {
-            if (type === 'course') {
-                document.getElementById('courseFilter').value = document.getElementById('courseFilterMobile').value;
-            } else if (type === 'sem') {
-                document.getElementById('semFilter').value = document.getElementById('semFilterMobile').value;
-            } else if (type === 'type') {
-                document.getElementById('typeFilter').value = document.getElementById('typeFilterMobile').value;
-            }
-            if(typeof window.filterResources === 'function') {
-                window.filterResources();
-            }
-        }
-
-        function toggleAppDrawer(open) {
-            const backdrop = document.getElementById('appDrawerBackdrop');
-            const drawer = document.getElementById('appSideDrawer');
-            if (open) {
-                backdrop.style.display = 'block';
-                setTimeout(() => drawer.classList.add('open'), 10);
-            } else {
-                drawer.classList.remove('open');
-                setTimeout(() => backdrop.style.display = 'none', 350);
-            }
-        }
-
-        function openContentPopup(popupId) {
-            toggleAppDrawer(false);
-            const mainOverlay = document.getElementById('contentPopupOverlay');
-            document.getElementById('popup-aboutApp').style.display = 'none';
-            document.getElementById('popup-marutyTechs').style.display = 'none';
-            document.getElementById('popup-terms').style.display = 'none';
-            mainOverlay.style.display = 'flex';
-            document.getElementById(`popup-${popupId}`).style.display = 'block';
-        }
-
-        function closeAllContentPopups() {
-            document.getElementById('contentPopupOverlay').style.display = 'none';
-        }
-    </script>
-
-    <script>
-        let deferredPrompt;
-        const installBtn = document.getElementById('installBtn');
-        const iosPromptCard = document.getElementById('iosPromptCard');
-
-        function getDeviceOperatingSystem() {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                return 'iOS';
-            }
-            return 'AndroidOrWeb';
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const os = getDeviceOperatingSystem();
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-            if (os === 'iOS' && !isStandalone) {
-                if (iosPromptCard) iosPromptCard.style.display = 'block';
-            }
-        });
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then((reg) => console.log('Bhai, App Engine Registered Successfully! Scope:', reg.scope))
-                    .catch((err) => console.log('App engine structure error:', err));
-            });
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (installBtn && getDeviceOperatingSystem() !== 'iOS') {
-                installBtn.style.display = 'inline-flex';
-            }
-        });
-
-        if (installBtn) {
-            installBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    deferredPrompt = null;
-                    installBtn.style.display = 'none';
-                }
-            });
-        }
-
-        window.addEventListener('appinstalled', () => {
-            if (installBtn) installBtn.style.display = 'none';
-            if (iosPromptCard) iosPromptCard.style.display = 'none';
-            deferredPrompt = null;
-        });
-    </script>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // 🔑 Ss-study-hub Real Production Credentials (G-N0YKP54FRQ)
-        const firebaseConfig = {
-            apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
-            authDomain: "ss-study-hub-fc1da.firebaseapp.com",
-            projectId: "ss-study-hub-fc1da",
-            storageBucket: "ss-study-hub-fc1da.firebasestorage.app",
-            messagingSenderId: "795768089126",
-            appId: "1:795768089126:web:2b768397067cc44d5854e7",
-            measurementId: "G-2FBM4BFM3D"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        let resourcesData = []; 
-        window.resourcesData = resourcesData;
-
-        const resourcesCollectionRef = collection(db, "study_materials");
-        
-        // 🔄 Real-time Firestore Cloud Live Streaming Pipeline
-        onSnapshot(resourcesCollectionRef, (snapshot) => {
-            resourcesData.length = 0; 
-            snapshot.forEach((doc) => {
-                resourcesData.push(doc.data());
-            });
-            window.resourcesData = resourcesData;
-            console.log("🔥 Firebase Live Engine Cloud Stream Synced!", resourcesData);
-            
-            if(typeof window.filterResources === 'function') {
-                window.filterResources();
-            }
-        });
-
-        // 🔥 THE COMPLETE MULTI-FILTER COMPLEMENTARY ENGINE ENGINE (Fixing script.js gaps)
-        window.filterResources = function() {
-            const data = window.resourcesData || [];
-            
-            // Collect Inputs
-            const searchText = document.getElementById('materialSearch').value.toLowerCase().trim();
-            const selectedCourse = document.getElementById('courseFilter').value;
-            const selectedSem = document.getElementById('semFilter').value;
-            const selectedType = document.getElementById('typeFilter').value;
-
-            // Strict Sync Desktop Select Options across Mobile View Fields
-            if(document.getElementById('courseFilterMobile')) document.getElementById('courseFilterMobile').value = selectedCourse;
-            if(document.getElementById('semFilterMobile')) document.getElementById('semFilterMobile').value = selectedSem;
-            if(document.getElementById('typeFilterMobile')) document.getElementById('typeFilterMobile').value = selectedType;
-
-            // Core Evaluation Processing Pipeline Matrix
-            const filtered = data.filter(item => {
-                const matchesSearch = !searchText || 
-                    (item.title && item.title.toLowerCase().includes(searchText)) ||
-                    (item.subject && item.subject.toLowerCase().includes(searchText)) ||
-                    (item.topic && item.topic.toLowerCase().includes(searchText));
-
-                const matchesCourse = selectedCourse === 'all' || (item.course && item.course === selectedCourse);
-
-                const matchesSem = selectedSem === 'all' || (item.semester && item.semester.toLowerCase() === selectedSem.toLowerCase());
-
-                const itemType = item.type || item.resourceType || '';
-                const matchesType = selectedType === 'all' || (itemType.toLowerCase() === selectedType.toLowerCase());
-
-                return matchesSearch && matchesCourse && matchesSem && matchesType;
-            });
-
-            renderGrid(filtered);
-        };
-
-        function renderGrid(items) {
-            const grid = document.getElementById('resourcesGrid');
-            const noResults = document.getElementById('noResults');
-            const loadMoreContainer = document.getElementById('loadMoreContainer');
-            const loadMoreCount = document.getElementById('loadMoreCount');
-
-            // Purge old dynamic element arrays keeping initial error components safe
-      <!-- Pehle data.js load hogi -->
+        <!-- External Files Load -->
     <script src="data.js"></script>
     <script src="script.js"></script>
 
-    <!-- Main Logic Script (Firebase Completely Removed) -->
+    <!-- UI Interaction Scripts -->
     <script>
-        let visibleCount = 6; // Standard visible pagination limits
-
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('mainNavbar');
             if (navbar) {
@@ -916,7 +705,6 @@
             }
         });
 
-        // ⏱️ Live Clock logic
         function updateLiveClock() {
             const clockEl = document.getElementById('liveClock');
             if (clockEl) {
@@ -938,7 +726,6 @@
             }
         }
 
-        // Two-Way Dropdown Synchronization Engine (Desktop <-> Mobile)
         function syncAndFilterMobile(type) {
             if (type === 'course') {
                 document.getElementById('courseFilter').value = document.getElementById('courseFilterMobile').value;
@@ -979,7 +766,7 @@
         }
     </script>
 
-    <!-- PWA Installation Logic -->
+    <!-- PWA Installation -->
     <script>
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
@@ -1036,11 +823,11 @@
         });
     </script>
 
-    <!-- Resource Filtering & Rendering Engine from data.js -->
+    <!-- Resource Filtering & Rendering Engine -->
     <script>
-        // Data filter logic
+        let visibleCount = 6;
+
         window.filterResources = function() {
-            // resourcesData variable jo data.js se aayega
             const data = (typeof resourcesData !== 'undefined') ? resourcesData : [];
             
             const searchInput = document.getElementById('materialSearch');
@@ -1053,7 +840,7 @@
             const selectedSem = semSelect ? semSelect.value : 'all';
             const selectedType = typeSelect ? typeSelect.value : 'all';
 
-            // Mobile filters sync
+            // Mobile sync
             if (document.getElementById('courseFilterMobile')) document.getElementById('courseFilterMobile').value = selectedCourse;
             if (document.getElementById('semFilterMobile')) document.getElementById('semFilterMobile').value = selectedSem;
             if (document.getElementById('typeFilterMobile')) document.getElementById('typeFilterMobile').value = selectedType;
@@ -1084,7 +871,6 @@
 
             if (!grid) return;
 
-            // Purge old cards
             const oldCards = grid.querySelectorAll('.card');
             oldCards.forEach(card => card.remove());
 
@@ -1108,7 +894,7 @@
                 if (typeLower.includes('series') || typeLower.includes('ows')) tagClass = 'tag-ows';
                 if (typeLower.includes('practical') || typeLower.includes('file')) tagClass = 'tag-file';
 
-                const targetLink = item.link || item.viewLink || '#';
+                const targetLink = item.link || '#';
 
                 card.innerHTML = `
                     <div>
@@ -1142,13 +928,11 @@
             window.filterResources();
         };
 
-        // Page load par initial render run karein
         window.addEventListener('DOMContentLoaded', () => {
             if (typeof window.filterResources === 'function') {
                 window.filterResources();
             }
 
-            // Search input aur filters par dynamic events attach karein
             const searchEl = document.getElementById('materialSearch');
             if (searchEl) searchEl.addEventListener('input', window.filterResources);
 
