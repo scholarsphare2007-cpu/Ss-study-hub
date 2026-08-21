@@ -1,132 +1,54 @@
-// Database of all resources. Easy to update anytime!
-const resourcesData = [
+const rosourseData = [
+    // ==================== 12th Standard Mathematics ====================
     {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Syllabus",
-        title: "Mathematics 2nd sem Syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1dCy4U9F4qlwwmiTGUz5Tz8fjtZOufbRd/view?usp=drivesdk"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics", 
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
+        course: "12th",
+        semester: "12th Class",
         subject: "Mathematics",
         type: "Notes",
-        title: "Matrices & Calculus - Unit 2",
-        link: "#"
+        title: "Class 12 Maths - All Differentiation Formulas (English Version)",
+        link: "https://drive.google.com/file/d/1_ZORKsCiRFaaW-zx9GvsqY6A3DHe7sxX/view?usp=drivesdk"
     },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Mathematics",
-        type: "Smart One Week Series",
-        title: "OWS Maths 2nd sem 2025-26",
-        link: "https://drive.google.com/file/d/183XpDPt_MMlvy3VlUSlaVtCxgev9lPQ9/view?usp=drivesdk"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Syllabus",
-        title: "Physics 2nd sem syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1-dU37HUpf8ZCSFD9z9XX99QYMh7grFpO/view?usp=drive_link"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-1",
-        link: "https://drive.google.com/file/d/1K15rmp37ZQQ-061KHdxQNbDC0W_zlVkL/view?usp=sharing"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Practical-Files",
-        title: "Physics lab file 2nd sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Physics",
-        type: "Smart One Week Series",
-        title: "OWS Physics 2nd sem 2025-26",
-        link: "https://drive.google.com/file/d/1duVw-y2mcyRms5W7I_pqcBmah9dkbGUe/view?usp=drive_link"
-    },
+
+    // ==================== B.Sc 2nd Sem - Chemistry ====================
     {
         course: "B.Sc",
         semester: "2nd Sem",
         subject: "Chemistry",
         type: "Syllabus",
-        title: "Chemistry 2nd sem syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1VOUyhNjNCV0vM5FRaBklEgBqdzPhzFS5/view?usp=drivesdk"
+        title: "Chemistry 2nd sem Syllabus (2025-26) UOR",
+        link: "https://drive.google.com/file/d/1g-Fk6cFBkMzsPwhV9vUAyqGBRWKtqOaU/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
         semester: "2nd Sem",
         subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-1",
-        link: "#"
+        type: "Important-Topics",
+        title: "Chemistry Unit-1 Important Topics (Hindi Version) 2025-26",
+        link: "https://drive.google.com/file/d/1EqMUNDuQYTFXTyKp_E9quHOOzehcaxQV/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
         semester: "2nd Sem",
         subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-2",
-        link: "#"
+        type: "Important-Topics",
+        title: "Chemistry Unit-1 Important Topics (English Version) 2025-26",
+        link: "https://drive.google.com/file/d/19OTo5BORHG5JlrYnWJd8JyyU1XIG0OrJ/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Chemistry",
+        type: "Important-Topics",
+        title: "Chemistry Unit-2 Important Topics (Hindi Version) 2025-26",
+        link: "https://drive.google.com/file/d/1sI0uNYKjdsYm5WWyycuT43O-I_zs6VKX/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Chemistry",
+        type: "Important-Topics",
+        title: "Chemistry Unit-2 Important Topics (English Version) 2025-26",
+        link: "https://drive.google.com/file/d/1U67FXq5n1Xwxg4Y6_DGPRUUBOo4XRQsY/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
@@ -140,9 +62,17 @@ const resourcesData = [
         course: "B.Sc",
         semester: "2nd Sem",
         subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-4",
-        link: "#"
+        type: "Important-Topics",
+        title: "Chemistry Unit-4 Important Topics (Hindi Version) 2025-26",
+        link: "https://drive.google.com/file/d/1-uawrztn-ZTUIp23nfKMCy9FsEeVAYRc/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Chemistry",
+        type: "Important-Topics",
+        title: "Chemistry Unit-4 Important Topics (English Version) 2025-26",
+        link: "https://drive.google.com/file/d/1i_ArqPt3KNrhEYCFdY5J9WG8ZPatlL9A/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
@@ -152,6 +82,74 @@ const resourcesData = [
         title: "Chemistry lab file 2nd sem",
         link: "#"
     },
+
+    // ==================== B.Sc 2nd Sem - Mathematics ====================
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Mathematics",
+        type: "Syllabus",
+        title: "Mathematics 2nd sem Syllabus (2025-26) UOR",
+        link: "https://drive.google.com/file/d/14qaUi_FcK-hgfuGyJgQ1Xp-1n-F5-ejj/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Mathematics",
+        type: "Notes",
+        title: "Calculus - Asymptote Notes",
+        link: "https://drive.google.com/file/d/15ttadd7u5tpGQ-102nrGtLIEUz3o1m5f/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Mathematics",
+        type: "Notes",
+        title: "Calculus - Envelope Notes",
+        link: "https://drive.google.com/file/d/13PLQcO993etoArrCf3GXtZNNftEnttXm/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Mathematics",
+        type: "Notes",
+        title: "Calculus - Taylor's Theorem (Taylor Pramey) Notes (Hindi)",
+        link: "https://drive.google.com/file/d/1h7goBxZBOANuDiKfXe4OFwvpvs1w3Xm/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Mathematics",
+        type: "Notes",
+        title: "Calculus - Taylor's Theorem Notes",
+        link: "https://drive.google.com/file/d/1fhRnQwg6zhJYlRf9KlWzTHzpleyo4BTA/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Mathematics",
+        type: "Notes",
+        title: "Calculus - Maclaurin Theorem Notes",
+        link: "https://drive.google.com/file/d/121DjEYba725eGrGYwOO_A7JArq8fz89k/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Mathematics",
+        type: "Notes",
+        title: "Calculus - Maxima and Minima Notes",
+        link: "https://drive.google.com/file/d/1OAbbsVKNrU17xBUvOMOajSwvYiZlRH54/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "Mathematics",
+        type: "Notes",
+        title: "Calculus - Curve Tracing Notes",
+        link: "https://drive.google.com/file/d/1oidoJA7VJtxayEL42m3sI2hmzthiB8Y3/view?usp=drivesdk"
+    },
+
+    // ==================== B.Sc 2nd Sem - Zoology ====================
     {
         course: "B.Sc",
         semester: "2nd Sem",
@@ -200,589 +198,38 @@ const resourcesData = [
         title: "Zoology lab file 2nd sem",
         link: "#"
     },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General English",
-        type: "Syllabus",
-        title: "General English Syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1B3ifIEmDWMtXB1T1GvILUAP5I13lx2Pf/view?usp=sharing"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General English",
-        type: "Notes",
-        title: "General English Notes",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Syllabus",
-        title: "General Hindi Syllabus (2025-26) ",
-        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing" 
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Notes",
-        title: "General Hindi Notes ",
-        link: "#" 
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Mathematics",
-        type: "Syllabus",
-        title: "Mathematics 1st sem Syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Mathematics", 
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Physics",
-        type: "Syllabus",
-        title: "Physics 1st sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Physics",
-        type: "Practical-Files",
-        title: "Physics lab file 1st sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Chemistry",
-        type: "Syllabus",
-        title: "Chemistry 1st sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Chemistry",
-        type: "Practical-Files",
-        title: "Chemistry lab file 1st sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Zoology",
-        type: "Syllabus",
-        title: "Zoology 1st sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Zoology",
-        type: "Practical-Files",
-        title: "Zoology lab file 1st sem",
-        link: "#"
-    },
-     {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "Botany",
-        type: "Notes",
-        title: "Botany Notes unit-1",
-        link: "https://drive.google.com/file/d/12YOWtmKU836xlMkFyqAas0-9Hfho459i/view?usp=sharing"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "General English",
-        type: "Syllabus",
-        title: "General English Syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1B3ifIEmDWMtXB1T1GvILUAP5I13lx2Pf/view?usp=sharing"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "General English",
-        type: "Notes",
-        title: "General English Notes",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "General Hindi",
-        type: "Syllabus",
-        title: "General Hindi Syllabus (2025-26) ",
-        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing" 
-    },
-    {
-        course: "B.Sc",
-        semester: "1st Sem",
-        subject: "General Hindi",
-        type: "Notes",
-        title: "General Hindi Notes ",
-        link: "#" 
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Mathematics",
-        type: "Syllabus",
-        title: "Mathematics 3rd sem Syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Mathematics", 
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Physics",
-        type: "Syllabus",
-        title: "Physics 3rd sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Physics",
-        type: "Practical-Files",
-        title: "Physics lab file 3rd sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Chemistry",
-        type: "Syllabus",
-        title: "Chemistry 3rd sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-1",
-        link: "https://drive.google.com/file/d/1V0UEqu5s7Y_9qhoYYVXizxFyVX7mPPgB/view?usp=sharing"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-2",
-        link: "https://drive.google.com/file/d/15VZK8ou8Q81UNAfZ7FtuBraRb9iwFjqU/view?usp=sharing"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Chemistry",
-        type: "Practical-Files",
-        title: "Chemistry lab file 3rd sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Zoology",
-        type: "Syllabus",
-        title: "Zoology 3rd sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "Zoology",
-        type: "Practical-Files",
-        title: "Zoology lab file 3rd sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "General English",
-        type: "Syllabus",
-        title: "General English Syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "General English",
-        type: "Notes",
-        title: "General English Notes",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "General Hindi",
-        type: "Syllabus",
-        title: "General Hindi Syllabus (2025-26) ",
-        link: "#" 
-    },
-    {
-        course: "B.Sc",
-        semester: "3rd Sem",
-        subject: "General Hindi",
-        type: "Notes",
-        title: "General Hindi Notes ",
-        link: "#" 
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Mathematics",
-        type: "Syllabus",
-        title: "Mathematics 4th sem Syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Mathematics", 
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Mathematics",
-        type: "Notes",
-        title: "Matrices & Calculus - Unit 4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Physics",
-        type: "Syllabus",
-        title: "Physics 4th sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Physics",
-        type: "Notes",
-        title: "Physics Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Physics",
-        type: "Practical-Files",
-        title: "Physics lab file 4th sem",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Chemistry",
-        type: "Syllabus",
-        title: "Chemistry 4th sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "4th Sem",
-        subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-2",
-        link: "#"
-    },
 
-    ]
+    // ==================== B.Sc 2nd Sem - Languages ====================
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "General English",
+        type: "Syllabus",
+        title: "General English Syllabus (2025-26)",
+        link: "https://drive.google.com/file/d/1B3ifIEmDWMtXB1T1GvILUAP5I13lx2Pf/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "General English",
+        type: "Notes",
+        title: "General English Notes",
+        link: "#"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "General Hindi",
+        type: "Syllabus",
+        title: "General Hindi Syllabus (2025-26)",
+        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "General Hindi",
+        type: "Notes",
+        title: "General Hindi Notes",
+        link: "#"
+    },
+]
