@@ -3,7 +3,7 @@ const resourcesData= [
     // ==================== 12th Standard Mathematics ====================
     {
         course: "12th",
-        semester: "12th Class",
+        semester: "NA",
         subject: "Mathematics",
         type: "Notes",
         title: "Class 12 Maths - All Differentiation Formulas (English Version)",
@@ -16,7 +16,7 @@ const resourcesData= [
         semester: "2nd Sem",
         subject: "Chemistry",
         type: "Syllabus",
-        title: "Chemistry 2nd sem Syllabus (2025-26) UOR",
+        title: "2nd sem Syllabus (2025-26) UOR",
         link: "https://drive.google.com/file/d/1g-Fk6cFBkMzsPwhV9vUAyqGBRWKtqOaU/view?usp=drivesdk"
     },
     {
@@ -55,14 +55,6 @@ const resourcesData= [
         course: "B.Sc",
         semester: "2nd Sem",
         subject: "Chemistry",
-        type: "Notes",
-        title: "Chemistry Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
         type: "Important-Topics",
         title: "Chemistry Unit-4 Important Topics (Hindi Version) 2025-26",
         link: "https://drive.google.com/file/d/1-uawrztn-ZTUIp23nfKMCy9FsEeVAYRc/view?usp=drivesdk"
@@ -74,14 +66,6 @@ const resourcesData= [
         type: "Important-Topics",
         title: "Chemistry Unit-4 Important Topics (English Version) 2025-26",
         link: "https://drive.google.com/file/d/1i_ArqPt3KNrhEYCFdY5J9WG8ZPatlL9A/view?usp=drivesdk"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
-        type: "Practical-Files",
-        title: "Chemistry lab file 2nd sem",
-        link: "#"
     },
 
     // ==================== B.Sc 2nd Sem - Mathematics ====================
@@ -150,56 +134,6 @@ const resourcesData= [
         link: "https://drive.google.com/file/d/1oidoJA7VJtxayEL42m3sI2hmzthiB8Y3/view?usp=drivesdk"
     },
 
-    // ==================== B.Sc 2nd Sem - Zoology ====================
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Syllabus",
-        title: "Zoology 2nd sem syllabus (2025-26)",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-1",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-2",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-3",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Notes",
-        title: "Zoology Notes unit-4",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Zoology",
-        type: "Practical-Files",
-        title: "Zoology lab file 2nd sem",
-        link: "#"
-    },
-
     // ==================== B.Sc 2nd Sem - Languages ====================
     {
         course: "B.Sc",
@@ -212,25 +146,9 @@ const resourcesData= [
     {
         course: "B.Sc",
         semester: "2nd Sem",
-        subject: "General English",
-        type: "Notes",
-        title: "General English Notes",
-        link: "#"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
         subject: "General Hindi",
         type: "Syllabus",
         title: "General Hindi Syllabus (2025-26)",
         link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
-    },
-    {
-        course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Notes",
-        title: "General Hindi Notes",
-        link: "#"
     },
 ]
