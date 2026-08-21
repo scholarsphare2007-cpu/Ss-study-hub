@@ -8,22 +8,19 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  // Govind Bhai Ki Real Measurement ID Setup
+  // Measurement ID Setup
   gtag('config', 'G-N0YKP54FRQ');
 
-  // 🔥 SPECIAL PWA APP TRACKING JUGAD:
+  // PWA APP TRACKING
   window.addEventListener('DOMContentLoaded', () => {
-    // Check karte hain ki bacche ne website browser mein kholi hai ya PWA App icon se
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
     
     if (isStandalone) {
-      // Agar bacche ne phone mein download kiye huye App se khola hai
       gtag('event', 'pwa_app_open', {
         'platform': 'PWA_Native_App',
         'status': 'opened_from_homescreen'
       });
     } else {
-      // Agar baccha normal website browser par padh raha hai
       gtag('event', 'website_open', {
         'platform': 'Web_Browser',
         'status': 'opened_from_browser'
@@ -67,7 +64,6 @@
             position: relative;
         }
 
-        /* 🏮 FIX: LANTERN IS NOW FULLY FIXED AND WON'T SCROLL UP */
         .lantern-assembly-node {
             position: fixed;
             top: 0;
@@ -76,7 +72,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 2000; /* Headers se upar rehne ke liye high value */
+            z-index: 2000;
             pointer-events: none;
         }
         .lantern-rope {
@@ -112,14 +108,12 @@
             background: var(--lantern-glow); z-index: 1; pointer-events: none; mix-blend-mode: color-dodge;
         }
 
-        /* 🌍 BROAD OPEN SPACE CORE ARCHITECTURE */
         .workspace-wrapper {
             max-width: 1300px; margin: 0 auto; width: 100%; z-index: 10; position: relative;
             display: flex; flex-direction: column; gap: 30px;
-            padding-top: 60px; /* Rope space backup padding */
+            padding-top: 60px;
         }
 
-        /* 🔐 REGISTRATION AUTH PANEL LAYOUT */
         .auth-card {
             background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); backdrop-filter: blur(25px);
             padding: 35px 25px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.4);
@@ -142,7 +136,6 @@
             border-radius: 12px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
         }
 
-        /* 🌲 DYNAMIC ROOM ENVIRONMENT ENGINE LAYOUT */
         .room-dashboard { display: none; flex-direction: column; gap: 30px; }
 
         .room-header {
@@ -155,7 +148,6 @@
         
         .header-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
 
-        /* ⚙️ EDIT PROFILE BUTTON STYLING */
         .edit-profile-btn {
             background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
             padding: 10px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 700;
@@ -164,7 +156,6 @@
         }
         .edit-profile-btn:hover { background: rgba(255,255,255,0.12); border-color: var(--primary); box-shadow: 0 0 10px rgba(99,102,241,0.2); }
 
-        /* 🧭 DOUBLE GRID WORK DESK ECOSYSTEM CONTROL STRUCTURE */
         .desk-layout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
 
         .desk-card-widget {
@@ -173,7 +164,6 @@
         }
         .widget-title { font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; }
 
-        /* ⏰ REAL-TIME CLOCK MATRIX ENGINE & ALARM SCHEDULER */
         .watch-face-display {
             font-family: monospace; font-size: 1.8rem; font-weight: 800; text-align: center;
             background: rgba(0,0,0,0.2); padding: 12px; border-radius: 12px; border: 1px dashed var(--card-border); letter-spacing: 1px; color: #38bdf8;
@@ -184,7 +174,6 @@
         }
         .alarm-btn:hover { opacity: 0.9; }
         
-        /* MULTI ALARM SCROLLER CONTAINER LIST */
         .alarm-queue-scroller {
             display: flex; flex-direction: column; gap: 8px; max-height: 140px; overflow-y: auto; margin-top: 5px;
         }
@@ -194,7 +183,6 @@
         }
         .queue-time-txt { font-weight: 700; font-size: 0.9rem; color: #fcd34d; display: flex; align-items: center; gap: 6px; }
 
-        /* 📅 REAL-TIME EDITABLE TIMETABLE ENGINE */
         .timetable-form { display: flex; flex-direction: column; gap: 8px; }
         .timetable-scroller-box { display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; }
         .custom-slot-row {
@@ -203,7 +191,6 @@
         }
         .delete-slot-btn { background: none; border: none; color: #f87171; font-weight: 800; cursor: pointer; font-size: 0.85rem; }
 
-        /* 🎛️ NEW MATERIAL FILTER TABS STYLE */
         .filter-tabs-row { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .filter-tab-btn {
             background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); color: var(--text-muted);
@@ -213,7 +200,6 @@
             background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
         }
 
-        /* 📋 STUDY ROOM MATERIAL BROWSER SEARCH GRID */
         .search-inner-box { display: flex; gap: 10px; width: 100%; align-items: center; margin-bottom: 5px; }
         .materials-container-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         
@@ -225,7 +211,6 @@
         .card-header-tags { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 6px; }
         .mat-type-pill { padding: 2px 6px; font-size: 0.58rem; font-weight: 800; border-radius: 4px; text-transform: uppercase; background: rgba(99,102,241,0.2); color: #a5b4fc; }
         
-        /* Interactive Toggle Switch Styling Control Buttons */
         .action-toggle-pill { font-size: 0.72rem; font-weight: bold; color: #818cf8; cursor: pointer; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--card-border); -webkit-tap-highlight-color: transparent; }
         .action-toggle-pill.saved-in { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16,185,129,0.3); }
         .action-toggle-pill.done-in { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245,158,11,0.3); }
@@ -235,7 +220,6 @@
         .action-room-btn { flex: 1; text-align: center; padding: 9px; font-size: 0.78rem; font-weight: 700; text-decoration: none; border-radius: 8px; color: white; background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); }
         .action-room-btn.accent-go { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); border: none; }
 
-        /* 🔄 LOAD MORE CONTAINER STYLING */
         .load-more-container { display: flex; justify-content: center; margin-top: 20px; width: 100%; }
         .load-more-btn {
             background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: #fff;
@@ -243,12 +227,10 @@
         }
         .load-more-btn:hover { background: var(--primary); border-color: var(--primary); }
 
-        /* 🍏 PRIVATE BOOKSHELF NAVIGATION PANELS GRIDS */
         .library-shelf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; }
 
         .exit-btn { text-align: center; color: var(--text-muted); font-size: 0.88rem; font-weight: 700; cursor: pointer; text-decoration: underline; margin-top: 15px; margin-bottom: 40px; -webkit-tap-highlight-color: transparent; }
 
-        /* 🎪 POPUP MODAL ARCHITECTURE FOR PROFILE EDITING */
         .profile-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(2, 6, 23, 0.75); backdrop-filter: blur(10px);
@@ -263,7 +245,6 @@
         .modal-btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .cancel-btn { background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--card-border); padding: 12px; font-weight: 700; border-radius: 12px; cursor: pointer; flex: 1; text-align: center; }
 
-        /* 🚨 ALARM TRIGGER OVERLAY SYSTEM DOCK */
         .alarm-alert-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(220, 38, 38, 0.4); backdrop-filter: blur(15px);
@@ -271,7 +252,6 @@
             animation: lightBreathe 1s infinite alternate;
         }
 
-        /* 📱 RESPONSIVE MEDIA CONSTRAINTS SMART ENGINE */
         @media screen and (max-width: 768px) {
             body { padding: 15px; }
             .desk-layout-grid { grid-template-columns: 1fr; gap: 20px; }
@@ -395,7 +375,7 @@
                 <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; color: var(--text-muted); padding-left: 5px;">🎯 Class Study Materials</div>
                 
                 <div class="filter-tabs-row">
-                    <button class="filter-tab-btn active" id="filter-all" onclick="changeTypeFilter('all')">All Materials</button>
+                           <button class="filter-tab-btn active" id="filter-all" onclick="changeTypeFilter('all')">All Materials</button>
                     <button class="filter-tab-btn" id="filter-syllabus" onclick="changeTypeFilter('syllabus')">Syllabus</button>
                     <button class="filter-tab-btn" id="filter-notes" onclick="changeTypeFilter('notes')">Notes</button>
                     <button class="filter-tab-btn" id="filter-paper" onclick="changeTypeFilter('paper')">Old Papers</button>
@@ -486,24 +466,11 @@
         <button onclick="killRingingAlarmAudio()" class="submit-btn" style="max-width: 250px; background: white; color: red; font-size: 1.2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-weight: 900; border-radius: 12px; border: none; padding: 14px; cursor: pointer;">🛑 Stop Alarm</button>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <!-- Data.js connection -->
+    <script src="data.js"></script>
 
-        // 🔑 PRODUCTION CONNECTIVITY KEYS (Ss-study-hub Verified)
-        const firebaseConfig = {
-            apiKey: "AIzaSyAan7xFyxtEtyoOmitUfiucfba347JlK0c",
-            authDomain: "ss-study-hub-fc1da.firebaseapp.com",
-            projectId: "ss-study-hub-fc1da",
-            storageBucket: "ss-study-hub-fc1da.firebasestorage.app",
-            messagingSenderId: "795768089126",
-            appId: "1:795768089126:web:2b768397067cc44d5854e7",
-            measurementId: "G-2FBM4BFM3D"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
+    <!-- Study Room Logic Script -->
+    <script>
         let currentClassSemester = '2nd Sem';
         let currentClassCourse = 'B.Sc'; 
         let registeredAlarmsList = [];
@@ -513,8 +480,6 @@
 
         let selectedTypeFilter = 'all';
         let visibleFilesCount = 4;
-        
-        let resourcesData = []; 
         let totalFilteredItems = [];
 
         window.onload = () => {
@@ -524,7 +489,6 @@
                 if (!audioContextInstance) {
                     audioContextInstance = new (window.AudioContext || window.webkitAudioContext)();
                 }
-                console.log("🔊 System: Hardware Speaker Audio Engine Unlocked!");
                 document.removeEventListener('click', initHardwareAudio);
                 document.removeEventListener('touchstart', initHardwareAudio);
             };
@@ -544,41 +508,28 @@
             renderTimetableSlots();
         };
 
-        const resourcesCollectionRef = collection(db, "study_materials");
-        onSnapshot(resourcesCollectionRef, (snapshot) => {
-            resourcesData = []; 
-            snapshot.forEach((doc) => {
-                resourcesData.push(doc.data());
-            });
-            console.log("🔥 Personal Room Cloud Pipeline Synced!", resourcesData);
-            executeRoomFilter();
-        });
-
         window.executeRoomFilter = function() {
             const grid = document.getElementById('roomMaterialsGrid');
             if(!grid) return;
             grid.innerHTML = '';
 
-            const query = document.getElementById('roomSearchInput').value.toLowerCase().trim();
+            const localData = (typeof resourcesData !== 'undefined') ? resourcesData : [];
+            const query = document.getElementById('roomSearchInput') ? document.getElementById('roomSearchInput').value.toLowerCase().trim() : '';
             const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
             const completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
 
-            let filtered = resourcesData.filter(item => {
+            let filtered = localData.filter(item => {
                 const matchCourse = item.course && item.course.toLowerCase() === currentClassCourse.toLowerCase();
                 const matchSem = item.semester && item.semester.toLowerCase() === currentClassSemester.toLowerCase();
                 return matchCourse && matchSem;
             });
 
-            // ⚡ FIXED COMPILING MATRIX LOOP FOR CASE INTERLOCK KEYS
             if (selectedTypeFilter !== 'all') {
                 filtered = filtered.filter(item => {
                     if(!item.type) return false;
                     const typeLower = item.type.toLowerCase();
-                    // Syllabus mapping
                     if(selectedTypeFilter === 'syllabus') return typeLower.includes('syllabus');
-                    // Notes mapping
                     if(selectedTypeFilter === 'notes') return typeLower.includes('note');
-                    // Old papers configuration mapping
                     if(selectedTypeFilter === 'paper') return typeLower.includes('paper') || typeLower.includes('pyq');
                     return typeLower === selectedTypeFilter;
                 });
@@ -591,8 +542,9 @@
             });
 
             if (totalFilteredItems.length === 0) {
-                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.85rem; color:var(--text-muted); padding:20px;">Bhai, aapke course (${currentClassCourse} - ${currentClassSemester}) ka aisa koi material nahi mila!</div>`;
-                document.getElementById('loadMoreBox').style.display = 'none';
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.85rem; color:var(--text-muted); padding:20px;">Bhai, aapke course (${currentClassCourse} - ${currentClassSemester}) ka koi material nahi mila!</div>`;
+                const loadBox = document.getElementById('loadMoreBox');
+                if(loadBox) loadBox.style.display = 'none';
                 return;
             }
 
@@ -613,7 +565,7 @@
                 const compBtnClass = isCompletedSaved ? 'action-toggle-pill done-in' : 'action-toggle-pill';
                 const compBtnText = isCompletedSaved ? '🔄 Study Again' : '✅ Mark Done';
 
-                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, Govind ne abhi iska PDF upload nahi kiya hai!')"`;
+                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, abhi iska link available nahi hai!')"`;
 
                 card.innerHTML = `
                     <div>
@@ -634,10 +586,13 @@
                 grid.appendChild(card);
             });
 
-            if (totalFilteredItems.length > visibleFilesCount) {
-                document.getElementById('loadMoreBox').style.display = 'flex';
-            } else {
-                document.getElementById('loadMoreBox').style.display = 'none';
+            const loadBox = document.getElementById('loadMoreBox');
+            if (loadBox) {
+                if (totalFilteredItems.length > visibleFilesCount) {
+                    loadBox.style.display = 'flex';
+                } else {
+                    loadBox.style.display = 'none';
+                }
             }
         };
 
@@ -654,7 +609,8 @@
         window.changeTypeFilter = function(type) {
             selectedTypeFilter = type;
             document.querySelectorAll('.filter-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`filter-${type}`).classList.add('active');
+            const activeBtn = document.getElementById(`filter-${type}`);
+            if(activeBtn) activeBtn.classList.add('active');
             resetAndFilter();
         };
 
@@ -723,7 +679,7 @@
             container.innerHTML = '';
 
             if (registeredAlarmsList.length === 0) {
-                container.innerHTML = `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:5px;">No active alarms set in stack grid.</div>`;
+                container.innerHTML = `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:5px;">No active alarms set.</div>`;
                 return;
             }
 
@@ -798,12 +754,13 @@
         }
 
         window.toggleLibraryItemEngine = function(targetTitle) {
+            const localData = (typeof resourcesData !== 'undefined') ? resourcesData : [];
             let libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
             const existingIndex = libraryList.findIndex(item => item.title === targetTitle);
             if (existingIndex > -1) {
                 libraryList.splice(existingIndex, 1);
             } else {
-                const matchedObj = resourcesData.find(item => item.title === targetTitle);
+                const matchedObj = localData.find(item => item.title === targetTitle);
                 if (matchedObj) libraryList.push(matchedObj);
             }
             localStorage.setItem('userRoomLibrary', JSON.stringify(libraryList));
@@ -817,8 +774,7 @@
             container.innerHTML = '';
             const libraryList = JSON.parse(localStorage.getItem('userRoomLibrary')) || [];
 
-            if (libraryList.length === 0) {
-                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.82rem; color:var(--text-muted); padding:15px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px dashed var(--card-border);">Bhai, aapki private library khaali hai! Files ko yahan jama karo.</div>`;
+            if (libraryList.length === 0) {container.innerHTML = `<div style="grid-column:1/-1; text-align:center; font-size:0.82rem; color:var(--text-muted); padding:15px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px dashed var(--card-border);">Bhai, aapki private library khaali hai! Files ko yahan jama karo.</div>`;
                 return;
             }
 
@@ -828,7 +784,7 @@
                 card.style.borderColor = 'rgba(16, 185, 129, 0.2)';
                 let rawLink = item.link || '';
                 let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
-                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, PDF link jaldi aane wala hai!')"`;
+                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, link available nahi hai!')"`;
 
                 card.innerHTML = `
                     <div>
@@ -847,12 +803,13 @@
         }
 
         window.toggleCompletedItemEngine = function(targetTitle) {
+            const localData = (typeof resourcesData !== 'undefined') ? resourcesData : [];
             let completedList = JSON.parse(localStorage.getItem('userRoomCompleted')) || [];
             const existingIndex = completedList.findIndex(item => item.title === targetTitle);
             if (existingIndex > -1) {
                 completedList.splice(existingIndex, 1);
             } else {
-                const matchedObj = resourcesData.find(item => item.title === targetTitle);
+                const matchedObj = localData.find(item => item.title === targetTitle);
                 if (matchedObj) completedList.push(matchedObj);
             }
             localStorage.setItem('userRoomCompleted', JSON.stringify(completedList));
@@ -877,7 +834,7 @@
                 card.style.borderColor = 'rgba(245, 158, 11, 0.2)';
                 let rawLink = item.link || '';
                 let isLinkValid = rawLink.trim() !== '' && rawLink.trim() !== '#';
-                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, PDF link jaldi aane wala hai!')"`;
+                let linkAttrView = isLinkValid ? `href="${rawLink.trim()}" target="_blank"` : `href="javascript:void(0);" onclick="alert('Bhai, link available nahi hai!')"`;
 
                 card.innerHTML = `
                     <div>
@@ -1002,3 +959,4 @@
     </script>
 </body>
 </html>
+                
