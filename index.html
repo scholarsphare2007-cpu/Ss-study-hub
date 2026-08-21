@@ -897,16 +897,203 @@
             const loadMoreCount = document.getElementById('loadMoreCount');
 
             // Purge old dynamic element arrays keeping initial error components safe
+      <!-- Pehle data.js load hogi -->
+    <script src="data.js"></script>
+
+    <!-- Main Logic Script (Firebase Completely Removed) -->
+    <script>
+        let visibleCount = 6; // Standard visible pagination limits
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('mainNavbar');
+            if (navbar) {
+                if (window.scrollY > 40) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+        });
+
+        // ⏱️ Live Clock logic
+        function updateLiveClock() {
+            const clockEl = document.getElementById('liveClock');
+            if (clockEl) {
+                const now = new Date();
+                clockEl.innerText = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            }
+        }
+        setInterval(updateLiveClock, 1000);
+
+        function toggleMobileFilterModal(open) {
+            const backdrop = document.getElementById('filterModalBackdrop');
+            const modal = document.getElementById('mobileFilterModal');
+            if (open) {
+                backdrop.style.display = 'block';
+                setTimeout(() => modal.classList.add('open'), 10);
+            } else {
+                modal.classList.remove('open');
+                setTimeout(() => backdrop.style.display = 'none', 350);
+            }
+        }
+
+        // Two-Way Dropdown Synchronization Engine (Desktop <-> Mobile)
+        function syncAndFilterMobile(type) {
+            if (type === 'course') {
+                document.getElementById('courseFilter').value = document.getElementById('courseFilterMobile').value;
+            } else if (type === 'sem') {
+                document.getElementById('semFilter').value = document.getElementById('semFilterMobile').value;
+            } else if (type === 'type') {
+                document.getElementById('typeFilter').value = document.getElementById('typeFilterMobile').value;
+            }
+            if (typeof window.filterResources === 'function') {
+                window.filterResources();
+            }
+        }
+
+        function toggleAppDrawer(open) {
+            const backdrop = document.getElementById('appDrawerBackdrop');
+            const drawer = document.getElementById('appSideDrawer');
+            if (open) {
+                backdrop.style.display = 'block';
+                setTimeout(() => drawer.classList.add('open'), 10);
+            } else {
+                drawer.classList.remove('open');
+                setTimeout(() => backdrop.style.display = 'none', 350);
+            }
+        }
+
+        function openContentPopup(popupId) {
+            toggleAppDrawer(false);
+            const mainOverlay = document.getElementById('contentPopupOverlay');
+            document.getElementById('popup-aboutApp').style.display = 'none';
+            document.getElementById('popup-marutyTechs').style.display = 'none';
+            document.getElementById('popup-terms').style.display = 'none';
+            mainOverlay.style.display = 'flex';
+            document.getElementById(`popup-${popupId}`).style.display = 'block';
+        }
+
+        function closeAllContentPopups() {
+            document.getElementById('contentPopupOverlay').style.display = 'none';
+        }
+    </script>
+
+    <!-- PWA Installation Logic -->
+    <script>
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+        const iosPromptCard = document.getElementById('iosPromptCard');
+
+        function getDeviceOperatingSystem() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 'iOS';
+            }
+            return 'AndroidOrWeb';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const os = getDeviceOperatingSystem();
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+            if (os === 'iOS' && !isStandalone) {
+                if (iosPromptCard) iosPromptCard.style.display = 'block';
+            }
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('App Engine Registered! Scope:', reg.scope))
+                    .catch((err) => console.log('App engine error:', err));
+            });
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (installBtn && getDeviceOperatingSystem() !== 'iOS') {
+                installBtn.style.display = 'inline-flex';
+            }
+        });
+
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    deferredPrompt = null;
+                    installBtn.style.display = 'none';
+                }
+            });
+        }
+
+        window.addEventListener('appinstalled', () => {
+            if (installBtn) installBtn.style.display = 'none';
+            if (iosPromptCard) iosPromptCard.style.display = 'none';
+            deferredPrompt = null;
+        });
+    </script>
+
+    <!-- Resource Filtering & Rendering Engine from data.js -->
+    <script>
+        // Data filter logic
+        window.filterResources = function() {
+            // resourcesData variable jo data.js se aayega
+            const data = (typeof resourcesData !== 'undefined') ? resourcesData : [];
+            
+            const searchInput = document.getElementById('materialSearch');
+            const courseSelect = document.getElementById('courseFilter');
+            const semSelect = document.getElementById('semFilter');
+            const typeSelect = document.getElementById('typeFilter');
+
+            const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const selectedCourse = courseSelect ? courseSelect.value : 'all';
+            const selectedSem = semSelect ? semSelect.value : 'all';
+            const selectedType = typeSelect ? typeSelect.value : 'all';
+
+            // Mobile filters sync
+            if (document.getElementById('courseFilterMobile')) document.getElementById('courseFilterMobile').value = selectedCourse;
+            if (document.getElementById('semFilterMobile')) document.getElementById('semFilterMobile').value = selectedSem;
+            if (document.getElementById('typeFilterMobile')) document.getElementById('typeFilterMobile').value = selectedType;
+
+            const filtered = data.filter(item => {
+                const matchesSearch = !searchText || 
+                    (item.title && item.title.toLowerCase().includes(searchText)) ||
+                    (item.subject && item.subject.toLowerCase().includes(searchText));
+
+                const matchesCourse = selectedCourse === 'all' || (item.course && item.course === selectedCourse);
+
+                const matchesSem = selectedSem === 'all' || (item.semester && item.semester.toLowerCase() === selectedSem.toLowerCase());
+
+                const itemType = item.type || '';
+                const matchesType = selectedType === 'all' || (itemType.toLowerCase() === selectedType.toLowerCase());
+
+                return matchesSearch && matchesCourse && matchesSem && matchesType;
+            });
+
+            renderGrid(filtered);
+        };
+
+        function renderGrid(items) {
+            const grid = document.getElementById('resourcesGrid');
+            const noResults = document.getElementById('noResults');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            const loadMoreCount = document.getElementById('loadMoreCount');
+
+            if (!grid) return;
+
+            // Purge old cards
             const oldCards = grid.querySelectorAll('.card');
             oldCards.forEach(card => card.remove());
 
             if (items.length === 0) {
-                noResults.style.display = 'block';
-                loadMoreContainer.style.display = 'none';
+                if (noResults) noResults.style.display = 'block';
+                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
                 return;
             }
 
-            noResults.style.display = 'none';
+            if (noResults) noResults.style.display = 'none';
             const itemsToShow = items.slice(0, visibleCount);
 
             itemsToShow.forEach(item => {
@@ -915,14 +1102,18 @@
                 
                 let tagClass = 'tag-notes';
                 const typeLower = (item.type || '').toLowerCase();
-                if(typeLower.includes('pyq') || typeLower.includes('paper')) tagClass = 'tag-pyq';
-                if(typeLower.includes('book') || typeLower.includes('file')) tagClass = 'tag-file';
+                if (typeLower.includes('pyq') || typeLower.includes('paper')) tagClass = 'tag-pyq';
+                if (typeLower.includes('syllabus')) tagClass = 'tag-syllabus';
+                if (typeLower.includes('series') || typeLower.includes('ows')) tagClass = 'tag-ows';
+                if (typeLower.includes('practical') || typeLower.includes('file')) tagClass = 'tag-file';
+
+                const targetLink = item.link || item.viewLink || '#';
 
                 card.innerHTML = `
                     <div>
                         <span class="card-tag ${tagClass}">${item.type || 'Material'}</span>
                         <h3 class="card-title">
-                            <a href="${item.viewLink || '#'}" target="_blank" class="card-title-link">${item.title || 'Untitled Resource'}</a>
+                            <a href="${targetLink}" target="_blank" class="card-title-link">${item.title || 'Untitled Resource'}</a>
                         </h3>
                         <div class="card-meta">
                             📍 ${item.course || 'N/A'} - ${item.semester || 'N/A'}<br>
@@ -930,18 +1121,18 @@
                         </div>
                     </div>
                     <div class="card-actions">
-                        <a href="${item.viewLink || '#'}" target="_blank" class="action-btn btn-view">View</a>
-                        <a href="${item.downloadLink || '#'}" target="_blank" class="action-btn btn-download" download>Download</a>
+                        <a href="${targetLink}" target="_blank" class="action-btn btn-view">View</a>
+                        <a href="${targetLink}" target="_blank" class="action-btn btn-download">Download</a>
                     </div>
                 `;
                 grid.appendChild(card);
             });
 
             if (items.length > visibleCount) {
-                loadMoreContainer.style.display = 'block';
-                loadMoreCount.innerText = `Showing ${itemsToShow.length} of ${items.length} items`;
+                if (loadMoreContainer) loadMoreContainer.style.display = 'block';
+                if (loadMoreCount) loadMoreCount.innerText = `Showing ${itemsToShow.length} of ${items.length} items`;
             } else {
-                loadMoreContainer.style.display = 'none';
+                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
             }
         }
 
@@ -949,6 +1140,26 @@
             visibleCount += 6;
             window.filterResources();
         };
+
+        // Page load par initial render run karein
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof window.filterResources === 'function') {
+                window.filterResources();
+            }
+
+            // Search input aur filters par dynamic events attach karein
+            const searchEl = document.getElementById('materialSearch');
+            if (searchEl) searchEl.addEventListener('input', window.filterResources);
+
+            const courseEl = document.getElementById('courseFilter');
+            if (courseEl) courseEl.addEventListener('change', window.filterResources);
+
+            const semEl = document.getElementById('semFilter');
+            if (semEl) semEl.addEventListener('change', window.filterResources);
+
+            const typeEl = document.getElementById('typeFilter');
+            if (typeEl) typeEl.addEventListener('change', window.filterResources);
+        });
     </script>
 </body>
 </html>
