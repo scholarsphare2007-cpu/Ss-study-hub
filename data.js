@@ -1,4 +1,5 @@
-const rosourseData = [
+// database of all my dat
+const resourcesData= [
     // ==================== 12th Standard Mathematics ====================
     {
         course: "12th",
