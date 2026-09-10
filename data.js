@@ -51,6 +51,55 @@ const resourcesData= [
         title: "3rd sem. syll. pract.physics, BSc UOR",
         link: "https://drive.google.com/file/d/1XG0xzKkpIv6guEJoQmhesqGgdutrwxpe/view?usp=drivesdk"
     },
+    {
+        course: "B.Sc",
+        semester: "4th semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "4th sem. syll.physics, BSc UOR",
+        link: "https://drive.google.com/file/d/11G7OyMcHwrIeG0qRYN_UaOnxCtUUpA7n/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "4th semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "4th sem. syll. pract.physics, BSc UOR",
+        link: "https://drive.google.com/file/d/17KkiGwIT0MywMBfRGIpF95nWjlUZ7da7/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "5th semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "5th sem. syll.physics, BSc UOR",
+        link: "https://drive.google.com/file/d/1yIWLRxua7msNJE9yu2efy1i4zSX1tCHa/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "5th semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "5th sem. syll. pract.physics, BSc UOR",
+        link: "https://drive.google.com/file/d/1Tnn_d6gX-85zSHiTh_bRm1Uh4rTOqyXN/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "6th semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "6th sem. syll.physics, BSc UOR",
+        link: "https://drive.google.com/file/d/1YSsycbRXAspQfx1p6MmqQuclbHhUFkLq/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "6th semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "6th sem. syll. pract.physics, BSc UOR",
+        link: "https://drive.google.com/file/d/1W961NGhy-lx4PGrudVBZSG9i2tI6TxPc/view?usp=drivesdk
+            "
+    },
 
     // ==================== B.Sc 2nd Sem - Chemistry ====================
     {
