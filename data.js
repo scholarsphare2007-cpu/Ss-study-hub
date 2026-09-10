@@ -1,4 +1,4 @@
-// database of all my dat
+// database of all my data
 const resourcesData= [
     // ==================== 12th Standard Mathematics ====================
     {
