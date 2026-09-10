@@ -9,6 +9,48 @@ const resourcesData= [
         title: "Class 12 Maths - All Differentiation Formulas (English Version)",
         link: "https://drive.google.com/file/d/1_ZORKsCIrFaaW-zx9GvsqY6A3DHe7sxX/view?usp=drivesdk"
     },
+    
+    // ==================== B.Sc - physics - Syllabus ====================
+     {
+        course: "B.Sc",
+        semester: "1st semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "1st sem. syll. physics, BSc UOR",
+        link: "https://drive.google.com/file/d/18b06iJ7MdzjI3cpgcGdQqVjJmgyqGSjZ/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "2nd sem. syll. physics, BSc UOR",
+        link: "https://drive.google.com/file/d/17024F_E9d5Adk_awdDuyIvaM6OosaAgP/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "2nd sem. syll. pract.physics, BSc UOR",
+        link: "https://drive.google.com/file/d/1QKbeXp5HNk2RU7NF-ymqouQHXcD2Qbdi/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "3rd semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "3rd sem. syll. physics, BSc UOR",
+        link: "https://drive.google.com/file/d/19FLqdlrbmCl80G5fg7kO7M3B3MnNZrQr/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "3rd semm",
+        subject: "physics",
+        type: "syllabus",
+        title: "3rd sem. syll. pract.physics, BSc UOR",
+        link: "https://drive.google.com/file/d/1XG0xzKkpIv6guEJoQmhesqGgdutrwxpe/view?usp=drivesdk"
+    },
 
     // ==================== B.Sc 2nd Sem - Chemistry ====================
     {
