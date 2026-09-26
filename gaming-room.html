@@ -1,1 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Student Battle Arena & Gaming Room</title>
+    <style>
+        :root {
+            --sky-top: #020617;
+            --sky-bottom: #0f172a;
+            --card-glass: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --text-color: #ffffff;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body {
+            background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 90px;
+            overflow-x: hidden;
+        }
+
+        .arena-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 14px 20px;
+            backdrop-filter: blur(15px);
+        }
+
+        .hub-title {
+            font-size: 1.25rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #38bdf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+        }
+
+        @media (max-width: 850px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+
+        .game-card {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(15px);
+        }
+
+        .leaderboard-card {
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+        }
+
+        .board-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.88rem;
+        }
+
+        .launch-btn {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        #gameModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #020617;
+            z-index: 5000;
+            flex-direction: column;
+        }
+
+        .modal-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0f172a;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .bottom-app-nav {
+            display: flex;
+            position: fixed;
+            bottom: 0; left: 0; right: 0; height: 68px;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            z-index: 1500;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .bottom-nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--text-muted); text-decoration: none; font-size: 0.72rem; font-weight: 700; gap: 4px;
+        }
+        .bottom-nav-item.active { color: #818cf8; }
+    </style>
+</head>
+<body>
+
+    <div class="arena-container">
+        <div class="top-bar">
+            <span class="hub-title">⚡ Mind Battle Arena</span>
+            <a href="index.html" class="back-nav-btn">← Back to Hub</a>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Active Game Selection -->
+            <div class="game-card">
+                <div>
+                    <span style="background: rgba(16,185,129,0.2); color:#34d399; font-size:0.65rem; font-weight:800; padding:4px 8px; border-radius:6px;">LIVE 1v1 MULTIPLAYER</span>
+                    <h2 style="font-size: 1.8rem; font-weight: 900; margin: 10px 0 6px 0;">Math Battle Arena</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+                        Real-time speed math calculation match. No room codes needed—tap 'Play Online' to auto-pair with another college peer, or practice solo!
+                    </p>
+                </div>
+                <button class="launch-btn" onclick="openGame()">Launch Math Battle 🚀</button>
+            </div>
+
+            <!-- College Leaderboard -->
+            <div class="leaderboard-card">
+                <div style="font-size: 1rem; font-weight: 900; margin-bottom: 15px; color: #fcd34d;">🏆 College Top Champions</div>
+                <div id="leaderboardList">
+                    <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px;">No match records yet. Play your first battle!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Embedded Game Frame -->
+    <div id="gameModal">
+        <div class="modal-top">
+            <span style="font-weight: 800; color: #38bdf8;">🎲 Math Battle Arena</span>
+            <button onclick="closeGame()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 6px 12px; border-radius: 8px; font-weight: 700; cursor: pointer;">✕ Exit to Arena</button>
+        </div>
+        <iframe id="mathFrame" src="math-battle.html" style="width: 100%; height: calc(100% - 50px); border: none;"></iframe>
+    </div>
+
+    <!-- Navigation -->
+    <div class="bottom-app-nav">
+        <a href="index.html" class="bottom-nav-item">
+            <span style="font-size: 1.3rem;">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="study-room.html" class="bottom-nav-item">
+            <span style="font-size: 1.3rem;">✏️</span>
+            <span>Study Room</span>
+        </a>
+        <a href="gaming-room.html" class="bottom-nav-item active">
+            <span style="font-size: 1.3rem;">🎮</span>
+            <span>Gaming Room</span>
+        </a>
+    </div>
+
+    <script>
+        function openGame() {
+            document.getElementById('gameModal').style.display = 'flex';
+        }
+
+        function closeGame() {
+            const frame = document.getElementById('mathFrame');
+            frame.src = frame.src; // resets sounds/sockets
+            document.getElementById('gameModal').style.display = 'none';
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
+            const list = document.getElementById('leaderboardList');
+            const data = JSON.parse(localStorage.getItem('math_battle_scores')) || [];
+            if(data.length === 0) return;
+
+            list.innerHTML = '';
+            data.forEach((p, idx) => {
+                const row = document.createElement('div');
+                row.className = 'board-item';
+                row.innerHTML = `
+                    <div>
+                        <span style="color:#94a3b8; font-weight:800; margin-right:8px;">#${idx+1}</span>
+                        <b>${p.name}</b>
+                    </div>
+                    <span style="color:#fcd34d; font-weight:900;">${p.score} pts</span>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        window.onload = renderLeaderboard;
+    </script>
+</body>
+</html>
