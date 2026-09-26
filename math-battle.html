@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Battle Arena</title>
+    <!-- PeerJS Library CDN -->
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <style>
+      :root {
+        --sky-top: #020617;
+        --sky-bottom: #0f172a;
+        --card-glass: rgba(255, 255, 255, 0.05);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --primary: #6366f1;
+      }
+      * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+      body {
+        background: radial-gradient(circle at 50% 20%, #1e1b4b, #020617);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+      }
+      .game-box {
+        width: 100%;
+        max-width: 550px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        padding: 25px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        backdrop-filter: blur(20px);
+        text-align: center;
+      }
+      .profile-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(255,255,255,0.04);
+        padding: 10px 16px;
+        border-radius: 16px;
+        border: 1px solid var(--card-border);
+        margin-bottom: 20px;
+      }
+      .player-tag-input {
+        background: transparent;
+        border: none;
+        color: #38bdf8;
+        font-weight: 800;
+        font-size: 1rem;
+        outline: none;
+        width: 60%;
+      }
+      .match-status {
+        font-size: 0.85rem;
+        color: #94a3b8;
+      }
+      .action-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 1rem;
+        font-weight: 800;
+        border-radius: 14px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+      }
+      .btn-quick {
+        background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        color: white;
+        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+      }
+      .btn-local {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid var(--card-border);
+        color: #fff;
+      }
+      .math-board {
+        display: none;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .question-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 25px 15px;
+      }
+      .math-prompt {
+        font-size: 2.5rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        color: #f8fafc;
+      }
+      .timer-bar-wrap {
+        height: 8px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 10px 0;
+      }
+      .timer-bar {
+        height: 100%;
+        width: 100%;
+        background: #38bdf8;
+        transition: width 0.1s linear;
+      }
+      .keypad-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 15px;
+      }
+      .key-btn {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid var(--card-border);
+        color: #fff;
+        padding: 14px;
+        font-size: 1.3rem;
+        font-weight: 800;
+        border-radius: 12px;
+        cursor: pointer;
+      }
+      .answer-display {
+        font-size: 1.8rem;
+        font-family: monospace;
+        font-weight: 900;
+        letter-spacing: 3px;
+        background: rgba(0,0,0,0.3);
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px dashed var(--card-border);
+        color: #38bdf8;
+      }
+      .hud-scores {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 800;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="game-box">
+      <!-- Player Profile Header -->
+      <div class="profile-strip">
+        <div>
+          <span style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 800;">Player Name</span><br>
+          <input type="text" id="playerNameInput" class="player-tag-input" onchange="saveGamerName(this.value)">
+        </div>
+        <span style="font-size: 1.2rem;">⚡</span>
+      </div>
+
+      <!-- Lobby Screen -->
+      <div id="lobbyScreen">
+        <h1 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 6px; background: linear-gradient(45deg, #38bdf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MATH BATTLE</h1>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 25px;">Live 1v1 Arithmetic Speed Battle</p>
+
+        <button class="action-btn btn-quick" onclick="startQuickMatch()">⚡ Play Online (Quick 1v1)</button>
+        <button class="action-btn btn-local" onclick="startSoloBattle()">🎮 Practice Solo Mode</button>
+        <div id="matchStatus" class="match-status" style="margin-top: 15px;"></div>
+      </div>
+
+      <!-- Active Arena Screen -->
+      <div id="mathBoard" class="math-board">
+        <div class="hud-scores">
+          <span id="playerScoreTxt" style="color: #38bdf8;">You: 0</span>
+          <span id="opponentScoreTxt" style="color: #f43f5e;">Opponent: 0</span>
+        </div>
+
+        <div class="question-card">
+          <div class="math-prompt" id="mathPromptText">-- + --</div>
+          <div class="timer-bar-wrap">
+            <div id="timerBar" class="timer-bar"></div>
+          </div>
+          <div class="answer-display" id="answerDisplay">_</div>
+        </div>
+
+        <div class="keypad-grid">
+          <button class="key-btn" onclick="pressKey('7')">7</button>
+          <button class="key-btn" onclick="pressKey('8')">8</button>
+          <button class="key-btn" onclick="pressKey('9')">9</button>
+          <button class="key-btn" onclick="pressKey('4')">4</button>
+          <button class="key-btn" onclick="pressKey('5')">5</button>
+          <button class="key-btn" onclick="pressKey('6')">6</button>
+          <button class="key-btn" onclick="pressKey('1')">1</button>
+          <button class="key-btn" onclick="pressKey('2')">2</button>
+          <button class="key-btn" onclick="pressKey('3')">3</button>
+          <button class="key-btn" onclick="pressKey('⌫')">⌫</button>
+          <button class="key-btn" onclick="pressKey('0')">0</button>
+          <button class="key-btn" style="background: #10b981;" onclick="submitAnswer()">⏎</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let myName = "Gamer";
+      let peer = null;
+      let activeConn = null;
+      let isHost = false;
+      let currentAnswer = 0;
+      let userTyped = "";
+      let myScore = 0;
+      let opponentScore = 0;
+      let roundTimer = null;
+      let timeLeft = 100;
+      let isSolo = false;
+
+      // 1. Auto-Fetch Name from Study Hub or LocalStorage
+      window.onload = () => {
+        const studyUser = JSON.parse(localStorage.getItem('studyRoomUser'));
+        const savedGamer = localStorage.getItem('math_gamer_name');
+        if (studyUser && studyUser.name) {
+          myName = studyUser.name;
+        } else if (savedGamer) {
+          myName = savedGamer;
+        }
+        document.getElementById('playerNameInput').value = myName;
+      };
+
+      function saveGamerName(val) {
+        if(val.trim()) {
+          myName = val.trim();
+          localStorage.setItem('math_gamer_name', myName);
+        }
+      }
+
+      // 2. Play Online Matchmaking Engine (PeerJS 1v1 auto pool)
+      function startQuickMatch() {
+        isSolo = false;
+        const status = document.getElementById('matchStatus');
+        status.innerText = "Searching for an online player...";
+
+        const poolRoomId = "csh-quick-match-room-v1";
+        peer = new Peer();
+
+        peer.on('open', () => {
+          // Connect attempt
+          const conn = peer.connect(poolRoomId);
+          conn.on('open', () => {
+            activeConn = conn;
+            isHost = false;
+            status.innerText = "Match Found! Starting...";
+            setupConnectionHandlers();
+            conn.send({ type: 'join', name: myName });
+          });
+
+          conn.on('error', () => {
+            hostPublicLobby(poolRoomId);
+          });
+
+          setTimeout(() => {
+            if (!activeConn) {
+              hostPublicLobby(poolRoomId);
+            }
+          }, 3500);
+        });
+      }
+
+      function hostPublicLobby(roomId) {
+        if(peer) peer.destroy();
+        peer = new Peer(roomId);
+
+        const status = document.getElementById('matchStatus');
+        status.innerText = "Waiting for an opponent to join...";
+
+        peer.on('connection', (conn) => {
+          activeConn = conn;
+          isHost = true;
+          status.innerText = "Opponent Connected! Launching...";
+          setupConnectionHandlers();
+          setTimeout(() => {
+            launchArena();
+            nextRound();
+          }, 1000);
+        });
+
+        peer.on('error', (err) => {
+          status.innerText = "Rooms busy, retrying matchmaking...";
+          setTimeout(startQuickMatch, 2000);
+        });
+      }
+
+      function setupConnectionHandlers() {
+        activeConn.on('data', (data) => {
+          if (data.type === 'new_question') {
+            currentAnswer = data.ans;
+            document.getElementById('mathPromptText').innerText = data.prompt;
+            launchArena();
+            startTimer();
+          } else if (data.type === 'score_update') {
+            opponentScore = data.score;
+            document.getElementById('opponentScoreTxt').innerText = `Opponent: ${opponentScore}`;
+          }
+        });
+      }
+
+      function startSoloBattle() {
+        isSolo = true;
+        launchArena();
+        nextRound();
+      }
+
+      function launchArena() {
+        document.getElementById('lobbyScreen').style.display = 'none';
+        document.getElementById('mathBoard').style.display = 'flex';
+      }
+
+      function nextRound() {
+        userTyped = "";
+        document.getElementById('answerDisplay').innerText = "_";
+
+        const n1 = Math.floor(Math.random() * 50) + 10;
+        const n2 = Math.floor(Math.random() * 40) + 5;
+        const ops = ['+', '-', '×'];
+        const op = ops[Math.floor(Math.random() * ops.length)];
+
+        if (op === '+') currentAnswer = n1 + n2;
+        if (op === '-') currentAnswer = n1 - n2;
+        if (op === '×') {
+          const s1 = Math.floor(Math.random() * 12) + 2;
+          const s2 = Math.floor(Math.random() * 12) + 2;
+          currentAnswer = s1 * s2;
+          var promptStr = `${s1} × ${s2}`;
+        } else {
+          var promptStr = `${n1} ${op} ${n2}`;
+        }
+
+        document.getElementById('mathPromptText').innerText = promptStr;
+
+        if (isHost && activeConn) {
+          activeConn.send({ type: 'new_question', prompt: promptStr, ans: currentAnswer });
+        }
+        startTimer();
+      }
+
+      function startTimer() {
+        if(roundTimer) clearInterval(roundTimer);
+        timeLeft = 100;
+        const bar = document.getElementById('timerBar');
+        roundTimer = setInterval(() => {
+          timeLeft -= 2;
+          bar.style.width = timeLeft + "%";
+          if (timeLeft <= 0) {
+            clearInterval(roundTimer);
+            if(isHost || isSolo) nextRound();
+          }
+        }, 150);
+      }
+
+      function pressKey(k) {
+        if (k === '⌫') {
+          userTyped = userTyped.slice(0, -1);
+        } else if (userTyped.length < 5) {
+          userTyped += k;
+        }
+        document.getElementById('answerDisplay').innerText = userTyped || "_";
+      }
+
+      function submitAnswer() {
+        if (!userTyped) return;
+        if (parseInt(userTyped) === currentAnswer) {
+          myScore += 10;
+          document.getElementById('playerScoreTxt').innerText = `You: ${myScore}`;
+          saveToHubLeaderboard(myName, myScore);
+
+          if (activeConn) {
+            activeConn.send({ type: 'score_update', score: myScore });
+          }
+          if (isHost || isSolo) nextRound();
+        } else {
+          userTyped = "";
+          document.getElementById('answerDisplay').innerText = "Wrong!";
+          setTimeout(() => { document.getElementById('answerDisplay').innerText = "_"; }, 500);
+        }
+      }
+
+      // Save match points to College Study Hub
+      function saveToHubLeaderboard(name, score) {
+        let board = JSON.parse(localStorage.getItem('math_battle_scores')) || [];
+        const index = board.findIndex(b => b.name === name);
+        if (index > -1) {
+          if (score > board[index].score) board[index].score = score;
+        } else {
+          board.push({ name: name, score: score, date: new Date().toLocaleDateString() });
+        }
+        board.sort((a,b) => b.score - a.score);
+        localStorage.setItem('math_battle_scores', JSON.stringify(board.slice(0, 10)));
+      }
+    </script>
+  </body>
+</html>
