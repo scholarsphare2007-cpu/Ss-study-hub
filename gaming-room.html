@@ -61,7 +61,9 @@
             font-size: 0.85rem;
             font-weight: 700;
             text-decoration: none;
+            transition: all 0.2s;
         }
+        .back-nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
 
         .dashboard-grid {
             display: grid;
@@ -77,18 +79,30 @@
             background: var(--card-glass);
             border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 25px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             backdrop-filter: blur(15px);
+            position: relative;
+        }
+
+        .card-badge {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 8px;
+            width: fit-content;
+            letter-spacing: 0.5px;
         }
 
         .leaderboard-card {
             background: var(--card-glass);
             border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 20px;
+            padding: 22px;
             backdrop-filter: blur(15px);
         }
 
@@ -102,23 +116,30 @@
         }
 
         .launch-btn {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
             color: white;
             border: none;
-            padding: 14px;
-            border-radius: 14px;
-            font-weight: 800;
-            font-size: 1rem;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 900;
+            font-size: 1.05rem;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 25px;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .launch-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
         }
 
+        /* Fullscreen Game Frame */
         #gameModal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #020617;
+            background: #060814;
             z-index: 5000;
             flex-direction: column;
         }
@@ -128,15 +149,22 @@
             justify-content: space-between;
             align-items: center;
             background: #0f172a;
-            padding: 12px 20px;
+            padding: 10px 20px;
             border-bottom: 1px solid var(--card-border);
+            height: 52px;
+        }
+
+        #mathFrame {
+            width: 100%;
+            height: calc(100% - 52px);
+            border: none;
         }
 
         .bottom-app-nav {
             display: flex;
             position: fixed;
             bottom: 0; left: 0; right: 0; height: 68px;
-            background: rgba(15, 23, 42, 0.92);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255,255,255,0.08);
             z-index: 1500;
@@ -145,7 +173,8 @@
         }
         .bottom-nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--text-muted); text-decoration: none; font-size: 0.72rem; font-weight: 700; gap: 4px;
+            color: var(--text-muted); text-decoration: none; font-size: 0.68rem; font-weight: 700; gap: 4px;
+            flex: 1; text-align: center;
         }
         .bottom-nav-item.active { color: #818cf8; }
     </style>
@@ -155,42 +184,42 @@
     <div class="arena-container">
         <div class="top-bar">
             <span class="hub-title">⚡ Mind Battle Arena</span>
-            <a href="index.html" class="back-nav-btn">← Back to Hub</a>
+            <a href="index.html" class="back-nav-btn">← Home</a>
         </div>
 
         <div class="dashboard-grid">
-            <!-- Active Game Selection -->
+            <!-- Math Battle Main Showcase -->
             <div class="game-card">
                 <div>
-                    <span style="background: rgba(16,185,129,0.2); color:#34d399; font-size:0.65rem; font-weight:800; padding:4px 8px; border-radius:6px;">LIVE 1v1 MULTIPLAYER</span>
-                    <h2 style="font-size: 1.8rem; font-weight: 900; margin: 10px 0 6px 0;">Math Battle Arena</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
-                        Real-time speed math calculation match. No room codes needed—tap 'Play Online' to auto-pair with another college peer, or practice solo!
+                    <span class="card-badge">MULTIPLAYER & PASS-PLAY</span>
+                    <h2 style="font-size: 2rem; font-weight: 900; margin: 12px 0 8px 0; color: #fff;">Math Battle</h2>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+                        Ludo-style multiplayer mental math arena. Fast-paced arithmetic calculations, 2 to 4 player battles, live animations, and speed score races.
                     </p>
                 </div>
-                <button class="launch-btn" onclick="openGame()">Launch Math Battle 🚀</button>
+                <button class="launch-btn" onclick="openGame()">Play Original Math Battle 🚀</button>
             </div>
 
-            <!-- College Leaderboard -->
+            <!-- Hub Leaderboard Card -->
             <div class="leaderboard-card">
-                <div style="font-size: 1rem; font-weight: 900; margin-bottom: 15px; color: #fcd34d;">🏆 College Top Champions</div>
+                <div style="font-size: 1rem; font-weight: 900; margin-bottom: 15px; color: #fcd34d;">🏆 College Top Scores</div>
                 <div id="leaderboardList">
-                    <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px;">No match records yet. Play your first battle!</div>
+                    <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 25px 0;">No match history yet. Play your first round!</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Embedded Game Frame -->
+    <!-- Original Math Battle Frame -->
     <div id="gameModal">
         <div class="modal-top">
-            <span style="font-weight: 800; color: #38bdf8;">🎲 Math Battle Arena</span>
-            <button onclick="closeGame()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 6px 12px; border-radius: 8px; font-weight: 700; cursor: pointer;">✕ Exit to Arena</button>
+            <span style="font-weight: 800; color: #38bdf8; font-size: 0.9rem;">🎲 Math Battle Arena</span>
+            <button onclick="closeGame()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 8px; font-weight: 700; cursor: pointer;">✕ Back to Arena</button>
         </div>
-        <iframe id="mathFrame" src="math-battle.html" style="width: 100%; height: calc(100% - 50px); border: none;"></iframe>
+        <iframe id="mathFrame" src="math-battle.html"></iframe>
     </div>
 
-    <!-- Navigation -->
+    <!-- Bottom Nav -->
     <div class="bottom-app-nav">
         <a href="index.html" class="bottom-nav-item">
             <span style="font-size: 1.3rem;">🏠</span>
@@ -207,30 +236,42 @@
     </div>
 
     <script>
+        // Auto Sync: Study Room profile name ko Math Battle ke saved name me daal do
+        function syncPlayerProfile() {
+            const studyUser = JSON.parse(localStorage.getItem('studyRoomUser'));
+            const currentGamer = localStorage.getItem('mathbattle.name');
+            if (studyUser && studyUser.name && !currentGamer) {
+                localStorage.setItem('mathbattle.name', studyUser.name);
+            }
+        }
+
         function openGame() {
+            syncPlayerProfile();
             document.getElementById('gameModal').style.display = 'flex';
         }
 
         function closeGame() {
             const frame = document.getElementById('mathFrame');
-            frame.src = frame.src; // resets sounds/sockets
+            frame.src = frame.src; // resets WebAudio context and active peers
             document.getElementById('gameModal').style.display = 'none';
             renderLeaderboard();
         }
 
         function renderLeaderboard() {
             const list = document.getElementById('leaderboardList');
-            const data = JSON.parse(localStorage.getItem('math_battle_scores')) || [];
+            // Original game highscore storage key: "mathbattle.highscores.v1"
+            const data = JSON.parse(localStorage.getItem('mathbattle.highscores.v1')) || [];
             if(data.length === 0) return;
 
             list.innerHTML = '';
-            data.forEach((p, idx) => {
+            data.slice(0, 7).forEach((p, idx) => {
                 const row = document.createElement('div');
                 row.className = 'board-item';
                 row.innerHTML = `
                     <div>
                         <span style="color:#94a3b8; font-weight:800; margin-right:8px;">#${idx+1}</span>
                         <b>${p.name}</b>
+                        <span style="font-size:0.75rem; color:#64748b; margin-left:4px;">(${p.diff})</span>
                     </div>
                     <span style="color:#fcd34d; font-weight:900;">${p.score} pts</span>
                 `;
@@ -238,7 +279,10 @@
             });
         }
 
-        window.onload = renderLeaderboard;
+        window.onload = () => {
+            syncPlayerProfile();
+            renderLeaderboard();
+        };
     </script>
 </body>
 </html>
