@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Student Battle Arena & Gaming Room</title>
+    <title>Student Gaming Zone & Arena</title>
     <style>
         :root {
             --sky-top: #020617;
@@ -26,7 +26,7 @@
         }
 
         .arena-container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -65,101 +65,105 @@
         }
         .back-nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 20px;
+        .arena-hero {
+            text-align: center;
+            padding: 30px 15px;
+            background: var(--card-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(15px);
+        }
+        .arena-hero h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+        .arena-hero p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        @media (max-width: 850px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .game-card {
             background: var(--card-glass);
             border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 28px;
+            padding: 26px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             backdrop-filter: blur(15px);
             position: relative;
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
         }
 
         .card-badge {
-            background: rgba(56, 189, 248, 0.2);
-            color: #38bdf8;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
             font-size: 0.7rem;
             font-weight: 800;
             padding: 4px 10px;
             border-radius: 8px;
-            width: fit-content;
             letter-spacing: 0.5px;
         }
 
-        .leaderboard-card {
-            background: var(--card-glass);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 22px;
-            backdrop-filter: blur(15px);
+        .game-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
         }
 
-        .board-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.88rem;
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .game-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 25px;
         }
 
         .launch-btn {
             background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 16px;
+            padding: 14px;
+            border-radius: 14px;
             font-weight: 900;
-            font-size: 1.05rem;
+            font-size: 1rem;
             cursor: pointer;
             width: 100%;
-            margin-top: 25px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
-            transition: transform 0.2s, filter 0.2s;
+            transition: filter 0.2s, transform 0.2s;
         }
         .launch-btn:hover {
             filter: brightness(1.1);
             transform: translateY(-2px);
         }
 
-        /* Fullscreen Game Frame */
-        #gameModal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #060814;
-            z-index: 5000;
-            flex-direction: column;
-        }
-
-        .modal-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #0f172a;
-            padding: 10px 20px;
-            border-bottom: 1px solid var(--card-border);
-            height: 52px;
-        }
-
-        #mathFrame {
-            width: 100%;
-            height: calc(100% - 52px);
-            border: none;
-        }
-
+        /* Bottom Nav */
         .bottom-app-nav {
             display: flex;
             position: fixed;
@@ -187,36 +191,49 @@
             <a href="index.html" class="back-nav-btn">← Home</a>
         </div>
 
-        <div class="dashboard-grid">
-            <!-- Math Battle Main Showcase -->
+        <div class="arena-hero">
+            <h1>Student Gaming Zone</h1>
+            <p>Challenge friends online or test your speed calculation reflexes in quick pass & play battles.</p>
+        </div>
+
+        <div class="games-grid">
+            <!-- Math Battle (Direct Live Link) -->
             <div class="game-card">
+                <span class="card-badge">LIVE MULTIPLAYER</span>
                 <div>
-                    <span class="card-badge">MULTIPLAYER & PASS-PLAY</span>
-                    <h2 style="font-size: 2rem; font-weight: 900; margin: 12px 0 8px 0; color: #fff;">Math Battle</h2>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                        Ludo-style multiplayer mental math arena. Fast-paced arithmetic calculations, 2 to 4 player battles, live animations, and speed score races.
+                    <div class="game-icon">🧮</div>
+                    <div class="game-title">Math Battle Arena</div>
+                    <p class="game-desc">
+                        Ludo-style multiplayer mental math arena. Fast-paced arithmetic calculations, room codes, live animations, and speed score races.
                     </p>
                 </div>
-                <button class="launch-btn" onclick="openGame()">Play Original Math Battle 🚀</button>
+                <!-- Seedha Netlify Live Link Trigger -->
+                <a href="https://beamish-rolypoly-f9e90f.netlify.app/" target="_blank" class="launch-btn">
+                    Launch Math Battle 🚀
+                </a>
             </div>
 
-            <!-- Hub Leaderboard Card -->
-            <div class="leaderboard-card">
-                <div style="font-size: 1rem; font-weight: 900; margin-bottom: 15px; color: #fcd34d;">🏆 College Top Scores</div>
-                <div id="leaderboardList">
-                    <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 25px 0;">No match history yet. Play your first round!</div>
+            <!-- Future Games Slots -->
+            <div class="game-card" style="opacity: 0.75;">
+                <span class="card-badge" style="background: rgba(99,102,241,0.2); color: #a5b4fc;">IN DEV</span>
+                <div>
+                    <div class="game-icon">🧩</div>
+                    <div class="game-title">Logic Puzzle Grid</div>
+                    <p class="game-desc">Pattern matching and logical reasoning puzzles designed for general aptitude and exams.</p>
                 </div>
+                <button class="launch-btn" style="background: rgba(255,255,255,0.08); box-shadow: none; cursor: not-allowed;" disabled>Coming Soon</button>
+            </div>
+
+            <div class="game-card" style="opacity: 0.75;">
+                <span class="card-badge" style="background: rgba(245,158,11,0.2); color: #fcd34d;">NEXT UPDATE</span>
+                <div>
+                    <div class="game-icon">⚡</div>
+                    <div class="game-title">Memory Matrix</div>
+                    <p class="game-desc">Rapid recall sequence tests to stretch your memory during study breaks.</p>
+                </div>
+                <button class="launch-btn" style="background: rgba(255,255,255,0.08); box-shadow: none; cursor: not-allowed;" disabled>Coming Soon</button>
             </div>
         </div>
-    </div>
-
-    <!-- Original Math Battle Frame -->
-    <div id="gameModal">
-        <div class="modal-top">
-            <span style="font-weight: 800; color: #38bdf8; font-size: 0.9rem;">🎲 Math Battle Arena</span>
-            <button onclick="closeGame()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 8px; font-weight: 700; cursor: pointer;">✕ Back to Arena</button>
-        </div>
-        <iframe id="mathFrame" src="math-battle.html"></iframe>
     </div>
 
     <!-- Bottom Nav -->
@@ -235,54 +252,5 @@
         </a>
     </div>
 
-    <script>
-        // Auto Sync: Study Room profile name ko Math Battle ke saved name me daal do
-        function syncPlayerProfile() {
-            const studyUser = JSON.parse(localStorage.getItem('studyRoomUser'));
-            const currentGamer = localStorage.getItem('mathbattle.name');
-            if (studyUser && studyUser.name && !currentGamer) {
-                localStorage.setItem('mathbattle.name', studyUser.name);
-            }
-        }
-
-        function openGame() {
-            syncPlayerProfile();
-            document.getElementById('gameModal').style.display = 'flex';
-        }
-
-        function closeGame() {
-            const frame = document.getElementById('mathFrame');
-            frame.src = frame.src; // resets WebAudio context and active peers
-            document.getElementById('gameModal').style.display = 'none';
-            renderLeaderboard();
-        }
-
-        function renderLeaderboard() {
-            const list = document.getElementById('leaderboardList');
-            // Original game highscore storage key: "mathbattle.highscores.v1"
-            const data = JSON.parse(localStorage.getItem('mathbattle.highscores.v1')) || [];
-            if(data.length === 0) return;
-
-            list.innerHTML = '';
-            data.slice(0, 7).forEach((p, idx) => {
-                const row = document.createElement('div');
-                row.className = 'board-item';
-                row.innerHTML = `
-                    <div>
-                        <span style="color:#94a3b8; font-weight:800; margin-right:8px;">#${idx+1}</span>
-                        <b>${p.name}</b>
-                        <span style="font-size:0.75rem; color:#64748b; margin-left:4px;">(${p.diff})</span>
-                    </div>
-                    <span style="color:#fcd34d; font-weight:900;">${p.score} pts</span>
-                `;
-                list.appendChild(row);
-            });
-        }
-
-        window.onload = () => {
-            syncPlayerProfile();
-            renderLeaderboard();
-        };
-    </script>
 </body>
 </html>
