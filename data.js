@@ -100,15 +100,172 @@ const resourcesData = [
         link: "https://drive.google.com/file/d/1W961NGhy-lx4PGrudVBZSG9i2tI6TxPc/view?usp=drivesdk"
     },
 
-    // ==================== B.Sc 2nd Sem - Chemistry ====================
+    // ==================== B.Sc - CHEMISTRY - Syllabus ====================
+     {
+        course: "B.Sc",
+        semester: "1st-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "chemistry-1st-sem syllabus, BSc UOR",
+        link: "#"
+    },
     {
         course: "B.Sc",
-        semester: "2nd Sem",
-        subject: "Chemistry",
+        semester: "2nd-Sem",
+        subject: "chemistry",
         type: "Syllabus",
-        title: "2nd sem Syllabus (2025-26) UOR",
-        link: "https://drive.google.com/file/d/1g-Fk6cFBkMzsPwhV9vUAyqGBRWKtqOaU/view?usp=drivesdk"
+        title: "chemistry-2nd-sem syllabus, BSc UOR",
+        link: "#"
     },
+    {
+        course: "B.Sc",
+        semester: "3rd-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "chemistry-3rd-sem syllabus, BSc UOR",
+        link: "https://drive.google.com/file/d/1UDEIL3pGY7KPLuuTg5eyVhgnpC2qr21k/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "4th-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "chemistry-4th-sem syllabus, BSc UOR",
+        link: "https://drive.google.com/file/d/1VnPdoTQqDy1EmGbp1n47Ce9U0FIUZKFx/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "5th-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "chemistry-5th-sem syllabus, BSc UOR",
+        link: ""
+        link: "https://drive.google.com/file/d/1xYz2I0bgO9aeJ9H2LHrifsTJA5Zh20zk/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "6th-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "chemistry-6th-sem syllabus, BSc UOR",
+        link: "https://drive.google.com/file/d/1nri7w2dL69w6bqIAhK0oXxL_HXxnYpLV/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "1st-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "practical-chemistry-1st-sem syllabus, BSc UOR",
+        link: "#"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "practical-chemistry-2nd-sem syllabus, BSc UOR",
+        link: "#"
+    },
+        {
+        course: "B.Sc",
+        semester: "3rd-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "practical-chemistry-3rd-sem syllabus, BSc UOR",
+        link: "https://drive.google.com/file/d/1BZvLT7AR-6FmsL0cyqfn5ZajW8C1Nj1n/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "4th-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "practical-chemistry-4th-sem syllabus, BSc UOR",
+        link: "https://drive.google.com/file/d/12qZ_AGxVcZKvJvVqG7-0Nvb35s5H-iTS/view?usp=sharing"
+    },
+        {
+        course: "B.Sc",
+        semester: "5th-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "practical-chemistry-5th-sem syllabus, BSc UOR",
+        link: "https://drive.google.com/file/d/1oMNHOW35UXZ_8P_1nyVe8eaMOUOcPPD1/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "6th-Sem",
+        subject: "chemistry",
+        type: "Syllabus",
+        title: "practical-chemistry-6th-sem syllabus, BSc UOR",
+        link: "https://drive.google.com/file/d/1PvTrJOyMh9XnUYzl4PVGYagq7cHf6yMX/view?usp=sharing"
+    },
+
+    // ==================== B.Sc - MATHEMATICS - Syllabus ====================
+    {
+        course: "B.Sc",
+        semester: "1st-Sem",
+        subject: "mathematics",
+        type: "syllabus",
+        title: "maths-1st-sem syllabus, BSc UOR", 
+        link: "https://drive.google.com/file/d/1WB749sG7uO6z9v7UL-v0GhwkjVEDdaoB/view?usp=sharing"
+    }, 
+    {
+        course: "B.Sc",
+        semester: "2nd-Sem",
+        subject: "mathematics",
+        type: "syllabus",
+        title: "maths-2nd-sem syllabus, BSc UOR", 
+        link: "https://drive.google.com/file/d/1jyTU2V4-ZdI-rhdZ4edLVKdfEIZUlD2I/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "3rd-Sem",
+        subject: "mathematics",
+        type: "syllabus",
+        title: "maths-3rd-sem syllabus, BSc UOR", 
+        link: "https://drive.google.com/file/d/1nmVyWT15J3O9mTUEF9D9q8HLDlC70HRn/view?usp=drive_link"
+    }, 
+    {
+        course: "B.Sc",
+        semester: "4th-Sem",
+        subject: "mathematics",
+        type: "syllabus",
+        title: "maths-4th-sem syllabus, BSc UOR", 
+        link: "https://drive.google.com/file/d/1tKnhhMJrXLpKyhUVrV6pPe6u9j-kEqxP/view?usp=sharing"
+    }, 
+    {
+        course: "B.Sc",
+        semester: "5th-Sem",
+        subject: "mathematics",
+        type: "syllabus",
+        title: "maths-5th-sem syllabus, BSc UOR", 
+        link: "https://drive.google.com/file/d/1bLKwW-Dar4XVXwJOB2eIfo2X6N3SJjBf/view?usp=sharing"
+    }, 
+    {
+        course: "B.Sc",
+        semester: "6th-Sem",
+        subject: "mathematics",
+        type: "syllabus",
+        title: "maths-6th-sem syllabus, BSc UOR", 
+        link: "https://drive.google.com/file/d/1SMcQmhIY6t4S5ItlX2GpFj3o5d0i4qAL/view?usp=sharing"
+    }, 
+    {
+        course: "B.Sc",
+        semester: "3rd-Sem",
+        subject: "mathematics",
+        type: "syllabus",
+        title: "maths-3rd-sem syllabus, BSc UOR", 
+        link: "https://drive.google.com/file/d/1CsW3WMcGvigCkL3cvYQ9r6MlY6eQ7NAD/view?usp=sharing"
+    }, 
+    {
+        course: "B.Sc",
+        semester: "4th-Sem",
+        subject: "mathematics",
+        type: "syllabus",
+        title: "maths-4th-sem syllabus, BSc UOR", 
+        link: "https://drive.google.com/file/d/1Zyfx9JyRqAdvJgLO6OmRcwvFJqUEngyt/view?usp=sharing"
+    }, 
+
+    // ==================== B.Sc 2nd Sem - Chemistry ====================
     {
         course: "B.Sc",
         semester: "2nd Sem",
