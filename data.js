@@ -139,7 +139,6 @@ const resourcesData = [
         subject: "chemistry",
         type: "Syllabus",
         title: "chemistry-5th-sem syllabus, BSc UOR",
-        link: ""
         link: "https://drive.google.com/file/d/1xYz2I0bgO9aeJ9H2LHrifsTJA5Zh20zk/view?usp=sharing"
     },
     {
