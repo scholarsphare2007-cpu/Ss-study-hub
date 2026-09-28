@@ -545,9 +545,10 @@
                     <option value="Important-Topics">Important-Topics</option>
                 </select>
             </div>
+            <!-- FIX: id ko subjectFilter kiya aur label for theek kiya -->
             <div class="filter-group">
-                <label for="typeFilter">Subject</label>
-                <select id="typeFilter" onchange="window.filterResources()">
+                <label for="subjectFilter">Subject</label>
+                <select id="subjectFilter" onchange="window.filterResources()">
                     <option value="all">All Subjects</option>
                     <option value="Hindi">Hindi</option>
                     <option value="English">English</option>
@@ -595,7 +596,7 @@
         </section>
     </div>
 
-    <!-- Bottom App Navigation with Gaming Room Added -->
+    <!-- Bottom App Navigation -->
     <div class="bottom-app-nav">
         <div class="bottom-nav-item active" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
             <span class="bottom-nav-icon">🏠</span>
@@ -662,6 +663,23 @@
                     <option value="PYQ">PYQs</option>
                     <option value="Paper">Papers</option>
                     <option value="Important-Topics">Important-Topics</option>
+                </select>
+            </div>
+
+            <!-- FIX: Mobile modal me bhi Subject filter add kiya -->
+            <div class="filter-group">
+                <label style="margin-bottom:6px;" for="subjectFilterMobile">Select Subject</label>
+                <select id="subjectFilterMobile" style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:white; border-radius:10px; font-weight:600;" onchange="syncAndFilterMobile('subject')">
+                    <option value="all">All Subjects</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="English">English</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Zoology">Zoology</option>
+                    <option value="Botany">Botany</option>
+                    <option value="M.D.C">M.D.C</option>
+                    <option value="Computer">Computer</option>
                 </select>
             </div>
         </div>
@@ -771,6 +789,7 @@
             }
         }
 
+        // FIX: Sync me 'subject' ko handle kiya
         function syncAndFilterMobile(type) {
             if (type === 'course') {
                 document.getElementById('courseFilter').value = document.getElementById('courseFilterMobile').value;
@@ -778,6 +797,8 @@
                 document.getElementById('semFilter').value = document.getElementById('semFilterMobile').value;
             } else if (type === 'type') {
                 document.getElementById('typeFilter').value = document.getElementById('typeFilterMobile').value;
+            } else if (type === 'subject') {
+                document.getElementById('subjectFilter').value = document.getElementById('subjectFilterMobile').value;
             }
             if (typeof window.filterResources === 'function') {
                 window.filterResources();
@@ -879,16 +900,19 @@
             const courseSelect = document.getElementById('courseFilter');
             const semSelect = document.getElementById('semFilter');
             const typeSelect = document.getElementById('typeFilter');
+            const subjectSelect = document.getElementById('subjectFilter'); // FIX: Added subject element
 
             const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
             const selectedCourse = courseSelect ? courseSelect.value : 'all';
             const selectedSem = semSelect ? semSelect.value : 'all';
             const selectedType = typeSelect ? typeSelect.value : 'all';
+            const selectedSubject = subjectSelect ? subjectSelect.value : 'all'; // FIX: Get subject value
 
             // Mobile sync
             if (document.getElementById('courseFilterMobile')) document.getElementById('courseFilterMobile').value = selectedCourse;
             if (document.getElementById('semFilterMobile')) document.getElementById('semFilterMobile').value = selectedSem;
             if (document.getElementById('typeFilterMobile')) document.getElementById('typeFilterMobile').value = selectedType;
+            if (document.getElementById('subjectFilterMobile')) document.getElementById('subjectFilterMobile').value = selectedSubject; // FIX: Sync mobile select
 
             const filtered = data.filter(item => {
                 const matchesSearch = !searchText || 
@@ -902,7 +926,11 @@
                 const itemType = item.type || '';
                 const matchesType = selectedType === 'all' || (itemType.toLowerCase() === selectedType.toLowerCase());
 
-                return matchesSearch && matchesCourse && matchesSem && matchesType;
+                // FIX: Added case-insensitive matching for subject
+                const itemSubject = item.subject || '';
+                const matchesSubject = selectedSubject === 'all' || (itemSubject.toLowerCase() === selectedSubject.toLowerCase());
+
+                return matchesSearch && matchesCourse && matchesSem && matchesType && matchesSubject;
             });
 
             renderGrid(filtered);
@@ -989,6 +1017,10 @@
 
             const typeEl = document.getElementById('typeFilter');
             if (typeEl) typeEl.addEventListener('change', window.filterResources);
+
+            // FIX: Added event listener for subjectFilter
+            const subjectEl = document.getElementById('subjectFilter');
+            if (subjectEl) subjectEl.addEventListener('change', window.filterResources);
         });
     </script>
 </body>
