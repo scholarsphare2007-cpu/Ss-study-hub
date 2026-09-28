@@ -16,7 +16,7 @@ const resourcesData = [
         semester: "1st Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "1st sem. syll. physics, BSc UOR",
+        title: "physics-1st-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/18b06iJ7MdzjI3cpgcGdQqVjJmgyqGSjZ/view?usp=drivesdk"
     },
     {
@@ -24,7 +24,7 @@ const resourcesData = [
         semester: "2nd Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "2nd sem. syll. physics, BSc UOR",
+        title: "physics-2nd-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/17024F_E9d5Adk_awdDuyIvaM6OosaAgP/view?usp=drivesdk"
     },
     {
@@ -32,7 +32,7 @@ const resourcesData = [
         semester: "2nd Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "2nd sem. syll. pract.physics, BSc UOR",
+        title: "practical-physics-2nd-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/1QKbeXp5HNk2RU7NF-ymqouQHXcD2Qbdi/view?usp=drivesdk"
     },
     {
@@ -40,7 +40,7 @@ const resourcesData = [
         semester: "3rd Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "3rd sem. syll. physics, BSc UOR",
+        title: "physics-3rd-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/19FLqdlrbmCl80G5fg7kO7M3B3MnNZrQr/view?usp=drivesdk"
     },
     {
@@ -48,7 +48,7 @@ const resourcesData = [
         semester: "3rd Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "3rd sem. syll. pract.physics, BSc UOR",
+        title: "practical-physics-3rd-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/1XG0xzKkpIv6guEJoQmhesqGgdutrwxpe/view?usp=drivesdk"
     },
     {
@@ -56,7 +56,7 @@ const resourcesData = [
         semester: "4th Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "4th sem. syll.physics, BSc UOR",
+        title: "physics-4th-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/11G7OyMcHwrIeG0qRYN_UaOnxCtUUpA7n/view?usp=drivesdk"
     },
     {
@@ -64,7 +64,7 @@ const resourcesData = [
         semester: "4th Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "4th sem. syll. pract.physics, BSc UOR",
+        title: "practical-physics-4th-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/17KkiGwIT0MywMBfRGIpF95nWjlUZ7da7/view?usp=drivesdk"
     },
     {
@@ -72,7 +72,7 @@ const resourcesData = [
         semester: "5th Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "5th sem. syll.physics, BSc UOR",
+        title: "physics-5th-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/1yIWLRxua7msNJE9yu2efy1i4zSX1tCHa/view?usp=drivesdk"
     },
     {
@@ -80,7 +80,7 @@ const resourcesData = [
         semester: "5th Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "5th sem. syll. pract.physics, BSc UOR",
+        title: "practical-physics-5th-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/1Tnn_d6gX-85zSHiTh_bRm1Uh4rTOqyXN/view?usp=drivesdk"
     },
     {
@@ -88,7 +88,7 @@ const resourcesData = [
         semester: "6th Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "6th sem. syll.physics, BSc UOR",
+        title: "practical-physics-6th-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/1YSsycbRXAspQfx1p6MmqQuclbHhUFkLq/view?usp=drivesdk"
     },
     {
@@ -96,7 +96,7 @@ const resourcesData = [
         semester: "6th Sem",
         subject: "Physics",
         type: "Syllabus",
-        title: "6th sem. syll. pract.physics, BSc UOR",
+        title: "practical-physics-6th-sem syllabus, BSc UOR",
         link: "https://drive.google.com/file/d/1W961NGhy-lx4PGrudVBZSG9i2tI6TxPc/view?usp=drivesdk"
     },
 
