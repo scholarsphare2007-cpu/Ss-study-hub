@@ -396,5 +396,13 @@ const resourcesData = [
         type: "Syllabus",
         title: "General Hindi Syllabus (2025-26)",
         link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
-    }
+    },
+    {
+        course: "B.Sc",
+        semester: "3rd Sem",
+        subject: "physics",
+        type: "assignment",
+        title: "physics-3rd-sem-assignment",
+        link: "https://docs.google.com/document/d/14XTicWVcIfycXujE6GoXl4mDyHPfaVRw/edit?usp=sharing&ouid=110924621719772604685&rtpof=true&sd=true"
+    },
 ];
