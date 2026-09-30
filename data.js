@@ -103,7 +103,7 @@ const resourcesData = [
     // ==================== B.Sc - CHEMISTRY - Syllabus ====================
      {
         course: "B.Sc",
-        semester: "1st-Sem",
+        semester: "1st Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "chemistry-1st-sem syllabus, BSc UOR",
@@ -111,7 +111,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "2nd-Sem",
+        semester: "2nd Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "chemistry-2nd-sem syllabus, BSc UOR",
@@ -119,7 +119,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "3rd-Sem",
+        semester: "3rd Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "chemistry-3rd-sem syllabus, BSc UOR",
@@ -127,7 +127,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "4th-Sem",
+        semester: "4th Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "chemistry-4th-sem syllabus, BSc UOR",
@@ -135,7 +135,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "5th-Sem",
+        semester: "5th Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "chemistry-5th-sem syllabus, BSc UOR",
@@ -143,7 +143,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "6th-Sem",
+        semester: "6th Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "chemistry-6th-sem syllabus, BSc UOR",
@@ -151,7 +151,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "1st-Sem",
+        semester: "1st Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "practical-chemistry-1st-sem syllabus, BSc UOR",
@@ -159,7 +159,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "2nd-Sem",
+        semester: "2nd Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "practical-chemistry-2nd-sem syllabus, BSc UOR",
@@ -167,7 +167,7 @@ const resourcesData = [
     },
         {
         course: "B.Sc",
-        semester: "3rd-Sem",
+        semester: "3rd Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "practical-chemistry-3rd-sem syllabus, BSc UOR",
@@ -175,7 +175,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "4th-Sem",
+        semester: "4th Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "practical-chemistry-4th-sem syllabus, BSc UOR",
@@ -183,7 +183,7 @@ const resourcesData = [
     },
         {
         course: "B.Sc",
-        semester: "5th-Sem",
+        semester: "5th Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "practical-chemistry-5th-sem syllabus, BSc UOR",
@@ -191,7 +191,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "6th-Sem",
+        semester: "6th Sem",
         subject: "chemistry",
         type: "Syllabus",
         title: "practical-chemistry-6th-sem syllabus, BSc UOR",
@@ -201,7 +201,7 @@ const resourcesData = [
     // ==================== B.Sc - MATHEMATICS - Syllabus ====================
     {
         course: "B.Sc",
-        semester: "1st-Sem",
+        semester: "1st Sem",
         subject: "mathematics",
         type: "syllabus",
         title: "maths-1st-sem syllabus, BSc UOR", 
@@ -209,7 +209,7 @@ const resourcesData = [
     }, 
     {
         course: "B.Sc",
-        semester: "2nd-Sem",
+        semester: "2nd Sem",
         subject: "mathematics",
         type: "syllabus",
         title: "maths-2nd-sem syllabus, BSc UOR", 
@@ -217,7 +217,7 @@ const resourcesData = [
     },
     {
         course: "B.Sc",
-        semester: "3rd-Sem",
+        semester: "3rd Sem",
         subject: "mathematics",
         type: "syllabus",
         title: "maths-3rd-sem syllabus, BSc UOR", 
@@ -225,7 +225,7 @@ const resourcesData = [
     }, 
     {
         course: "B.Sc",
-        semester: "4th-Sem",
+        semester: "4th Sem",
         subject: "mathematics",
         type: "syllabus",
         title: "maths-4th-sem syllabus, BSc UOR", 
@@ -233,7 +233,7 @@ const resourcesData = [
     }, 
     {
         course: "B.Sc",
-        semester: "5th-Sem",
+        semester: "5th Sem",
         subject: "mathematics",
         type: "syllabus",
         title: "maths-5th-sem syllabus, BSc UOR", 
@@ -241,7 +241,7 @@ const resourcesData = [
     }, 
     {
         course: "B.Sc",
-        semester: "6th-Sem",
+        semester: "6th Sem",
         subject: "mathematics",
         type: "syllabus",
         title: "maths-6th-sem syllabus, BSc UOR", 
@@ -249,7 +249,7 @@ const resourcesData = [
     }, 
     {
         course: "B.Sc",
-        semester: "3rd-Sem",
+        semester: "3rd Sem",
         subject: "mathematics",
         type: "syllabus",
         title: "maths-3rd-sem syllabus, BSc UOR", 
@@ -257,7 +257,7 @@ const resourcesData = [
     }, 
     {
         course: "B.Sc",
-        semester: "4th-Sem",
+        semester: "4th Sem",
         subject: "mathematics",
         type: "syllabus",
         title: "maths-4th-sem syllabus, BSc UOR", 
