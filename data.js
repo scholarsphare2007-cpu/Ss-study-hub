@@ -405,4 +405,12 @@ const resourcesData = [
         title: "physics-3rd-sem-assignment",
         link: "https://docs.google.com/document/d/14XTicWVcIfycXujE6GoXl4mDyHPfaVRw/edit?usp=sharing&ouid=110924621719772604685&rtpof=true&sd=true"
     },
+    {
+        course: "B.Sc",
+        semester: "3rd Sem",
+        subject: "chemistry",
+        type: "assignment",
+        title: "chemistry-3rd-sem-assignment",
+        link: "https://docs.google.com/document/d/14KeHMa0_v669ncC50xS851aduCOToP4D/edit?usp=sharing&ouid=110924621719772604685&rtpof=true&sd=true"
+    },
 ];
