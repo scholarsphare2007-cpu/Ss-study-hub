@@ -417,40 +417,40 @@ const resourcesData = [
         course: "B.Sc",
         semester: "2nd Sem",
         subject: "mathematics",
-        type: "nites",
+        type: "Notes",
         title: "maths-2nd-sem.all NOTES, B.Sc uor 2026",
         link: "https://drive.google.com/file/d/1HgzMF3RvhDm04oj-CJC7eisXAIjwOEfs/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
         semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Syllabus",
-        title: "General Hindi Syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+        subject: "mathematics",
+        type: "PYQ",
+        title: "MATHS 2ND-SEM. PYQS",
+        link: "https://drive.google.com/file/d/1EGjeQEVlROclwBXGI5KXBbR3hUYT8hEV/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
         semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Syllabus",
-        title: "General Hindi Syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+        subject: "physics",
+        type: "paper",
+        title: "PHYSICS 2ND-SEM. previous year question paper",
+        link: "https://drive.google.com/file/d/1P5fMupSQPAPoqU3qQarO8WmbVSW1zVT0/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
         semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Syllabus",
-        title: "General Hindi Syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+        subject: "physics",
+        type: "Notes",
+        title: "PHYSICS 2nd-sem. all notes(2025-26)",
+        link: "https://drive.google.com/file/d/1_OSdkaWU8yHzBiVoay2bwVwUyPNbBdxp/view?usp=drivesdk"
     },
     {
         course: "B.Sc",
         semester: "2nd Sem",
-        subject: "General Hindi",
-        type: "Syllabus",
-        title: "General Hindi Syllabus (2025-26)",
-        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+        subject: "physics",
+        type: "PYQ",
+        title: "PHYSICS 2nd-sem. PYQS",
+        link: "https://drive.google.com/file/d/1pn7oFAHmaex_nIsySzBJ92Tw5xNvS1KH/view?usp=drivesdk"
     },
 ];
