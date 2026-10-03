@@ -413,4 +413,44 @@ const resourcesData = [
         title: "chemistry-3rd-sem-assignment",
         link: "https://docs.google.com/document/d/14KeHMa0_v669ncC50xS851aduCOToP4D/edit?usp=sharing&ouid=110924621719772604685&rtpof=true&sd=true"
     },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "mathematics",
+        type: "nites",
+        title: "maths-2nd-sem.all NOTES, B.Sc uor 2026",
+        link: "https://drive.google.com/file/d/1HgzMF3RvhDm04oj-CJC7eisXAIjwOEfs/view?usp=drivesdk"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "General Hindi",
+        type: "Syllabus",
+        title: "General Hindi Syllabus (2025-26)",
+        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "General Hindi",
+        type: "Syllabus",
+        title: "General Hindi Syllabus (2025-26)",
+        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "General Hindi",
+        type: "Syllabus",
+        title: "General Hindi Syllabus (2025-26)",
+        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+    },
+    {
+        course: "B.Sc",
+        semester: "2nd Sem",
+        subject: "General Hindi",
+        type: "Syllabus",
+        title: "General Hindi Syllabus (2025-26)",
+        link: "https://drive.google.com/file/d/1jfPjrPxiBlkVXoAtTmJPCYT1Bulps1dk/view?usp=sharing"
+    },
 ];
